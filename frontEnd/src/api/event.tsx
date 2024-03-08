@@ -1,17 +1,6 @@
 import axios from "axios";
 import { Ievent } from "../interface/Ievent";
 
-export const getQuestions = async () => {
-    try {
-        const response = await axios.get(
-            `${import.meta.env.VITE_EVENT}/questions`
-        );
-        return response.data;
-    } catch (error) {
-        console.error(error);
-        throw error;
-    }
-}
 export const getEvent = async () => {
     try {
         const response = await axios.get(
@@ -22,7 +11,7 @@ export const getEvent = async () => {
         console.error(error);
         throw error;
     }
-}
+};
 export const getEventById = async (eventId: string) => {
     try {
         const response = await axios.get(
@@ -33,17 +22,17 @@ export const getEventById = async (eventId: string) => {
         console.error(error);
         throw error;
     }
-}
+};
 
 export const createEvent = async (event: Ievent) => {
     try {
         const response = await axios.post(
             `${import.meta.env.VITE_EVENT}/createEvent`,
-            event 
+            event
         );
         return response.data;
     } catch (error) {
         console.error(error);
         throw error;
     }
-}
+};

@@ -173,7 +173,16 @@ export async function getAllQuestion() {
     }
     return question;
 }
-
+export async function getQuestionsByEventId(eventId: string) {
+    const questions: Question[] = [];
+    for await (const res of kv.list({ prefix: ["question"] })) {
+        const question = res.value as Question;
+        if (question.eventId === eventId) {
+            questions.push(question);
+        }
+    }
+    return questions;
+}
 /**
  * Get by id.
  * @param id

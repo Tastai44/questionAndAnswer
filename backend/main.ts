@@ -12,6 +12,7 @@ import {
     getAllQuestion,
     getUserByName,
     getEventById,
+    getQuestionsByEventId,
     insertQuestion,
     insertEvent,
     insertUser,
@@ -49,6 +50,10 @@ router
         const { id } = getQuery(ctx, { mergeParams: true });
         ctx.response.body = await getEventById(id);
     })
+    .get("/questionByEId/:eventId", async (ctx: Context) => {
+        const { eventId } = getQuery(ctx, { mergeParams: true });
+        ctx.response.body = await getQuestionsByEventId(eventId);
+    })
     .get("/usersByName/:name", async (ctx: Context) => {
         const { name } = getQuery(ctx, { mergeParams: true });
         ctx.response.body = await getUserByName(name);
@@ -61,7 +66,7 @@ router
         const body = ctx.request.body();
         const user = await body.value;
         await insertUser(user);
-        ctx.response.body = "Add user successfully."
+        ctx.response.body = "Add user successfully.";
     })
     .post("/updateUsers", async (ctx: Context) => {
         const body = ctx.request.body();
@@ -72,7 +77,7 @@ router
         const body = ctx.request.body();
         const question = await body.value;
         await insertQuestion(question);
-        ctx.response.body = "Add question successfully."
+        ctx.response.body = "Add question successfully.";
     })
     .post("/createEvent", async (ctx: Context) => {
         const body = ctx.request.body();
@@ -83,26 +88,26 @@ router
     .post("/likeQuestion/:questionId/:userLikeId", async (ctx: Context) => {
         const { questionId, userLikeId } = getQuery(ctx, { mergeParams: true });
         await likeQuestion(questionId, userLikeId);
-        ctx.response.body = "Like question successfully."
+        ctx.response.body = "Like question successfully.";
     })
     .post("/unlikeQuestion/:questionId/:userLikeId", async (ctx: Context) => {
         const { questionId, userLikeId } = getQuery(ctx, { mergeParams: true });
         await unlikeQuestion(questionId, userLikeId);
-        ctx.response.body = "Like question successfully."
+        ctx.response.body = "Like question successfully.";
     })
     .post("/updateQuestion/:questionId", async (ctx: Context) => {
         const body = ctx.request.body();
         const { questionId } = getQuery(ctx, { mergeParams: true });
         const question = await body.value;
         await updateQuestion(questionId, question);
-        ctx.response.body = "Update question successfully."
+        ctx.response.body = "Update question successfully.";
     })
     .post("/updateEvent/:eventId", async (ctx: Context) => {
         const body = ctx.request.body();
         const { eventId } = getQuery(ctx, { mergeParams: true });
         const event = await body.value;
         await updateEvent(eventId, event);
-        ctx.response.body = "Update event successfully."
+        ctx.response.body = "Update event successfully.";
     })
     .delete("/users/:id", async (ctx: Context) => {
         const { id } = getQuery(ctx, { mergeParams: true });
