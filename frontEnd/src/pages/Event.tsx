@@ -35,7 +35,18 @@ export default function Event() {
   }
 
   return (
-    <Box sx={{ display: "flex", gap: "10px", flexDirection: "column" }}>
+    <Box
+      sx={{
+        display: "flex",
+        gap: "10px",
+        flexDirection: "column",
+        textAlign: "center",
+        position: "fixed",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)"
+      }}
+    >
       <Box sx={{display:"flex", justifyContent:"center"}}>
         <Avatar {...stringAvatar('Kent Dodds')}/>
       </Box>

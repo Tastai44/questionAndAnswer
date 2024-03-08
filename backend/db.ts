@@ -13,6 +13,7 @@ export interface Question {
     id: string;
     questionText: string;
     ownerId: string;
+    name: string;
     eventId: string;
     timestamp: string;
     likeNumber: { userLikeId: string; }[];
@@ -82,7 +83,7 @@ export async function insertEvent(event: Event) {
         .commit();
 
     if (!ok) throw new Error("Something went wrong.");
-    return 200;
+    return eventId;
 }
 
 // Update

@@ -11,6 +11,7 @@ import {
     getAllEvent,
     getAllQuestion,
     getUserByName,
+    getEventById,
     insertQuestion,
     insertEvent,
     insertUser,
@@ -44,6 +45,10 @@ router
         const { id } = getQuery(ctx, { mergeParams: true });
         ctx.response.body = await getUserById(id);
     })
+    .get("/eventById/:id", async (ctx: Context) => {
+        const { id } = getQuery(ctx, { mergeParams: true });
+        ctx.response.body = await getEventById(id);
+    })
     .get("/usersByName/:name", async (ctx: Context) => {
         const { name } = getQuery(ctx, { mergeParams: true });
         ctx.response.body = await getUserByName(name);
@@ -72,8 +77,8 @@ router
     .post("/createEvent", async (ctx: Context) => {
         const body = ctx.request.body();
         const event = await body.value;
-        await insertEvent(event);
-        ctx.response.body = "Add event successfully."
+        const data = await insertEvent(event);
+        ctx.response.body = data;
     })
     .post("/likeQuestion/:questionId/:userLikeId", async (ctx: Context) => {
         const { questionId, userLikeId } = getQuery(ctx, { mergeParams: true });

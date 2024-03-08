@@ -7,8 +7,6 @@ import { useNavigate } from "react-router-dom";
 export default function Host() {
     const [eventName, setEventName] = useState("");
     const [hostName, setHostName] = useState("");
-    const [eventId, setEventId] = useState("");
-    const [error, setError] = useState('');
     const navigate = useNavigate();
 
     const handleCreateEvent = async () => {
@@ -16,7 +14,9 @@ export default function Host() {
             title: eventName,
             ownerName: hostName
         }
-        await createEvent(event)
+        const response = await createEvent(event);
+        const responseBody = await response;
+        navigate(`/eventHostDetails/${responseBody}`)
         setEventName("")
         setHostName("")
     }
@@ -27,16 +27,19 @@ export default function Host() {
         setHostName(event.target.value)
     }
 
-    const handleContinue = () => {
-        if (eventName && hostName) {
-            navigate(`/eventHostDetails/${eventId}`)
-        } else {
-            setError("Please type the code!")
-        }
-    }
-
   return (
-    <Box sx={{ display: "flex", gap: "10px", flexDirection: "column" }}>
+      <Box
+          sx={{
+              display: "flex",
+              gap: "10px",
+              flexDirection: "column",
+              textAlign: "center",
+              position: "fixed",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+          }}
+      >
         <Typography color={"black"} fontSize={"32px"} fontWeight={"bold"}>
             Fill your info
         </Typography>
@@ -114,7 +117,7 @@ export default function Host() {
                       color: "white",
                   },
             }}
-            onClick={handleContinue}
+              onClick={handleCreateEvent}
         >
             Continue
         </Button>

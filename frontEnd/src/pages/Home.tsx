@@ -26,14 +26,25 @@ export default function Home() {
     }
 
   return (
-    <Box sx={{ display: "flex", gap:"10px", flexDirection:"column"}}>
+      <Box
+          sx={{
+              display: "flex",
+              gap: "10px",
+              flexDirection: "column",
+              textAlign: "center",
+              position: "fixed",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+          }}
+      >
           <Typography color={"black"} fontSize={"32px"} fontWeight={"bold"}>
             Invite code
         </Typography>
           <Typography color={"#6C6C6C"} fontSize={"17px"}>
               Enter invite code to participate.
         </Typography>
-          <FormControl sx={{ width: '398px', marginTop: "24px" }} variant="outlined">
+          <FormControl sx={{ width: '398px', marginTop: "24px"}} variant="outlined">
               <InputLabel htmlFor="Enter code here">Enter code here</InputLabel>
               <OutlinedInput
                   id="Enter code here"
