@@ -51,7 +51,7 @@ export default function HostEvent() {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={{ display: "flex", justifyContent: "center" }}>
-                    <HostEventMenu handleClose={handleClose} />
+                    <HostEventMenu handleClose={handleClose} eventId={eventId ?? ''} />
                 </Box>
             </Modal>
             <Box sx={{

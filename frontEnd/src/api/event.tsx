@@ -26,11 +26,21 @@ export const getEventById = async (eventId: string) => {
 
 export const createEvent = async (event: Ievent) => {
     try {
-        const response = await axios.post(
+        return await axios.post(
             `${import.meta.env.VITE_EVENT}/createEvent`,
             event
         );
-        return response.data;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
+export const deleteEventById = async (eventId: string) => {
+    try {
+        return await axios.delete(
+            `${import.meta.env.VITE_EVENT}/deleteEvent/${eventId}`
+        );
     } catch (error) {
         console.error(error);
         throw error;

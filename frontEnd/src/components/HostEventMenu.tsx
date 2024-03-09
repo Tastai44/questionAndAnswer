@@ -2,12 +2,25 @@ import { Box, Divider, IconButton, Typography } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { ContentCopy } from '@mui/icons-material';
 import LogoutIcon from '@mui/icons-material/Logout';
+import { deleteEventById } from '../api/event';
+import { useNavigate } from 'react-router-dom';
 
 interface IData {
     handleClose: () => void;
+    eventId: string;
 }
 
 export default function HostEventMenu(props: IData) {
+    const navigate = useNavigate();
+    const handleCopyText = (text: string) => {
+        navigator.clipboard.writeText(text);
+        alert('Text copied to clipboard!');
+    };
+
+    const handleEndEvent = async (id: string) => {
+        await deleteEventById(id);
+        navigate('/host');
+    };
 
     return (
         <>
@@ -28,15 +41,20 @@ export default function HostEventMenu(props: IData) {
                 <Divider sx={{ border: "0.5px solid #9C9C9C", marginBottom: "20px" }} />
                 <Box sx={{ display: "flex", justifyContent: "space-between", marginLeft: "10px", alignContent: "center", alignItems: "center", marginTop: "10px" }}>
                     <Box>
-                        Code:
+                        Code: {props.eventId}
                     </Box>
-                    <IconButton>
+                    <IconButton onClick={() => handleCopyText(props.eventId)}>
                         <ContentCopy fontSize="small" />
                     </IconButton>
                 </Box>
                 <Box sx={{
-                    display: "flex", alignContent: "center", alignItems: "center", marginTop: "10px", cursor: "pointer", color: "black",
-                }}>
+                    display: "flex", alignContent: "center", alignItems: "center", marginTop: "10px", cursor: "pointer", color: "black", transition: "background-color 0.3s ease",
+                    "&:hover": {
+                        backgroundColor: "rgba(0, 0, 0, 0.1)"
+                    }
+                }}
+                    onClick={() => handleEndEvent(props.eventId)}
+                >
                     <IconButton>
                         <LogoutIcon fontSize="small" />
                     </IconButton>
