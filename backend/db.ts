@@ -183,6 +183,16 @@ export async function getQuestionsByEventId(eventId: string) {
     }
     return questions;
 }
+export async function getQuestionsByOwnerId(ownerId: string) {
+    const questions: Question[] = [];
+    for await (const res of kv.list({ prefix: ["question"] })) {
+        const question = res.value as Question;
+        if (question.ownerId === ownerId) {
+            questions.push(question);
+        }
+    }
+    return questions;
+}
 /**
  * Get by id.
  * @param id
@@ -237,6 +247,21 @@ export async function deleteQuestionById(id: string) {
     const questionKey = ["question", id];
     const questionRes = await kv.get(questionKey);
     if (!questionRes.value) return;
+    await kv.atomic()
+        .check(questionRes)
+        .delete(questionKey)
+        .commit();
+}
+export async function deleteQuestionByOwner(id: string, ownerId: string) {
+    const questionKey = ["question", id];
+    const questionRes = await kv.get(questionKey);
+    if (!questionRes.value) return; // Question not found
+
+    const question: Question = questionRes.value;
+    if (question.ownerId !== ownerId) {
+        throw new Error("You are not authorized to delete this question."); // Unauthorized to delete
+    }
+
     await kv.atomic()
         .check(questionRes)
         .delete(questionKey)

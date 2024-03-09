@@ -13,6 +13,7 @@ import {
     getUserByName,
     getEventById,
     getQuestionsByEventId,
+    getQuestionsByOwnerId,
     insertQuestion,
     insertEvent,
     insertUser,
@@ -25,6 +26,7 @@ import {
     deleteAllEvent,
     deleteEventById,
     deleteQuestionById,
+    deleteQuestionByOwner,
     likeQuestion,
     unlikeQuestion,
 } from "./db.ts";
@@ -53,6 +55,10 @@ router
     .get("/questionByEId/:eventId", async (ctx: Context) => {
         const { eventId } = getQuery(ctx, { mergeParams: true });
         ctx.response.body = await getQuestionsByEventId(eventId);
+    })
+    .get("/getQuestionsByOwnerId/:ownerId", async (ctx: Context) => {
+        const { ownerId } = getQuery(ctx, { mergeParams: true });
+        ctx.response.body = await getQuestionsByOwnerId(ownerId);
     })
     .get("/usersByName/:name", async (ctx: Context) => {
         const { name } = getQuery(ctx, { mergeParams: true });
@@ -121,6 +127,12 @@ router
     .delete("/deleteQuestionById/:id", async (ctx: Context) => {
         const { id } = getQuery(ctx, { mergeParams: true });
         await deleteQuestionById(id);
+        ctx.response.body = "Delete a question successfully.";
+    })
+    .delete("/deleteQuestionByOwner/:id/:ownerId", async (ctx: Context) => {
+        const { ownerId } = getQuery(ctx, { mergeParams: true });
+        const { id } = getQuery(ctx, { mergeParams: true });
+        await deleteQuestionByOwner(id, ownerId);
         ctx.response.body = "Delete a question successfully.";
     })
     .delete("/deleteAllUser", async (ctx) => {
