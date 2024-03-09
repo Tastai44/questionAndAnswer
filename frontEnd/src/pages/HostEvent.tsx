@@ -47,33 +47,33 @@ export default function HostEvent() {
         <Box sx={{ display: "flex", justifyContent: "center" }}>
             <Modal
                 open={open}
-                onClose={handleClose}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={{ display: "flex", justifyContent: "center" }}>
-                    <HostEventMenu />
+                    <HostEventMenu handleClose={handleClose} />
                 </Box>
             </Modal>
             <Box sx={{
                 display: "flex", flexDirection: "column", marginTop: "-10px"
             }}>
                 {eventData !== undefined && (
-                    <><Box sx={{
-                        background: "#D9D9D9", height: "112px", width: "430px", padding: "10px"
-                    }}>
-                        <Box sx={{ display: "flex", width: "100%", justifyContent: "space-between" }}>
-                            <Typography color={"black"} fontSize={"32px"} sx={{ paddingLeft: "10px", paddingTop: "10px" }}>
-                                {eventData.title}
-                            </Typography>
-                            <IconButton size="large" onClick={handleOpen}>
-                                <MenuIcon />
-                            </IconButton>
+                    <>
+                        <Box sx={{
+                            background: "#D9D9D9", height: "112px", width: "430px", padding: "10px"
+                        }}>
+                            <Box sx={{ display: "flex", width: "100%", justifyContent: "space-between", alignContent: "center", alignItems: "center" }}>
+                                <Typography color={"black"} fontSize={"32px"} sx={{ paddingLeft: "10px", paddingTop: "10px" }}>
+                                    {eventData.title}
+                                </Typography>
+                                <IconButton size="large" onClick={handleOpen} sx={{ width: "32px", height: "32px" }}>
+                                    <MenuIcon />
+                                </IconButton>
+                            </Box>
+                            <Box textAlign={"left"} color={"#6C6C6C"} fontSize={"17px"} sx={{ paddingLeft: "10px" }} fontWeight={"100"}>
+                                {eventData.ownerName}
+                            </Box>
                         </Box>
-                        <Box textAlign={"left"} color={"#6C6C6C"} fontSize={"17px"} sx={{ paddingLeft: "10px" }} fontWeight={"100"}>
-                            {eventData.ownerName}
-                        </Box>
-                    </Box>
                         <Box sx={{ width: '430px' }}>
                             <Box sx={{ borderBottom: 1, borderColor: 'divider', fontSize: "16px", display: "flex", justifyContent: "space-between" }}>
                                 <Box sx={{ display: "flex", alignContent: "center", alignItems: "center" }}>
