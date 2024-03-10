@@ -52,7 +52,7 @@ export async function insertUser(user: User) {
         .commit();
 
     if (!ok) throw new Error("Something went wrong.");
-    return 200;
+    return userId;
 }
 
 export async function insertQuestion(question: Question) {

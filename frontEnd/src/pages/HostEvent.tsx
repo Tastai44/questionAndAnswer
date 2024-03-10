@@ -44,39 +44,39 @@ export default function HostEvent() {
         alert('Text copied to clipboard!');
     };
     return (
-        <Box sx={{ display: "flex", justifyContent: "center" }}>
-            <Modal
-                open={open}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
+        <>
+            {eventData !== undefined && (
                 <Box sx={{ display: "flex", justifyContent: "center" }}>
-                    <HostEventMenu handleClose={handleClose} eventId={eventId ?? ''} />
-                </Box>
-            </Modal>
-            <Box sx={{
-                display: "flex", flexDirection: "column", marginTop: "-10px"
-            }}>
-                {eventData !== undefined && (
-                    <>
+                    <Modal
+                        open={open}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description"
+                    >
+                        <Box sx={{ display: "flex", justifyContent: "center" }}>
+                            <HostEventMenu handleClose={handleClose} eventId={eventId ?? ''} title={eventData.title} hostName={eventData.ownerName} />
+                        </Box>
+                    </Modal>
+                    <Box sx={{
+                        display: "flex", flexDirection: "column", marginTop: "-10px"
+                    }}>
                         <Box sx={{
                             background: "#D9D9D9", height: "112px", width: "430px", padding: "10px"
                         }}>
                             <Box sx={{ display: "flex", width: "100%", justifyContent: "space-between", alignContent: "center", alignItems: "center" }}>
-                                <Typography color={"black"} fontSize={"32px"} sx={{ paddingLeft: "10px", paddingTop: "10px" }}>
+                                <Typography color={"black"} fontSize={"32px"} sx={{ paddingLeft: "16px", paddingTop: "10px" }}>
                                     {eventData.title}
                                 </Typography>
-                                <IconButton size="large" onClick={handleOpen} sx={{ width: "32px", height: "32px" }}>
+                                <IconButton size="large" onClick={handleOpen} sx={{ width: "32px", height: "32px", marginRight: "10px" }}>
                                     <MenuIcon />
                                 </IconButton>
                             </Box>
-                            <Box textAlign={"left"} color={"#6C6C6C"} fontSize={"17px"} sx={{ paddingLeft: "10px" }} fontWeight={"100"}>
+                            <Box textAlign={"left"} color={"#6C6C6C"} fontSize={"17px"} sx={{ paddingLeft: "16px" }} fontWeight={"100"}>
                                 {eventData.ownerName}
                             </Box>
                         </Box>
                         <Box sx={{ width: '430px' }}>
                             <Box sx={{ borderBottom: 1, borderColor: 'divider', fontSize: "16px", display: "flex", justifyContent: "space-between" }}>
-                                <Box sx={{ display: "flex", alignContent: "center", alignItems: "center" }}>
+                                <Box sx={{ display: "flex", alignContent: "center", alignItems: "center", marginLeft: "16px", marginRight: "16px" }}>
                                     <Box
                                         onClick={() => handleChange(0)}
                                         sx={{
@@ -180,9 +180,10 @@ export default function HostEvent() {
                                     )}
                                 </>
                             )}
-                        </Box></>
-                )}
-            </Box>
-        </Box>
+                        </Box>
+                    </Box>
+                </Box>
+            )}
+        </>
     );
 }

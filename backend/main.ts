@@ -71,8 +71,8 @@ router
     .post("/addUser", async (ctx: Context) => {
         const body = ctx.request.body();
         const user = await body.value;
-        await insertUser(user);
-        ctx.response.body = "Add user successfully.";
+        const data = await insertUser(user);
+        ctx.response.body = data;
     })
     .post("/updateUsers", async (ctx: Context) => {
         const body = ctx.request.body();
