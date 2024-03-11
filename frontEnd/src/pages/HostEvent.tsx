@@ -1,16 +1,18 @@
 import { Box, Divider, IconButton, Modal, Typography } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import QuestionCard from "../components/QuestionCard";
 import { getEventById } from "../api/event";
 import { IQuestion, Ievent } from "../interface/Ievent";
 import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined';
 import { getQuesByEId } from "../api/question";
 import HostEventMenu from "../components/HostEventMenu";
+import PopupAlert from "../components/PopupAlert";
 
 export default function HostEvent() {
     const [value, setValue] = useState(0);
+    const navigatorPath = useNavigate();
     const { eventId } = useParams();
     const [eventData, setEventData] = useState<Ievent>();
     const [questions, setQuestions] = useState<IQuestion[]>([]);
@@ -29,10 +31,15 @@ export default function HostEvent() {
     useEffect(() => {
         const fetch = async () => {
             const data = await getQuesByEId(eventId ?? "") as IQuestion[];
-
-            setQuestions(data);
+            if (data) {
+                setQuestions(data);
+            } else {
+                PopupAlert("Sorry, there are no that event page", "warning");
+                navigatorPath('/');
+            }
         };
         fetch();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [eventId]);
 
     const handleChange = (newValue: number) => {
