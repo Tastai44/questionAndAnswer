@@ -23,16 +23,8 @@ export default function HostEvent() {
     useEffect(() => {
         const fetch = async () => {
             const data = await getEventById(eventId ?? "");
-            setEventData(data);
-        };
-        fetch();
-    }, [eventId]);
-
-    useEffect(() => {
-        const fetch = async () => {
-            const data = await getQuesByEId(eventId ?? "") as IQuestion[];
             if (data) {
-                setQuestions(data);
+                setEventData(data);
             } else {
                 PopupAlert("Sorry, there are no that event page", "warning");
                 navigatorPath('/');
@@ -40,6 +32,14 @@ export default function HostEvent() {
         };
         fetch();
         // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [eventId]);
+
+    useEffect(() => {
+        const fetch = async () => {
+            const data = await getQuesByEId(eventId ?? "") as IQuestion[];
+            setQuestions(data);
+        };
+        fetch();
     }, [eventId]);
 
     const handleChange = (newValue: number) => {
@@ -178,7 +178,9 @@ export default function HostEvent() {
                             ) : (
                                 <>
                                     {questions !== undefined && (
-                                        questions.map((item, index) => (
+                                        questions.sort((a, b) => {
+                                            return b.likeNumber.length - a.likeNumber.length;
+                                        }).map((item, index) => (
                                             <Box key={index}>
                                                 <QuestionCard name={item.name} timestamp={item.timestamp} likeNumber={item.likeNumber} questionText={item.questionText} />
                                                 <Divider />
