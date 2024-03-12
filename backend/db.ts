@@ -17,6 +17,7 @@ export interface Question {
     eventId: string;
     timestamp: string;
     isRead: boolean;
+    isSave: boolean;
     likeNumber: { userLikeId: string; }[];
 }
 
@@ -61,6 +62,8 @@ export async function insertQuestion(question: Question) {
 
     if (question.likeNumber === undefined) {
         question.likeNumber = [];
+        question.isRead = false;
+        question.isSave = false;
     }
 
     const questionObject: Question = { questionId, ...question } as Question;
@@ -220,6 +223,10 @@ export async function getUserByEmail(email: string) {
     const userKey = ["user", id];
     return (await kv.get(userKey)).value as User;
 }
+export async function getQuestionById(id: string): Promise<Question> {
+    const key = ["question", id];
+    return (await kv.get(key)).value as Question;
+}
 
 /**
  * Delete by id.
@@ -348,5 +355,64 @@ export async function unlikeQuestion(questionId: string, userLikeId: string) {
         throw new Error("Failed to update question");
     }
 
+    return 200;
+}
+
+export async function saveQuestion(questionId: string) {
+    const questionKey = ["question", questionId];
+    const questionObject = (await kv.get(questionKey)).value as Question;
+
+    if (!questionObject) {
+        throw new Error("Question not found");
+    }
+    const alreadySave = questionObject.isSave
+    if (alreadySave) {
+        throw new Error("User has already saved the question");
+    }
+    questionObject.isSave = true;
+    const ok = await kv.atomic()
+        .set(questionKey, questionObject)
+        .commit();
+    if (!ok) {
+        throw new Error("Failed to update question");
+    }
+    return 200;
+}
+export async function unSaveQuestion(questionId: string) {
+    const questionKey = ["question", questionId];
+    const questionObject = (await kv.get(questionKey)).value as Question;
+
+    if (!questionObject) {
+        throw new Error("Question not found");
+    }
+
+    questionObject.isSave = false;
+    const ok = await kv.atomic()
+        .set(questionKey, questionObject)
+        .commit();
+    if (!ok) {
+        throw new Error("Failed to update question");
+    }
+    return 200;
+}
+
+export async function readQuestion(questionId: string) {
+    const questionKey = ["question", questionId];
+    const questionObject = (await kv.get(questionKey)).value as Question;
+
+    if (!questionObject) {
+        throw new Error("Question not found");
+    }
+    const alreadyRead = questionObject.isRead
+    if (alreadyRead) {
+        return 200;
+    }
+    questionObject.isRead = true;
+    const ok = await kv.atomic()
+        .set(questionKey, questionObject)
+        .commit();
+    if (!ok) {
+        throw new Error("Failed to update question");
+    }
     return 200;
 }

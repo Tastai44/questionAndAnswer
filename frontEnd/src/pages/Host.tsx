@@ -181,7 +181,7 @@ export default function Host() {
                     }}
                     onClick={() => navigate('/')}
                 >
-                    Back to Homepage
+                    Back to Home
                 </Button>
             </Box>
     );

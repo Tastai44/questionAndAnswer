@@ -14,6 +14,7 @@ import {
     getEventById,
     getQuestionsByEventId,
     getQuestionsByOwnerId,
+    getQuestionById,
     insertQuestion,
     insertEvent,
     insertUser,
@@ -29,6 +30,9 @@ import {
     deleteQuestionByOwner,
     likeQuestion,
     unlikeQuestion,
+    saveQuestion,
+    unSaveQuestion,
+    readQuestion
 } from "./db.ts";
 
 const { getQuery } = helpers;
@@ -60,6 +64,10 @@ router
         const { ownerId } = getQuery(ctx, { mergeParams: true });
         ctx.response.body = await getQuestionsByOwnerId(ownerId);
     })
+    .get("/questionById/:questionId", async (ctx: Context) => {
+        const { questionId } = getQuery(ctx, { mergeParams: true });
+        ctx.response.body = await getQuestionById(questionId);
+    })
     .get("/usersByName/:name", async (ctx: Context) => {
         const { name } = getQuery(ctx, { mergeParams: true });
         ctx.response.body = await getUserByName(name);
@@ -83,13 +91,28 @@ router
         const body = ctx.request.body();
         const question = await body.value;
         await insertQuestion(question);
-        ctx.response.body = "Add question successfully.";
+        ctx.response.body = "Added question successfully.";
     })
     .post("/createEvent", async (ctx: Context) => {
         const body = ctx.request.body();
         const event = await body.value;
         const data = await insertEvent(event);
         ctx.response.body = data;
+    })
+    .post("/saveQuestion/:questionId", async (ctx: Context) => {
+        const { questionId } = getQuery(ctx, { mergeParams: true });
+        await saveQuestion(questionId);
+        ctx.response.body = "Saved question successfully.";
+    })
+    .post("/unSaveQuestion/:questionId", async (ctx: Context) => {
+        const { questionId } = getQuery(ctx, { mergeParams: true });
+        await unSaveQuestion(questionId);
+        ctx.response.body = "UnSaved question successfully.";
+    })
+    .post("/readQuestion/:questionId", async (ctx: Context) => {
+        const { questionId } = getQuery(ctx, { mergeParams: true });
+        await readQuestion(questionId);
+        ctx.response.body = "Read question successfully.";
     })
     .post("/likeQuestion/:questionId/:userLikeId", async (ctx: Context) => {
         const { questionId, userLikeId } = getQuery(ctx, { mergeParams: true });
