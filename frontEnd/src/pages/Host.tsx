@@ -58,10 +58,10 @@ export default function Host() {
                 }
             }}
         >
-                <Typography color={"black"} fontSize={"32px"} fontWeight={"bold"}>
+            <Typography fontFamily={"Inter"} color={"black"} fontSize={"32px"} fontWeight={"bold"}>
                     Fill your info
                 </Typography>
-                <Typography color={"#6C6C6C"} fontSize={"17px"}>
+            <Typography fontFamily={"Inter"} color={"#6C6C6C"} fontSize={"17px"}>
                     Complete your event details.
                 </Typography>
                 <FormControl 
@@ -71,9 +71,9 @@ export default function Host() {
                             width: "398px"
                         },
                     }} variant="outlined">
-                    <InputLabel htmlFor="Enter code here">Event name</InputLabel>
+                    <InputLabel sx={{ fontFamily: "Inter" }} htmlFor="Enter code here">Event name</InputLabel>
                     <OutlinedInput
-                        sx={{background:"white", borderRadius:"14px"}}
+                    sx={{ background: "white", borderRadius: "14px" }}
                         id="Event name"
                         value={eventName}
                         onChange={handleEventName}
@@ -108,7 +108,7 @@ export default function Host() {
                     width: "398px"
                 },
             }} variant="outlined">
-                    <InputLabel htmlFor="Enter code here">Host name</InputLabel>
+                <InputLabel sx={{ fontFamily: "Inter" }} htmlFor="Enter code here">Host name</InputLabel>
                     <OutlinedInput
                         sx={{ background: "white", borderRadius:"14px" }}
                         id="Host name"
@@ -154,6 +154,7 @@ export default function Host() {
                         [themeApp.breakpoints.up('lg')]: {
                             width: "398px"
                         },
+                        fontFamily: "Inter"
                     }}
                     onClick={handleCreateEvent}
                 >
@@ -176,10 +177,11 @@ export default function Host() {
                         [themeApp.breakpoints.up('lg')]: {
                             width: "398px"
                         },
+                        fontFamily: "Inter"
                     }}
                     onClick={() => navigate('/')}
                 >
-                    Cancel
+                    Back to Homepage
                 </Button>
             </Box>
     );

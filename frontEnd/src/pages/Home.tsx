@@ -43,10 +43,10 @@ export default function Home() {
                 }
             }}
         >
-            <Typography color={"black"} fontSize={"32px"} fontWeight={"bold"}>
+            <Typography fontFamily={"Inter"} color={"black"} fontSize={"32px"} fontWeight={"bold"}>
                 Invite code
             </Typography>
-            <Typography color={"#6C6C6C"} fontSize={"17px"}>
+            <Typography fontFamily={"Inter"} color={"#6C6C6C"} fontSize={"17px"}>
                 Enter invite code to participate.
             </Typography>
             <Box>
@@ -56,7 +56,7 @@ export default function Home() {
                         width: "398px"
                     },
                 }} variant="outlined">
-                    <InputLabel htmlFor="Enter code here">Enter code here</InputLabel>
+                    <InputLabel sx={{ fontFamily: "Inter" }} htmlFor="Enter code here">Enter code here</InputLabel>
                     <OutlinedInput
                         sx={{ borderRadius: "14px", background:"white" }}
                         id="Enter code here"
@@ -106,13 +106,14 @@ export default function Home() {
                         [themeApp.breakpoints.up('lg')]: {
                             width: "398px"
                         },
+                        fontFamily:"Inter"
                     }}
                     onClick={handleContinue}
                 >
                     Continue
                 </Button>
             </Box>
-            <Typography color={"#6C6C6C"} fontSize={"17px"} sx={{ marginTop: "32px" }}>
+            <Typography fontFamily={"Inter"} color={"#6C6C6C"} fontSize={"17px"} sx={{ marginTop: "32px" }}>
                 Want to be a host? <u style={{ cursor: "pointer" }} onClick={() => navigate("/host")}>Create</u>
             </Typography>
         </Box>

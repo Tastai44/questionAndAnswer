@@ -55,8 +55,9 @@ export default function HostEvent() {
         <>
             {eventData !== undefined && (
                 <Box sx={{
-                    display: "flex", justifyContent: "center",
-                    width: "100%",
+                    display: "flex", 
+                    justifyContent: "center",
+                    width: "100%", 
                     
                 }}>
                     <Modal
@@ -69,7 +70,10 @@ export default function HostEvent() {
                         </Box>
                     </Modal>
                     <Box sx={{
-                        display: "flex", flexDirection: "column", width: "100%",
+                        display: "flex", flexDirection: "column", width: "100%", 
+                        [themeApp.breakpoints.up('md')]: {
+                            width: "430px"
+                        },
                     }}>
                         <Box sx={{
                             background: "#D9D9D9", height: "112px", 
@@ -90,7 +94,10 @@ export default function HostEvent() {
                                 {eventData.ownerName}
                             </Box>
                         </Box>
-                        <Box sx={{ width: '100%' }}>
+                        <Box sx={{ width: '100%',
+                            [themeApp.breakpoints.up('lg')]: {
+                                width: "430px" 
+                            }, }}>
                             <Box sx={{ fontSize: "16px", display: "flex", justifyContent: "space-between" }}>
                                 <Box sx={{ display: "flex", alignContent: "center", alignItems: "center", marginLeft: "16px", marginRight: "16px" }}>
                                     <Box
