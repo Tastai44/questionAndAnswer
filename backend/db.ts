@@ -16,6 +16,7 @@ export interface Question {
     name: string;
     eventId: string;
     timestamp: string;
+    isRead: boolean;
     likeNumber: { userLikeId: string; }[];
 }
 
