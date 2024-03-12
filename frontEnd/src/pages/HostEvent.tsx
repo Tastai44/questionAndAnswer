@@ -67,7 +67,7 @@ export default function HostEvent() {
                         display: "flex", flexDirection: "column", marginTop: "-10px"
                     }}>
                         <Box sx={{
-                            background: "#D9D9D9", height: "112px", width: "430px", padding: "10px"
+                            background: "#D9D9D9", height: "112px", width: "430px"
                         }}>
                             <Box sx={{ display: "flex", width: "100%", justifyContent: "space-between", alignContent: "center", alignItems: "center" }}>
                                 <Typography color={"black"} fontSize={"32px"} sx={{ paddingLeft: "16px", paddingTop: "10px" }}>
@@ -97,6 +97,7 @@ export default function HostEvent() {
                                             display: "flex",
                                             justifyContent: "center",
                                             alignItems: "center",
+                                            cursor:"pointer"
                                         }}
                                     >
                                         Live
@@ -114,6 +115,7 @@ export default function HostEvent() {
                                             display: "flex",
                                             justifyContent: "center",
                                             alignItems: "center",
+                                            cursor: "pointer"
                                         }}>
                                         Popular
                                     </Box>
