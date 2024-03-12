@@ -7,9 +7,9 @@ import '@fontsource/roboto/700.css';
 export const themeApp = createTheme({
     typography: {
         allVariants: {
-            fontFamily: "Noto Sans SC",
             textTransform: "none",
         },
+        fontFamily: "Inter"
     },
 
     components: {

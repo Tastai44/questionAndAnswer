@@ -1,5 +1,6 @@
 {
     "tasks": {
-        "dev": "deno run -A --watch --unstable main.ts"
-    }
+        "dev": "deno run -A --watch --unstable-kv main.ts"
+    },
+    "unstable": ["bare-node-builtins", "webgpu"]
 }
