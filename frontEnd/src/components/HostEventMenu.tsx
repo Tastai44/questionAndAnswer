@@ -2,9 +2,9 @@ import { Box, Divider, IconButton, Modal, Typography } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { ContentCopy } from '@mui/icons-material';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { style } from '../utils/BoxStyle';
 import { useState } from 'react';
 import CloseEventCard from './CloseEventCard';
+import { themeApp } from '../utils/Theme';
 
 interface IData {
     handleClose: () => void;
@@ -33,18 +33,35 @@ export default function HostEventMenu(props: IData) {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Box sx={style}>
+                <Box
+                    sx={{
+                        position: 'absolute',
+                        top: '40%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        bgcolor: 'background.paper',
+                        boxShadow: 24,
+                        borderRadius: "20px",
+                        width: "90%",
+                        [themeApp.breakpoints.up('md')]: {
+                            width: "398px"
+                        },
+                    }}
+                >
                     <CloseEventCard handleClose={handleCloseCard} eventId={props.eventId} />
                 </Box>
             </Modal>
             <Box sx={{
-                background: "#D9D9D9", height: "200px", width: "430px",
+                background: "#D9D9D9", height: "200px", width: "100%",
+                [themeApp.breakpoints.up('md')]: {
+                    width: "430px"
+                },
             }}>
                 <Box sx={{ display: "flex", width: "100%", 
                     justifyContent: "space-between", alignContent: "center", 
                     alignItems: "center"}}
                     >
-                    <Typography color={"black"} fontSize={"32px"} sx={{marginLeft:"16px", marginTop:"8px"}}>
+                    <Typography color={"black"} fontSize={"32px"} sx={{marginLeft:"16px", marginTop:"10px"}}>
                         {props.title}
                     </Typography>
                     <IconButton size="large" sx={{ width: "32px", height: "32px", marginRight:"16px" }} onClick={props.handleClose} >

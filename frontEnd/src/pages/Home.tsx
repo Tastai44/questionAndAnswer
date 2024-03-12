@@ -58,7 +58,7 @@ export default function Home() {
                 }} variant="outlined">
                     <InputLabel htmlFor="Enter code here">Enter code here</InputLabel>
                     <OutlinedInput
-                        sx={{ borderRadius: "14px" }}
+                        sx={{ borderRadius: "14px", background:"white" }}
                         id="Enter code here"
                         value={invitedCode}
                         onChange={handleTypeCode}

@@ -9,6 +9,7 @@ import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined';
 import { getQuesByEId } from "../api/question";
 import HostEventMenu from "../components/HostEventMenu";
 import PopupAlert from "../components/PopupAlert";
+import { themeApp } from "../utils/Theme";
 
 export default function HostEvent() {
     const [value, setValue] = useState(0);
@@ -53,7 +54,11 @@ export default function HostEvent() {
     return (
         <>
             {eventData !== undefined && (
-                <Box sx={{ display: "flex", justifyContent: "center" }}>
+                <Box sx={{
+                    display: "flex", justifyContent: "center",
+                    width: "100%",
+                    
+                }}>
                     <Modal
                         open={open}
                         aria-labelledby="modal-modal-title"
@@ -64,10 +69,14 @@ export default function HostEvent() {
                         </Box>
                     </Modal>
                     <Box sx={{
-                        display: "flex", flexDirection: "column", marginTop: "-10px"
+                        display: "flex", flexDirection: "column", width: "100%",
                     }}>
                         <Box sx={{
-                            background: "#D9D9D9", height: "112px", width: "430px"
+                            background: "#D9D9D9", height: "112px", 
+                            width: "100%", 
+                            [themeApp.breakpoints.up('md')]: {
+                                width: "430px" 
+                            },
                         }}>
                             <Box sx={{ display: "flex", width: "100%", justifyContent: "space-between", alignContent: "center", alignItems: "center" }}>
                                 <Typography color={"black"} fontSize={"32px"} sx={{ paddingLeft: "16px", paddingTop: "10px" }}>
@@ -81,8 +90,8 @@ export default function HostEvent() {
                                 {eventData.ownerName}
                             </Box>
                         </Box>
-                        <Box sx={{ width: '430px' }}>
-                            <Box sx={{ borderBottom: 1, borderColor: 'divider', fontSize: "16px", display: "flex", justifyContent: "space-between" }}>
+                        <Box sx={{ width: '100%' }}>
+                            <Box sx={{ fontSize: "16px", display: "flex", justifyContent: "space-between" }}>
                                 <Box sx={{ display: "flex", alignContent: "center", alignItems: "center", marginLeft: "16px", marginRight: "16px" }}>
                                     <Box
                                         onClick={() => handleChange(0)}
@@ -133,6 +142,7 @@ export default function HostEvent() {
                                         display: "flex",
                                         justifyContent: "center",
                                         alignItems: "center",
+                                        marginRight:"16px"
                                     }}>
                                     {`${questions.length} questions`}
                                 </Box>
