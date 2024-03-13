@@ -23,15 +23,12 @@ export default function HostEventMenu(props: IData) {
 
     const handleCloseCard = () => {
         setOpen(!open);
-        // handleEndEvent(props.eventId);
     };
 
     return (
         <>
             <Modal
                 open={open}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
             >
                 <Box
                     sx={{

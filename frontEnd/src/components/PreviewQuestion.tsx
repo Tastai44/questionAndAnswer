@@ -1,9 +1,10 @@
-import { Box, Button, Divider, IconButton, Typography } from '@mui/material'
+import { Box, Button, Divider, IconButton, Modal, Typography } from '@mui/material'
 import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
 import { IQuestion } from '../interface/Ievent';
 import { useEffect, useState } from 'react';
 import { deleteQuestionById, getQuesById, saveQuestion, unSaveQuestion } from '../api/question';
 import { themeApp } from '../utils/Theme';
+import DeleteCard from './DeleteCard';
 
 interface IData {
     questionId: string;
@@ -13,6 +14,7 @@ interface IData {
 
 export default function PreviewQuestion(props: IData) {
     const [questions, setQuestions] = useState<IQuestion>();
+    const [open, setOpen] = useState(false);
 
     useEffect(() => {
         const fetch = async () => {
@@ -40,9 +42,33 @@ export default function PreviewQuestion(props: IData) {
         props.handleRefresh();
         props.handleCloseCard();
     }
+    const handleCloseCard = () => {
+        setOpen(!open);
+    };
     
   return (
     <Box sx={{ display: "flex", justifyContent: "center", width: "100%" }}>
+          <Modal
+              open={open}
+          >
+              <Box
+                  sx={{
+                      position: 'absolute',
+                      top: '40%',
+                      left: '50%',
+                      transform: 'translate(-50%, -50%)',
+                      bgcolor: 'background.paper',
+                      boxShadow: 24,
+                      borderRadius: "20px",
+                      width: "90%",
+                      [themeApp.breakpoints.up('md')]: {
+                          width: "398px"
+                      },
+                  }}
+              >
+                  <DeleteCard handleClose={handleCloseCard} id={props.questionId} handleDeleteQuestion={handleDeleteQuestion}/>
+              </Box>
+          </Modal>
         {questions !== undefined && (
             <Box sx={{ display: "flex", flexDirection: "column", textAlign: "center", width: "100%" }}>
                 <Box sx={{
@@ -85,7 +111,7 @@ export default function PreviewQuestion(props: IData) {
                               },
                               fontFamily: "Inter"
                           }}
-                          onClick={() => handleDeleteQuestion(props.questionId)}
+                          onClick={handleCloseCard}
                       >
                           Remove
                       </Button>
