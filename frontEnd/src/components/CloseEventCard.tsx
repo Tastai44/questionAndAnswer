@@ -1,21 +1,15 @@
-// import React from 'react';
 import EventBusyOutlinedIcon from '@mui/icons-material/EventBusyOutlined';
 import { Box, Button, Divider, Typography } from "@mui/material";
-import { deleteEventById } from "../api/event";
-import { useNavigate } from "react-router-dom";
 import { themeApp } from '../utils/Theme';
 
 interface IData {
     handleClose: () => void;
-    eventId: string;
+    handleDelete: (id: string) => void;
+    id: string;
 }
 
 export default function CloseEventCard(props: IData) {
-    const navigate = useNavigate();
-    const handleEndEvent = async (id: string) => {
-        await deleteEventById(id);
-        navigate('/host');
-    };
+    
     return (
         <Box sx={{ display: "flex", justifyContent: "center", width:"100%" }}>
             <Box sx={{ display: "flex", flexDirection: "column", textAlign: "center", width: "100%" }}>
@@ -29,7 +23,7 @@ export default function CloseEventCard(props: IData) {
                 <Box sx={{ display: "flex", flexDirection: "column", textAlign: "center", width: "100%" }}>
                     <Box sx={{ display: "flex", justifyContent: "center" }}>
                         <Button
-                            onClick={() => handleEndEvent(props.eventId)}
+                            onClick={() => props.handleDelete(props.id)}
                             sx={{
                                 width: "95%", borderRadius: "8px", background: "#FA6056", color: "white", marginTop: "13px", 
                                 height: "49px", "&:hover": {

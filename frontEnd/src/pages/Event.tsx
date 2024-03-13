@@ -5,19 +5,18 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import { themeApp } from "../utils/Theme";
 import { getEventById } from "../api/event";
 import { Ievent } from "../interface/Ievent";
-// import { addUser } from "../api/audience";
+import { addUser } from "../api/audience";
 
 export default function Event() {
     const navigate = useNavigate();
     const { eventId } = useParams();
     const [eventData, setEventData] = useState<Ievent>();
     const [userName, setUsername] = useState('');
-    // const [error, setError] = useState('');
+    const [error, setError] = useState('');
 
     useEffect(() => {
         const fetchData = async () => {
             const data = await getEventById(eventId ?? "");
-            console.log(data);
             setEventData(data);
         };
 
@@ -28,24 +27,24 @@ export default function Event() {
         setUsername(event.target.value);
     };
 
-    // const handleContinue = async () => {
+    const handleContinue = async () => {
         
-    //     if (userName) {
-    //         const user = {
-    //             name: userName,
-    //         }
-    //         const response = await addUser(user);
-    //         const responseBody = await response;
-    //         const saveUser = {
-    //             userId: responseBody.data,
-    //             name: userName,
-    //         }
-    //         localStorage.setItem("user", JSON.stringify(saveUser));
-    //         navigate(`/eventDetails/${eventId}/${userName}`);
-    //     } else {
-    //         setError("Please type your name!");
-    //     }
-    // };
+        if (userName) {
+            const user = {
+                name: userName,
+            }
+            const response = await addUser(user);
+            const responseBody = await response;
+            const saveUser = {
+                userId: responseBody.data,
+                name: userName,
+            }
+            localStorage.setItem("user", JSON.stringify(saveUser));
+            navigate(`/eventDetails/${eventId}/${userName}`);
+        } else {
+            setError("Please type your name!");
+        }
+    };
 
     function stringAvatar(name: string) {
         return {
@@ -122,11 +121,11 @@ export default function Event() {
                     label="What should everyone call you?"
                 />
             </FormControl>
-            {/* {(error !== '' && !userName) && (
+            {(error !== '' && !userName) && (
                 <Typography color={"red"}>
                     {error}
                 </Typography>
-            )} */}
+            )}
             <Button
                 sx={{
                     height: "61px",
@@ -139,12 +138,12 @@ export default function Event() {
                     "&:hover": {
                         background: "black",
                     },
-                    [themeApp.breakpoints.up('lg')]: {
+                    [themeApp.breakpoints.up('sm')]: {
                         width: "398px"
                     },
                     fontFamily: "Inter"
                 }}
-                // onClick={handleContinue}
+                onClick={handleContinue}
             >
                 Join the event
             </Button>
@@ -172,10 +171,6 @@ export default function Event() {
             >
                 Leave
             </Button>
-
-            <Typography color={"#6C6C6C"} fontSize={"17px"} sx={{ marginTop: "32px" }}>
-                Want to be a host? <u style={{ cursor: "pointer" }} onClick={() => navigate("/host")}>Create</u>
-            </Typography>
         </Box>
     );
 }

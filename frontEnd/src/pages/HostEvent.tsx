@@ -45,7 +45,6 @@ export default function HostEvent() {
         fetch();
     }, [eventId, refresh]);
 
-
     const handleChange = (newValue: number) => {
         setValue(newValue);
     };
@@ -116,14 +115,14 @@ export default function HostEvent() {
                             },
                         }}>
                             <Box sx={{ display: "flex", width: "100%", justifyContent: "space-between", alignContent: "center", alignItems: "center" }}>
-                                <Typography fontWeight={"bold"} color={"#2ECC71"} fontSize={"32px"} sx={{ paddingLeft: "16px", paddingTop: "10px" }}>
+                                <Typography fontFamily={"Inter"} fontWeight={"bold"} color={"#2ECC71"} fontSize={"32px"} sx={{ paddingLeft: "16px", paddingTop: "10px" }}>
                                     {eventData.title}
                                 </Typography>
                                 <IconButton size="large" onClick={handleOpen} sx={{ width: "32px", height: "32px", marginRight: "10px", color:"white" }}>
                                     <MenuIcon />
                                 </IconButton>
                             </Box>
-                            <Box textAlign={"left"} color={"white"} fontSize={"17px"} sx={{ paddingLeft: "16px" }} fontWeight={"100"}>
+                            <Box fontFamily={"Inter"} textAlign={"left"} color={"white"} fontSize={"17px"} sx={{ paddingLeft: "16px" }}>
                                 {eventData.ownerName}
                             </Box>
                         </Box>

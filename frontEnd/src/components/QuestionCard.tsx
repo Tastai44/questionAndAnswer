@@ -10,6 +10,7 @@ interface IData {
 	questionText: string;
 	isRead: boolean;
 	questionId: string;
+	isMy?: boolean;
 	handleRefresh: () => void;
 }
 

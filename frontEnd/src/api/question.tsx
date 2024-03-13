@@ -35,6 +35,17 @@ export const getQuesById = async (questionId: string) => {
         throw error;
     }
 };
+export const getQuesByOwnerId = async (ownerId: string) => {
+    try {
+        const response = await axios.get(
+            `${import.meta.env.VITE_EVENT}/getQuestionsByOwnerId/${ownerId}`
+        );
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
 
 export const saveQuestion = async (questionId: string) => {
     try {

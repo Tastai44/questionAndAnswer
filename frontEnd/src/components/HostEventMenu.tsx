@@ -5,6 +5,8 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { useState } from 'react';
 import CloseEventCard from './CloseEventCard';
 import { themeApp } from '../utils/Theme';
+import { deleteEventById } from '../api/event';
+import { useNavigate } from 'react-router-dom';
 
 interface IData {
     handleClose: () => void;
@@ -15,6 +17,7 @@ interface IData {
 
 export default function HostEventMenu(props: IData) {
     const [open, setOpen] = useState(false);
+    const navigate = useNavigate();
 
     const handleCopyText = (text: string) => {
         navigator.clipboard.writeText(text);
@@ -23,6 +26,10 @@ export default function HostEventMenu(props: IData) {
 
     const handleCloseCard = () => {
         setOpen(!open);
+    };
+    const handleEndEvent = async (id: string) => {
+        await deleteEventById(id);
+        navigate('/host');
     };
 
     return (
@@ -45,7 +52,7 @@ export default function HostEventMenu(props: IData) {
                         },
                     }}
                 >
-                    <CloseEventCard handleClose={handleCloseCard} eventId={props.eventId} />
+                    <CloseEventCard handleClose={handleCloseCard} id={props.eventId} handleDelete={handleEndEvent}/>
                 </Box>
             </Modal>
             <Box sx={{

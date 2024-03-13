@@ -13,9 +13,11 @@ export default function DeleteCard(props: IData) {
       <Box sx={{ display: "flex", justifyContent: "center", width: "100%" }}>
           <Box sx={{ display: "flex", flexDirection: "column", textAlign: "center", width: "100%" }}>
               <Box><DeleteForeverOutlinedIcon sx={{ width: "120px", height: "120px", marginTop: "60px" }} /></Box>
-              <Typography sx={{ marginTop: "10px" }}>
-                  Are you sure you want to delete this question?
-              </Typography>
+              <Typography sx={{ marginTop: "10px" }}>Remove question?</Typography>
+              <Box sx={{ marginTop: "10px" }}>
+                    Your question will be remove from Q&A <br />
+                    and no way to return it.
+              </Box>
               <Divider sx={{ width: "100%", marginTop: "60px", border: "0.5px solid #1C1C1C" }} />
               <Box sx={{ display: "flex", flexDirection: "column", textAlign: "center", width: "100%" }}>
                   <Box sx={{ display: "flex", justifyContent: "center" }}>
