@@ -23,6 +23,7 @@ export const getQuesByEId = async (eventId: string) => {
         throw error;
     }
 };
+
 export const getQuesById = async (questionId: string) => {
     try {
         const response = await axios.get(

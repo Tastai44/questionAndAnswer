@@ -43,7 +43,7 @@ export default function Home() {
                 }
             }}
         >
-            <Typography fontFamily={"Inter"} color={"black"} fontSize={"32px"} fontWeight={"bold"}>
+            <Typography fontFamily={"Inter"} color={"#2ECC71"} fontSize={"32px"} fontWeight={"bold"}>
                 Invite code
             </Typography>
             <Typography fontFamily={"Inter"} color={"#6C6C6C"} fontSize={"17px"}>
@@ -52,7 +52,7 @@ export default function Home() {
             <Box>
                 <FormControl sx={{
                     width: '100%', marginTop: "24px",
-                    [themeApp.breakpoints.up('lg')]: {
+                    [themeApp.breakpoints.up('sm')]: {
                         width: "398px"
                     },
                 }} variant="outlined">
@@ -114,7 +114,7 @@ export default function Home() {
                 </Button>
             </Box>
             <Typography fontFamily={"Inter"} color={"#6C6C6C"} fontSize={"17px"} sx={{ marginTop: "32px" }}>
-                Want to be a host? <u style={{ cursor: "pointer" }} onClick={() => navigate("/host")}>Create</u>
+                Want to be a host? <u style={{ cursor: "pointer", color:"#2ECC71" }} onClick={() => navigate("/host")}>Create</u>
             </Typography>
         </Box>
     );

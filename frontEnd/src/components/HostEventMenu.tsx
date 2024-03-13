@@ -49,31 +49,34 @@ export default function HostEventMenu(props: IData) {
                 </Box>
             </Modal>
             <Box sx={{
-                background: "#D9D9D9", height: "200px", width: "100%",
+                background: "black", height: "200px", width: "100%",
                 [themeApp.breakpoints.up('md')]: {
                     width: "430px"
                 },
             }}>
-                <Box sx={{ display: "flex", width: "100%", 
+                <Box sx={{
+                    display: "flex", width: "100%", 
                     justifyContent: "space-between", alignContent: "center", 
                     alignItems: "center"}}
                     >
-                    <Typography color={"black"} fontSize={"32px"} sx={{marginLeft:"16px", marginTop:"10px"}}>
+                    <Typography color={"#2ECC71"} fontSize={"32px"} sx={{marginLeft:"16px", marginTop:"10px"}}>
                         {props.title}
                     </Typography>
-                    <IconButton size="large" sx={{ width: "32px", height: "32px", marginRight:"16px" }} onClick={props.handleClose} >
+                    <IconButton size="large" sx={{ width: "32px", height: "32px", marginRight:"16px", color:"white" }} onClick={props.handleClose} >
                         <CloseIcon />
                     </IconButton>
                 </Box>
-                <Box textAlign={"left"} color={"#6C6C6C"} fontSize={"17px"} sx={{ marginBottom: "10px", marginLeft:"16px" }}>
+                <Box textAlign={"left"} color={"white"} fontSize={"17px"} sx={{ marginBottom: "10px", marginLeft:"16px" }}>
                     {props.hostName}
                 </Box>
                 <Divider sx={{ border: "0.5px solid #9C9C9C", marginBottom: "20px" }} />
-                <Box sx={{ display: "flex", justifyContent: "space-between", alignContent: "center", alignItems: "center", marginTop: "10px", marginLeft: "16px" }}>
+                <Box sx={{ display: "flex", justifyContent: "space-between", 
+                    alignContent: "center", alignItems: "center", 
+                    marginTop: "10px", marginLeft: "16px", color:"white" }}>
                     <Box>
                         Code: {props.eventId}
                     </Box>
-                    <IconButton onClick={() => handleCopyText(props.eventId)} sx={{marginRight:"16px"}}>
+                    <IconButton onClick={() => handleCopyText(props.eventId)} sx={{ marginRight: "16px", color:"white" }}>
                         <ContentCopy fontSize="small" />
                     </IconButton>
                 </Box>
@@ -87,10 +90,10 @@ export default function HostEventMenu(props: IData) {
                 }}
                     onClick={handleCloseCard}
                 >
-                    <IconButton>
+                    <IconButton sx={{color:"white"}}>
                         <LogoutIcon fontSize="small" />
                     </IconButton>
-                    <Box>
+                    <Box sx={{color:"white"}}>
                         End this event
                     </Box>
                 </Box>

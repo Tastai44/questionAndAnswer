@@ -5,13 +5,14 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import { themeApp } from "../utils/Theme";
 import { getEventById } from "../api/event";
 import { Ievent } from "../interface/Ievent";
+// import { addUser } from "../api/audience";
 
 export default function Event() {
     const navigate = useNavigate();
     const { eventId } = useParams();
     const [eventData, setEventData] = useState<Ievent>();
     const [userName, setUsername] = useState('');
-    const [error, setError] = useState('');
+    // const [error, setError] = useState('');
 
     useEffect(() => {
         const fetchData = async () => {
@@ -27,13 +28,24 @@ export default function Event() {
         setUsername(event.target.value);
     };
 
-    const handleContinue = () => {
-        if (userName) {
-            navigate(`/event/${userName}`);
-        } else {
-            setError("Please type your name!");
-        }
-    };
+    // const handleContinue = async () => {
+        
+    //     if (userName) {
+    //         const user = {
+    //             name: userName,
+    //         }
+    //         const response = await addUser(user);
+    //         const responseBody = await response;
+    //         const saveUser = {
+    //             userId: responseBody.data,
+    //             name: userName,
+    //         }
+    //         localStorage.setItem("user", JSON.stringify(saveUser));
+    //         navigate(`/eventDetails/${eventId}/${userName}`);
+    //     } else {
+    //         setError("Please type your name!");
+    //     }
+    // };
 
     function stringAvatar(name: string) {
         return {
@@ -71,11 +83,8 @@ export default function Event() {
                 }
             }}
         >
-
-
-
             <Box sx={{ display: "flex", justifyContent: "center" }}>
-                <Avatar {...stringAvatar(`${eventData?.ownerName}`)} sx={{ width: "100px", height: "100px" }} />
+                <Avatar {...stringAvatar(`${eventData?.ownerName}`)} sx={{ background:"black" ,fontSize:"36px", width: "100px", height: "100px", color:"#2ECC71" }} />
             </Box>
             {eventData !== undefined && (
                 <>
@@ -113,22 +122,29 @@ export default function Event() {
                     label="What should everyone call you?"
                 />
             </FormControl>
-            {(error !== '' && !userName) && (
+            {/* {(error !== '' && !userName) && (
                 <Typography color={"red"}>
                     {error}
                 </Typography>
-            )}
+            )} */}
             <Button
-                variant="outlined"
                 sx={{
-                    height: "61px", width: "398px", background: "black",
-                    color: "white", borderRadius: "14px", marginTop: "24px",
+                    height: "61px",
+                    width: '100%',
+                    background: "#2ECC71",
+                    color: "white",
+                    borderRadius: "14px",
+                    marginTop: "24px",
+                    fontSize:"17px",
                     "&:hover": {
                         background: "black",
-                        color: "white",
                     },
+                    [themeApp.breakpoints.up('lg')]: {
+                        width: "398px"
+                    },
+                    fontFamily: "Inter"
                 }}
-                onClick={handleContinue}
+                // onClick={handleContinue}
             >
                 Join the event
             </Button>
@@ -136,16 +152,21 @@ export default function Event() {
                 variant="outlined"
                 sx={{
                     height: "61px",
-                    width: "398px",
+                    fontSize: "17px",
+                    width: "100%",
                     color: "black",
                     borderRadius: "14px",
-                    marginTop: "24px",
+                    marginTop: "14px",
                     border: "1px solid black",
                     "&:hover": {
                         background: "white",
                         color: "black",
                         border: "1px solid black"
                     },
+                    [themeApp.breakpoints.up('lg')]: {
+                        width: "398px"
+                    },
+                    fontFamily: "Inter"
                 }}
                 onClick={() => navigate('/')}
             >

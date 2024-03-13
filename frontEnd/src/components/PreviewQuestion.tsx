@@ -97,14 +97,14 @@ export default function PreviewQuestion(props: IData) {
                       <Button
                           sx={{
                               height: "49px",
-                              color: "black",
+                              color: "#FA6056",
                               borderRadius: "14px",
                               marginTop: "24px",
-                              border: "1px solid black",
+                              border: "1px solid #FA6056",
                               "&:hover": {
                                   background: "white",
-                                  color: "black",
-                                  border: "1px solid black"
+                                  color: "#FA6056",
+                                  border: "1px solid #FA6056"
                               },
                               [themeApp.breakpoints.up('lg')]: {
                                   width: "94px"
@@ -167,13 +167,13 @@ export default function PreviewQuestion(props: IData) {
                           <Button
                               sx={{
                                   height: "49px",
-                                  color: "white",
+                                  color: "black",
                                   borderRadius: "14px",
                                   marginTop: "24px",
-                                  border: "1px solid black",
-                                  background: "black",
+                                  border: "1px solid #2ECC71",
+                                  background: "#2ECC71",
                                   "&:hover": {
-                                      background: "black",
+                                      background: "#2ECC71",
                                       color: "black",
                                   },
                                   [themeApp.breakpoints.up('lg')]: {

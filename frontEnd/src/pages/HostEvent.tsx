@@ -45,6 +45,7 @@ export default function HostEvent() {
         fetch();
     }, [eventId, refresh]);
 
+
     const handleChange = (newValue: number) => {
         setValue(newValue);
     };
@@ -108,21 +109,21 @@ export default function HostEvent() {
                         },
                     }}>
                         <Box sx={{
-                            background: "#D9D9D9", height: "112px", 
+                            background: "#1C1C1C", height: "112px", 
                             width: "100%", 
                             [themeApp.breakpoints.up('md')]: {
                                 width: "430px" 
                             },
                         }}>
                             <Box sx={{ display: "flex", width: "100%", justifyContent: "space-between", alignContent: "center", alignItems: "center" }}>
-                                <Typography color={"black"} fontSize={"32px"} sx={{ paddingLeft: "16px", paddingTop: "10px" }}>
+                                <Typography fontWeight={"bold"} color={"#2ECC71"} fontSize={"32px"} sx={{ paddingLeft: "16px", paddingTop: "10px" }}>
                                     {eventData.title}
                                 </Typography>
-                                <IconButton size="large" onClick={handleOpen} sx={{ width: "32px", height: "32px", marginRight: "10px" }}>
+                                <IconButton size="large" onClick={handleOpen} sx={{ width: "32px", height: "32px", marginRight: "10px", color:"white" }}>
                                     <MenuIcon />
                                 </IconButton>
                             </Box>
-                            <Box textAlign={"left"} color={"#6C6C6C"} fontSize={"17px"} sx={{ paddingLeft: "16px" }} fontWeight={"100"}>
+                            <Box textAlign={"left"} color={"white"} fontSize={"17px"} sx={{ paddingLeft: "16px" }} fontWeight={"100"}>
                                 {eventData.ownerName}
                             </Box>
                         </Box>
@@ -135,10 +136,10 @@ export default function HostEvent() {
                                     <Box
                                         onClick={() => handleChange(0)}
                                         sx={{
-                                            borderBottom: value == 0 ? "2px solid black" : "",
+                                            borderBottom: value == 0 ? "2px solid #2ECC71" : "",
                                             fontWeight: value == 0 ? "bold" : "",
                                             borderRadius: "0px",
-                                            color: "black",
+                                            color: value == 0 ? "#2ECC71" : "#1C1C1C",
                                             width: "87px",
                                             height: "47px",
                                             fontSize: "16px",
@@ -153,10 +154,10 @@ export default function HostEvent() {
                                     <Box
                                         onClick={() => handleChange(1)}
                                         sx={{
-                                            borderBottom: value == 1 ? "2px solid black" : "",
+                                            borderBottom: value == 1 ? "2px solid #2ECC71" : "",
                                             fontWeight: value == 1 ? "bold" : "",
                                             borderRadius: "0px",
-                                            color: "black",
+                                            color: value == 1 ? "#2ECC71" : "#1C1C1C",
                                             width: "87px",
                                             height: "47px",
                                             fontSize: "16px",
@@ -170,19 +171,30 @@ export default function HostEvent() {
                                     <Box
                                         onClick={() => handleChange(2)}
                                         sx={{
-                                            borderBottom: value == 2 ? "2px solid black" : "",
+                                            borderBottom: value == 2 ? "2px solid #2ECC71" : "",
                                             fontWeight: value == 2 ? "bold" : "",
                                             borderRadius: "0px",
-                                            color: "black",
+                                            color: value == 2 ? "#2ECC71" : "#1C1C1C",
                                             width: "87px",
                                             height: "47px",
                                             fontSize: "16px",
                                             display: "flex",
                                             justifyContent: "center",
                                             alignItems: "center",
-                                            cursor: "pointer"
+                                            cursor: "pointer",
                                         }}>
-                                        Saved
+                                        Saved 
+                                        <Box sx={{
+                                            display: "flex",
+                                            alignItems: "center",
+                                            justifyContent: "center", 
+                                            marginLeft: "10px",
+                                            borderRadius: "4px",
+                                            color: value == 2 ? "#2ECC71" : "#1C1C1C",
+                                            background: value != 2 ? "#eeeeee": "rgba(46, 204, 113, 0.2)", 
+                                            width: "19px",
+                                            height: "21px"
+                                        }}>{questions.filter((que) => que.isSave == true).length}</Box>
                                     </Box>
                                 </Box>
                                 <Box

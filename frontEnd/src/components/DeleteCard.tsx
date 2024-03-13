@@ -1,6 +1,6 @@
 import { Box, Typography, Divider, Button } from '@mui/material'
-import EventBusyOutlinedIcon from '@mui/icons-material/EventBusyOutlined';
 import { themeApp } from '../utils/Theme'
+import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 
 interface IData {
     handleClose: () => void;
@@ -12,7 +12,7 @@ export default function DeleteCard(props: IData) {
   return (
       <Box sx={{ display: "flex", justifyContent: "center", width: "100%" }}>
           <Box sx={{ display: "flex", flexDirection: "column", textAlign: "center", width: "100%" }}>
-              <Box><EventBusyOutlinedIcon sx={{ width: "120px", height: "120px", marginTop: "60px" }} /></Box>
+              <Box><DeleteForeverOutlinedIcon sx={{ width: "120px", height: "120px", marginTop: "60px" }} /></Box>
               <Typography sx={{ marginTop: "10px" }}>
                   Are you sure you want to delete this question?
               </Typography>
@@ -22,9 +22,9 @@ export default function DeleteCard(props: IData) {
                       <Button
                         onClick={() => props.handleDeleteQuestion(props.id)}
                           sx={{
-                              width: "95%", borderRadius: "8px", background: "black", color: "white", marginTop: "13px",
+                              width: "95%", borderRadius: "8px", background: "#FA6056", color: "white", marginTop: "13px",
                               height: "49px", "&:hover": {
-                                  background: "black",
+                                  background: "#FA6056",
                                   color: "white",
                               },
                               [themeApp.breakpoints.up('md')]: {

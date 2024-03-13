@@ -31,9 +31,9 @@ export default function CloseEventCard(props: IData) {
                         <Button
                             onClick={() => handleEndEvent(props.eventId)}
                             sx={{
-                                width: "95%", borderRadius: "8px", background: "black", color: "white", marginTop: "13px", 
+                                width: "95%", borderRadius: "8px", background: "#FA6056", color: "white", marginTop: "13px", 
                                 height: "49px", "&:hover": {
-                                    background: "black",
+                                    background: "#FA6056",
                                     color: "white",
                                 },
                                 [themeApp.breakpoints.up('md')]: {
