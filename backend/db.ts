@@ -265,7 +265,7 @@ export async function deleteQuestionByOwner(id: string, ownerId: string) {
     const questionRes = await kv.get(questionKey);
     if (!questionRes.value) return; // Question not found
 
-    const question: Question = questionRes.value;
+    const question: Question = questionRes.value as Question;
     if (question.ownerId !== ownerId) {
         throw new Error("You are not authorized to delete this question."); // Unauthorized to delete
     }
@@ -365,7 +365,7 @@ export async function saveQuestion(questionId: string) {
     if (!questionObject) {
         throw new Error("Question not found");
     }
-    const alreadySave = questionObject.isSave
+    const alreadySave = questionObject.isSave;
     if (alreadySave) {
         throw new Error("User has already saved the question");
     }
@@ -403,7 +403,7 @@ export async function readQuestion(questionId: string) {
     if (!questionObject) {
         throw new Error("Question not found");
     }
-    const alreadyRead = questionObject.isRead
+    const alreadyRead = questionObject.isRead;
     if (alreadyRead) {
         return 200;
     }
