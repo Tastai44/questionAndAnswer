@@ -43,7 +43,7 @@ export default function AudienceMenu(props: IData) {
                 </Box>
             </Modal> */}
             <Box sx={{
-                background: "black", height: "160px", width: "100%",
+                background: "#2ECC71", height: "160px", width: "100%",
                 [themeApp.breakpoints.up('md')]: {
                     width: "430px"
                 },
@@ -54,20 +54,20 @@ export default function AudienceMenu(props: IData) {
                     alignItems: "center"
                 }}
                 >
-                    <Typography fontWeight={"bold"} fontFamily={"Inter"} color={"#2ECC71"} fontSize={"32px"} sx={{ marginLeft: "16px", marginTop: "10px" }}>
+                    <Typography fontWeight={"bold"} fontFamily={"Inter"} color={"#000000"} fontSize={"32px"} sx={{ marginLeft: "16px", marginTop: "10px" }}>
                         {props.title}
                     </Typography>
-                    <IconButton size="large" sx={{ width: "32px", height: "32px", marginRight: "16px", color: "white" }} onClick={props.handleClose} >
+                    <IconButton size="large" sx={{ width: "32px", height: "32px", marginRight: "16px", color: "black" }} onClick={props.handleClose} >
                         <CloseIcon />
                     </IconButton>
                 </Box>
-                <Box fontFamily={"Inter"} textAlign={"left"} color={"white"} fontSize={"17px"} sx={{ marginBottom: "10px", marginLeft: "16px" }}>
+                <Box fontFamily={"Inter"} textAlign={"left"} color={"black"} fontSize={"17px"} sx={{ marginBottom: "10px", marginLeft: "16px" }}>
                     {props.hostName}
                 </Box>
-                <Divider sx={{ border: "0.5px solid #9C9C9C", marginBottom: "20px" }} />
                 <Box sx={{
                     display: "flex", alignContent: "center",
-                    alignItems: "center", marginTop: "10px", cursor: "pointer",
+                    height: "48px",
+                    alignItems: "center", marginTop: "20px", cursor: "pointer",
                     color: "black", transition: "background-color 0.3s ease", marginLeft: "10px",
                     "&:hover": {
                         backgroundColor: "rgba(0, 0, 0, 0.1)"
@@ -75,10 +75,10 @@ export default function AudienceMenu(props: IData) {
                 }}
                     onClick={handleCloseCard}
                 >
-                    <IconButton sx={{ color: "white" }}>
+                    <IconButton sx={{ color: "black" }}>
                         <LogoutIcon fontSize="small" />
                     </IconButton>
-                    <Box sx={{ color: "white" }}>
+                    <Box sx={{ color: "black" }}>
                         Leave
                     </Box>
                 </Box>

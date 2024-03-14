@@ -16,7 +16,9 @@ export const themeApp = createTheme({
         MuiButton: {
             styleOverrides: {
                 root: {
+                    textTransform: "none",
                     border: "0px",
+                    fontSize: "17px",
                     "&:focus": {
                         outline: "none",
                     },
@@ -44,6 +46,7 @@ export const themeApp = createTheme({
         MuiIconButton: {
             styleOverrides: {
                 root: {
+                    textTransform: "none",
                     border: "0px",
                     "&:focus": {
                         outline: "none",
