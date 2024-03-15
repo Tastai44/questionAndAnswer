@@ -17,16 +17,16 @@ export default function Event() {
     useEffect(() => {
         const fetchData = async () => {
             const data = await getEventById(eventId ?? "");
-            if(data) {
+            if (data) {
                 setEventData(data);
             } else {
-                navigate('/')
+                navigate('/');
             }
-            
+
         };
 
         fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [eventId]);
 
     const handleName = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,13 +37,13 @@ export default function Event() {
         if (userName) {
             const user = {
                 name: userName,
-            }
+            };
             const response = await addUser(user);
             const responseBody = await response;
             const saveUser = {
                 userId: responseBody.data,
                 name: userName,
-            }
+            };
             localStorage.setItem("user", JSON.stringify(saveUser));
             navigate(`/eventDetails/${eventId}/${userName}`);
         } else {
@@ -88,7 +88,7 @@ export default function Event() {
             }}
         >
             <Box sx={{ display: "flex", justifyContent: "center" }}>
-                <Avatar {...stringAvatar(`${eventData?.ownerName}`)} sx={{ background:"black" ,fontSize:"36px", width: "100px", height: "100px", color:"#2ECC71" }} />
+                <Avatar {...stringAvatar(`${eventData?.ownerName}`)} sx={{ background: "black", fontSize: "36px", width: "100px", height: "100px", color: "#2ECC71" }} />
             </Box>
             {eventData !== undefined && (
                 <>
@@ -100,82 +100,89 @@ export default function Event() {
                     </Typography>
                 </>
             )}
-            <FormControl sx={{ width: '100%', marginTop: "32px" }} variant="outlined">
-                <InputLabel htmlFor="What should everyone call you?">What should everyone call you?</InputLabel>
-                <OutlinedInput
-                    sx={{ borderRadius: "14px" }}
-                    value={userName}
-                    onChange={handleName}
-                    endAdornment={
-                        <InputAdornment position="end">
-                            {
-                                userName ? (
-                                    <IconButton
-                                        edge="end"
-                                        sx={{ border: "0px" }}
-                                        onClick={() => setUsername('')}
-                                    >
-                                        <CancelIcon />
-                                    </IconButton>
-                                ) : (
-                                    <></>
-                                )
-                            }
-                        </InputAdornment>
-                    }
-                    label="What should everyone call you?"
-                />
-            </FormControl>
-            {(error !== '' && !userName) && (
-                <Typography color={"red"}>
-                    {error}
-                </Typography>
-            )}
-            <Button
-                sx={{
-                    height: "61px",
-                    width: '398px',
-                    background: "#2ECC71",
-                    color: "white",
-                    borderRadius: "14px",
-                    marginTop: "24px",
-                    fontSize:"17px",
-                    "&:hover": {
-                        background: "black",
-                    },
-                    [themeApp.breakpoints.down('lg')]: {
+            <Box>
+                <FormControl sx={{
+                    width: '398px', marginTop: "32px", [themeApp.breakpoints.down('lg')]: {
                         width: "100%"
                     },
-                    fontFamily: "Inter"
-                }}
-                onClick={handleContinue}
-            >
-                Join the event
-            </Button>
-            <Button
-                variant="outlined"
-                sx={{
-                    height: "61px",
-                    fontSize: "17px",
-                    width: "398px",
-                    color: "black",
-                    borderRadius: "14px",
-                    marginTop: "14px",
-                    border: "1px solid black",
-                    "&:hover": {
-                        background: "white",
+                }} variant="outlined">
+                    <InputLabel htmlFor="What should everyone call you?">What should everyone call you?</InputLabel>
+                    <OutlinedInput
+                        sx={{ borderRadius: "14px" }}
+                        value={userName}
+                        onChange={handleName}
+                        endAdornment={
+                            <InputAdornment position="end">
+                                {
+                                    userName ? (
+                                        <IconButton
+                                            edge="end"
+                                            sx={{ border: "0px" }}
+                                            onClick={() => setUsername('')}
+                                        >
+                                            <CancelIcon />
+                                        </IconButton>
+                                    ) : (
+                                        <></>
+                                    )
+                                }
+                            </InputAdornment>
+                        }
+                        label="What should everyone call you?"
+                    />
+                </FormControl>
+                {(error !== '' && !userName) && (
+                    <Typography color={"red"}>
+                        {error}
+                    </Typography>
+                )}
+                <Button
+                    sx={{
+                        height: "61px",
+                        width: '398px',
+                        background: "#2ECC71",
+                        color: "white",
+                        borderRadius: "14px",
+                        marginTop: "24px",
+                        fontSize: "17px",
+                        "&:hover": {
+                            background: "black",
+                        },
+                        [themeApp.breakpoints.down('lg')]: {
+                            width: "100%"
+                        },
+                        fontFamily: "Inter"
+                    }}
+                    onClick={handleContinue}
+                >
+                    Join the event
+                </Button>
+                <Button
+                    variant="outlined"
+                    sx={{
+                        height: "61px",
+                        fontSize: "17px",
+                        width: "398px",
                         color: "black",
-                        border: "1px solid black"
-                    },
-                    [themeApp.breakpoints.down('lg')]: {
-                        width: "100%"
-                    },
-                    fontFamily: "Inter"
-                }}
-                onClick={() => navigate('/')}
-            >
-                Leave
-            </Button>
+                        borderRadius: "14px",
+                        marginTop: "14px",
+                        border: "1px solid black",
+                        "&:hover": {
+                            background: "white",
+                            color: "black",
+                            border: "1px solid black"
+                        },
+                        [themeApp.breakpoints.down('lg')]: {
+                            width: "100%"
+                        },
+                        fontFamily: "Inter"
+                    }}
+                    onClick={() => navigate('/')}
+                >
+                    Leave
+                </Button>
+
+            </Box>
         </Box>
     );
 }

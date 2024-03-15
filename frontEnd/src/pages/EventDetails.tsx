@@ -52,7 +52,7 @@ export default function EventDetails(props: IData) {
             setQuestions(data);
         };
         fetch();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.refresh]);
     useEffect(() => {
         const fetch = async () => {
@@ -60,7 +60,7 @@ export default function EventDetails(props: IData) {
             setMyQuestions(data);
         };
         fetch();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.refresh]);
 
     const handleOpenCard = () => setOpenCard(true);
@@ -130,14 +130,14 @@ export default function EventDetails(props: IData) {
                                 width: "398px"
                             },
                         }}>
-                            <AddQuestion handleClose={handleCloseQueCard} 
-                                handleRefresh={props.handleRefresh} 
+                            <AddQuestion handleClose={handleCloseQueCard}
+                                handleRefresh={props.handleRefresh}
                                 handleCloseAlert={handleCloseAlert}
                                 handleOpenAlert={handleOpenAlert}
-                                />
+                            />
                         </Box>
                     </Modal>
-                    <AlerQuestion open={openAlert}/>
+                    <AlerQuestion open={openAlert} />
                     <Box sx={{
                         display: "flex", flexDirection: "column", width: "100%",
                         [themeApp.breakpoints.up('md')]: {
@@ -245,7 +245,7 @@ export default function EventDetails(props: IData) {
                                             background: value != 2 ? "#F7F7F7" : "rgba(46, 204, 113, 0.2)",
                                             width: "16px",
                                             height: "19px"
-                                        }}>{myQuestions.filter((que) => que.isSave == true).length}</Box>
+                                        }}>{myQuestions.length}</Box>
                                     </Box>
                                 </Box>
                             </Box>
@@ -255,8 +255,6 @@ export default function EventDetails(props: IData) {
                                         questions.sort((a, b) => (a.isRead === b.isRead ? 0 : a.isRead ? 1 : -1)).map((item, index) => (
                                             <Box
                                                 key={index}
-                                                // onClick={() => handleSelectQuestion(item.questionId)}
-                                                // sx={{ cursor: "pointer" }}
                                             >
                                                 <ALQuestionCard
                                                     name={item.name}
@@ -281,33 +279,32 @@ export default function EventDetails(props: IData) {
                             ) : value == 1 ? (
                                 <>
                                     {questions !== undefined && (
-                                        questions.sort((a, b) => (a.isRead === b.isRead ? 0 : a.isRead ? 1 : -1)).sort((a, b) => {
-                                            return b.likeNumber.length - a.likeNumber.length;
-                                        }).map((item, index) => (
-                                            <Box
-                                                key={index}
-                                                // onClick={() => handleSelectQuestion(item.questionId)}
-                                                sx={{ cursor: "pointer" }}
-                                            >
-                                                <ALQuestionCard
-                                                    name={item.name}
-                                                    timestamp={item.timestamp}
-                                                    likeNumber={item.likeNumber}
-                                                    questionText={item.questionText}
-                                                    questionId={item.questionId}
-                                                    handleRefresh={props.handleRefresh}
-                                                    handleSelectQuestion={handleSelectQuestion}
-                                                />
-                                                <Divider />
-                                            </Box>
-                                        ))
+                                        questions
+                                            .sort((a, b) => b.likeNumber.length - a.likeNumber.length)
+                                            .map((item, index) => (
+                                                <Box
+                                                    key={index}
+                                                    sx={{ cursor: "pointer" }}
+                                                >
+                                                    <ALQuestionCard
+                                                        name={item.name}
+                                                        timestamp={item.timestamp}
+                                                        likeNumber={item.likeNumber}
+                                                        questionText={item.questionText}
+                                                        questionId={item.questionId}
+                                                        handleRefresh={props.handleRefresh}
+                                                        handleSelectQuestion={handleSelectQuestion}
+                                                    />
+                                                    <Divider />
+                                                </Box>
+                                            ))
                                     )}
                                 </>
                             ) : (
                                 <>
                                     {myQuestions !== undefined && (
-                                        myQuestions.filter((que) => que.isSave == true).length !== 0 ? (
-                                            myQuestions.filter((que) => que.isSave == true).map((item, index) => (
+                                        myQuestions.length !== 0 ? (
+                                            myQuestions.map((item, index) => (
                                                 <Box
                                                     key={index}
                                                     // onClick={() => handleSelectQuestion(item.questionId)}
@@ -340,15 +337,17 @@ export default function EventDetails(props: IData) {
                                 </>
                             )}
                         </Box>
-                        <Box sx={{ display: "flex", justifyContent: "flex-end", position: "fixed", 
-                            bottom: 10, width: "100%"}}>
+                        <Box sx={{
+                            display: "flex", justifyContent: "flex-end", position: "fixed",
+                            bottom: 10, width: "100%"
+                        }}>
                             <IconButton
                                 onClick={handleOpenQueCard}
                                 sx={{
                                     width: "60px",
                                     height: "60px",
                                     background: "#2AC75F",
-                                    marginRight:"10px",
+                                    marginRight: "10px",
                                 }}
                             >
                                 <AddIcon sx={{ color: "black", width: "24px", height: "24px" }} />
