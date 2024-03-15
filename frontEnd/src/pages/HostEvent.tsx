@@ -12,7 +12,12 @@ import PopupAlert from "../components/PopupAlert";
 import { themeApp } from "../utils/Theme";
 import PreviewQuestion from "../components/PreviewQuestion";
 
-export default function HostEvent() {
+interface IData {
+    refresh: number;
+    handleRefresh: () => void;
+}
+
+export default function HostEvent(props: IData) {
     const [value, setValue] = useState(0);
     const navigatorPath = useNavigate();
     const { eventId } = useParams();
@@ -20,7 +25,6 @@ export default function HostEvent() {
     const [questions, setQuestions] = useState<IQuestion[]>([]);
     const [open, setOpen] = useState(false);
     const [openCard, setOpenCard] = useState(false);
-    const [refresh, setRefresh] = useState(0);
     const [selectedQId, setSelectedQId] = useState('');
 
     useEffect(() => {
@@ -35,7 +39,7 @@ export default function HostEvent() {
         };
         fetch();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [eventId]);
+    }, [props.refresh]);
 
     useEffect(() => {
         const fetch = async () => {
@@ -43,7 +47,8 @@ export default function HostEvent() {
             setQuestions(data);
         };
         fetch();
-    }, [eventId, refresh]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [props.refresh]);
 
     const handleChange = (newValue: number) => {
         setValue(newValue);
@@ -57,14 +62,11 @@ export default function HostEvent() {
     const handleClose = () => setOpen(false);
     const handleOpenCard = () => setOpenCard(true);
     const handleCloseCard = () => setOpenCard(false);
-    const handleRefresh = () =>{
-        setRefresh((pre) => pre+1);
-    }
     const handleSelectQuestion = async (id: string) => {
         await readQuestion(id);
         setSelectedQId(id);
         handleOpenCard();
-        handleRefresh();
+        props.handleRefresh();
     }
 
     return (
@@ -98,7 +100,7 @@ export default function HostEvent() {
                                 width: "398px"
                             },
                         }}>
-                            <PreviewQuestion questionId={selectedQId} handleCloseCard={handleCloseCard} handleRefresh={handleRefresh}/>
+                            <PreviewQuestion questionId={selectedQId} handleCloseCard={handleCloseCard} handleRefresh={props.handleRefresh}/>
                         </Box>
                     </Modal>
                     <Box sx={{
@@ -227,7 +229,7 @@ export default function HostEvent() {
                                                     questionText={item.questionText} 
                                                     isRead={item.isRead}
                                                     questionId={item.questionId}
-                                                    handleRefresh={handleRefresh}
+                                                    handleRefresh={props.handleRefresh}
                                                 />
                                                 <Divider />
                                             </Box>
@@ -269,7 +271,7 @@ export default function HostEvent() {
                                                     questionText={item.questionText} 
                                                     isRead={item.isRead}
                                                     questionId={item.questionId}
-                                                    handleRefresh={handleRefresh}
+                                                    handleRefresh={props.handleRefresh}
                                                 />
                                                 <Divider />
                                             </Box>
@@ -293,7 +295,7 @@ export default function HostEvent() {
                                                         questionText={item.questionText}
                                                         isRead={item.isRead}
                                                         questionId={item.questionId}
-                                                        handleRefresh={handleRefresh}
+                                                        handleRefresh={props.handleRefresh}
                                                     />
                                                     <Divider />
                                                 </Box>

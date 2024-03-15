@@ -1,9 +1,10 @@
-import { Box, Divider, IconButton, Modal, Typography } from '@mui/material';
+import { Box, IconButton, Modal, Typography } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useState } from 'react';
 // import CloseEventCard from './CloseEventCard';
 import { themeApp } from '../utils/Theme';
+import LeaveCard from './LeaveCard';
 
 interface IData {
     handleClose: () => void;
@@ -21,7 +22,7 @@ export default function AudienceMenu(props: IData) {
 
     return (
         <>
-            {/* <Modal
+            <Modal
                 open={open}
             >
                 <Box
@@ -39,9 +40,9 @@ export default function AudienceMenu(props: IData) {
                         },
                     }}
                 >
-                    <CloseEventCard handleClose={handleCloseCard} eventId={props.eventId} />
+                    <LeaveCard handleCloseCard={handleCloseCard} />
                 </Box>
-            </Modal> */}
+            </Modal>
             <Box sx={{
                 background: "#2ECC71", height: "160px", width: "100%",
                 [themeApp.breakpoints.up('md')]: {
@@ -65,11 +66,13 @@ export default function AudienceMenu(props: IData) {
                     {props.hostName}
                 </Box>
                 <Box sx={{
+                    width:"95%",
                     display: "flex", alignContent: "center",
                     height: "48px",
                     alignItems: "center", marginTop: "20px", cursor: "pointer",
                     color: "black", transition: "background-color 0.3s ease", marginLeft: "10px",
                     "&:hover": {
+                        borderRadius:"10px",
                         backgroundColor: "rgba(0, 0, 0, 0.1)"
                     }
                 }}

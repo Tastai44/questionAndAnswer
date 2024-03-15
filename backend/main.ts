@@ -138,9 +138,10 @@ router
         await updateEvent(eventId, event);
         ctx.response.body = "Update event successfully.";
     })
-    .delete("/users/:id", async (ctx: Context) => {
+    .delete("/deleteUserById/:id", async (ctx: Context) => {
         const { id } = getQuery(ctx, { mergeParams: true });
         await deleteUserById(id);
+        ctx.response.body = "Delete an user successfully.";
     })
     .delete("/deleteEvent/:id", async (ctx: Context) => {
         const { id } = getQuery(ctx, { mergeParams: true });

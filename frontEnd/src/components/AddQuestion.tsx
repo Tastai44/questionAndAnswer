@@ -1,12 +1,46 @@
 import { Box, Divider, Button } from "@mui/material";
 import { themeApp } from "../utils/Theme";
+import { useParams } from "react-router-dom";
+import { useState } from "react";
+import { createQuestion } from "../api/question";
 // import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
 
 interface IData {
     handleClose: () => void;
+    handleRefresh: () => void;
+    handleCloseAlert: () => void;
+    handleOpenAlert: () => void;
 }
 
 export default function AddQuestion(props: IData) {
+    const userInfo = JSON.parse(localStorage.getItem("user") || "null");
+    const { eventId } = useParams();
+    const [text, setText] = useState('');
+
+    const now = new Date();
+    
+
+    const handleAddQuestion = async () => {
+        try {
+            const data = {
+                questionText: text,
+                ownerId: userInfo.userId,
+                name: userInfo.name,
+                eventId: eventId || "",
+                timestamp: `${now}`,
+            };
+            await createQuestion(data);
+            props.handleRefresh()
+            props.handleOpenAlert();
+            props.handleClose();
+            setTimeout(() => {
+                props.handleCloseAlert();
+            }, 2000);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     return (
         <Box sx={{ display: "flex", justifyContent: "center", width: "100%" }}>
             <Box sx={{ display: "flex", flexDirection: "column", textAlign: "center", width: "100%" }}>
@@ -43,6 +77,7 @@ export default function AddQuestion(props: IData) {
                     }}>
                         <Box sx={{ width: "100%", borderRadius: "14px", marginTop: "20px" }}>
                             <textarea
+                                onChange={(e) => setText(e.target.value)}
                                 style={{
                                     borderRadius: "14px",
                                     fontSize: "17px",
@@ -71,6 +106,7 @@ export default function AddQuestion(props: IData) {
                             marginTop: "24px",
                             border: "1px solid #9C9C9C",
                             width: "86px",
+                            textTransform: "none",
                             "&:hover": {
                                 background: "white",
                                 color: "black",
@@ -79,7 +115,7 @@ export default function AddQuestion(props: IData) {
                             [themeApp.breakpoints.up('lg')]: {
                                 width: "86px"
                             },
-                            fontFamily: "Inter"
+                            fontFamily: "Inter",
                         }}
                         onClick={props.handleClose}
                     >
@@ -104,7 +140,7 @@ export default function AddQuestion(props: IData) {
                             fontFamily: "Inter",
                             textTransform: "none"
                         }}
-                    // onClick={props.handleCloseCard}
+                        onClick={handleAddQuestion}
                     >
                         Send question
                     </Button>

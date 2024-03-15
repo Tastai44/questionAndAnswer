@@ -17,10 +17,16 @@ export default function Event() {
     useEffect(() => {
         const fetchData = async () => {
             const data = await getEventById(eventId ?? "");
-            setEventData(data);
+            if(data) {
+                setEventData(data);
+            } else {
+                navigate('/')
+            }
+            
         };
 
         fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [eventId]);
 
     const handleName = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,7 +34,6 @@ export default function Event() {
     };
 
     const handleContinue = async () => {
-        
         if (userName) {
             const user = {
                 name: userName,
@@ -129,7 +134,7 @@ export default function Event() {
             <Button
                 sx={{
                     height: "61px",
-                    width: '100%',
+                    width: '398px',
                     background: "#2ECC71",
                     color: "white",
                     borderRadius: "14px",
@@ -138,8 +143,8 @@ export default function Event() {
                     "&:hover": {
                         background: "black",
                     },
-                    [themeApp.breakpoints.up('sm')]: {
-                        width: "398px"
+                    [themeApp.breakpoints.down('lg')]: {
+                        width: "100%"
                     },
                     fontFamily: "Inter"
                 }}
@@ -152,7 +157,7 @@ export default function Event() {
                 sx={{
                     height: "61px",
                     fontSize: "17px",
-                    width: "100%",
+                    width: "398px",
                     color: "black",
                     borderRadius: "14px",
                     marginTop: "14px",
@@ -162,8 +167,8 @@ export default function Event() {
                         color: "black",
                         border: "1px solid black"
                     },
-                    [themeApp.breakpoints.up('lg')]: {
-                        width: "398px"
+                    [themeApp.breakpoints.down('lg')]: {
+                        width: "100%"
                     },
                     fontFamily: "Inter"
                 }}

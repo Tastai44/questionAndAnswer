@@ -11,20 +11,28 @@ import MenuIcon from '@mui/icons-material/Menu';
 import AudienceMenu from "../components/AudienceMenu";
 import AddIcon from '@mui/icons-material/Add';
 import AddQuestion from "../components/AddQuestion";
+import ALQuestionCard from "../components/ALQuestionCard";
+import AlerQuestion from "../components/AlerQuestion";
 
-export default function EventDetails() {
+interface IData {
+    refresh: number;
+    handleRefresh: () => void;
+}
+
+export default function EventDetails(props: IData) {
     const navigate = useNavigate();
     const userInfo = JSON.parse(localStorage.getItem("user") || "null");
     const [value, setValue] = useState(0);
     const [open, setOpen] = useState(false);
     const [openCard, setOpenCard] = useState(false);
+    const [openAlert, setOpenAlert] = useState(false);
     const [openQueCard, setOpenQueCard] = useState(false);
     const { eventId } = useParams();
     const [eventData, setEventData] = useState<Ievent>();
     const [questions, setQuestions] = useState<IQuestion[]>([]);
     const [myQuestions, setMyQuestions] = useState<IQuestion[]>([]);
     const [selectedQId, setSelectedQId] = useState('');
-    const [refresh, setRefresh] = useState(0);
+    // const [refresh, setRefresh] = useState(0);
 
     useEffect(() => {
         const fetch = async () => {
@@ -44,17 +52,21 @@ export default function EventDetails() {
             setQuestions(data);
         };
         fetch();
-    }, [eventId, refresh]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [props.refresh]);
     useEffect(() => {
         const fetch = async () => {
             const data = await getQuesByOwnerId(userInfo.userId ?? "") as IQuestion[];
             setMyQuestions(data);
         };
         fetch();
-    }, [userInfo, refresh]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [props.refresh]);
 
     const handleOpenCard = () => setOpenCard(true);
     const handleCloseCard = () => setOpenCard(false);
+    const handleOpenAlert = () => setOpenAlert(true);
+    const handleCloseAlert = () => setOpenAlert(false);
     const handleOpenQueCard = () => setOpenQueCard(true);
     const handleCloseQueCard = () => setOpenQueCard(false);
     const handleOpen = () => setOpen(true);
@@ -62,26 +74,15 @@ export default function EventDetails() {
     const handleChange = (newValue: number) => {
         setValue(newValue);
     };
-    const handleRefresh = () => {
-        setRefresh((pre) => pre + 1);
-    };
     const handleSelectQuestion = async (id: string) => {
         await readQuestion(id);
         setSelectedQId(id);
         handleOpenCard();
-        handleRefresh();
+        props.handleRefresh();
     };
 
     return (
         <>
-            <IconButton
-                onClick={handleOpenQueCard}
-                sx={{
-                    position: "absolute", bottom: "20px", right: "16px", width: "60px",
-                    height: "60px", background: "#2AC75F", zIndex: "100"
-                }}>
-                <AddIcon sx={{ color: "black", width: "24px", height: "24px" }} />
-            </IconButton>
             {eventData !== undefined && (
                 <Box sx={{
                     display: "flex",
@@ -111,7 +112,7 @@ export default function EventDetails() {
                                 width: "398px"
                             },
                         }}>
-                            <PreviewQuestion questionId={selectedQId} handleCloseCard={handleCloseCard} handleRefresh={handleRefresh} />
+                            <PreviewQuestion questionId={selectedQId} handleCloseCard={handleCloseCard} handleRefresh={props.handleRefresh} />
                         </Box>
                     </Modal>
                     <Modal
@@ -129,9 +130,14 @@ export default function EventDetails() {
                                 width: "398px"
                             },
                         }}>
-                            <AddQuestion handleClose={handleCloseQueCard} />
+                            <AddQuestion handleClose={handleCloseQueCard} 
+                                handleRefresh={props.handleRefresh} 
+                                handleCloseAlert={handleCloseAlert}
+                                handleOpenAlert={handleOpenAlert}
+                                />
                         </Box>
                     </Modal>
+                    <AlerQuestion open={openAlert}/>
                     <Box sx={{
                         display: "flex", flexDirection: "column", width: "100%",
                         [themeApp.breakpoints.up('md')]: {
@@ -249,17 +255,17 @@ export default function EventDetails() {
                                         questions.sort((a, b) => (a.isRead === b.isRead ? 0 : a.isRead ? 1 : -1)).map((item, index) => (
                                             <Box
                                                 key={index}
-                                                onClick={() => handleSelectQuestion(item.questionId)}
-                                                sx={{ cursor: "pointer" }}
+                                                // onClick={() => handleSelectQuestion(item.questionId)}
+                                                // sx={{ cursor: "pointer" }}
                                             >
-                                                <QuestionCard
+                                                <ALQuestionCard
                                                     name={item.name}
                                                     timestamp={item.timestamp}
                                                     likeNumber={item.likeNumber}
                                                     questionText={item.questionText}
-                                                    isRead={item.isRead}
                                                     questionId={item.questionId}
-                                                    handleRefresh={handleRefresh}
+                                                    handleRefresh={props.handleRefresh}
+                                                    handleSelectQuestion={handleSelectQuestion}
                                                 />
                                                 <Divider />
                                             </Box>
@@ -290,7 +296,7 @@ export default function EventDetails() {
                                                     questionText={item.questionText}
                                                     isRead={item.isRead}
                                                     questionId={item.questionId}
-                                                    handleRefresh={handleRefresh}
+                                                    handleRefresh={props.handleRefresh}
                                                 />
                                                 <Divider />
                                             </Box>
@@ -314,7 +320,7 @@ export default function EventDetails() {
                                                         questionText={item.questionText}
                                                         isRead={item.isRead}
                                                         questionId={item.questionId}
-                                                        handleRefresh={handleRefresh}
+                                                        handleRefresh={props.handleRefresh}
                                                     />
                                                     <Divider />
                                                 </Box>
@@ -333,6 +339,20 @@ export default function EventDetails() {
                                     )}
                                 </>
                             )}
+                        </Box>
+                        <Box sx={{ display: "flex", justifyContent: "flex-end", position: "fixed", 
+                            bottom: 10, width: "100%"}}>
+                            <IconButton
+                                onClick={handleOpenQueCard}
+                                sx={{
+                                    width: "60px",
+                                    height: "60px",
+                                    background: "#2AC75F",
+                                    marginRight:"10px",
+                                }}
+                            >
+                                <AddIcon sx={{ color: "black", width: "24px", height: "24px" }} />
+                            </IconButton>
                         </Box>
                     </Box>
                 </Box>

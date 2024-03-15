@@ -19,6 +19,12 @@ export interface Question {
     isRead: boolean;
     isSave: boolean;
     likeNumber: { userLikeId: string; }[];
+    comment: { 
+        ownerId: string;
+        name: string;
+        context: string;
+        timestamp: string;
+     }[];
 }
 
 function generateId(): string {
@@ -59,12 +65,10 @@ export async function insertUser(user: User) {
 
 export async function insertQuestion(question: Question) {
     const questionId = generateId();
-
-    if (question.likeNumber === undefined) {
-        question.likeNumber = [];
-        question.isRead = false;
-        question.isSave = false;
-    }
+    question.likeNumber = [];
+    question.comment = [];
+    question.isRead = false;
+    question.isSave = false;
 
     const questionObject: Question = { questionId, ...question } as Question;
     const questionKey = ["question", questionId];

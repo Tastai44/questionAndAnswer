@@ -1,4 +1,5 @@
 import axios from "axios";
+import { IAddQuestion } from "../interface/IQuestion";
 
 export const getQuestions = async () => {
     try {
@@ -82,6 +83,37 @@ export const deleteQuestionById = async (questionId: string) => {
         return await axios.delete(
             `${import.meta.env.VITE_EVENT}/deleteQuestionById/${questionId}`
         );
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
+export const createQuestion = async (question: IAddQuestion) => {
+    try {
+        return await axios.post(
+            `${import.meta.env.VITE_EVENT}/createQuestion`,
+            question
+        );
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
+export const likeQuestion = async (questionId: string, userId: string) => {
+    try {
+        return await axios.post(
+            `${import.meta.env.VITE_EVENT}/likeQuestion/${questionId}/${userId}`);
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+export const unlikeQuestion = async (questionId: string, userId: string) => {
+    try {
+        return await axios.post(
+            `${import.meta.env.VITE_EVENT}/unlikeQuestion/${questionId}/${userId}`);
     } catch (error) {
         console.error(error);
         throw error;

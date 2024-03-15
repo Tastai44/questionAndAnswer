@@ -103,7 +103,7 @@ export default function Home() {
                             color: invitedCode ? "black" : "gray",
                             border: invitedCode ? "1px solid black" : "none"
                         },
-                        [themeApp.breakpoints.up('lg')]: {
+                        [themeApp.breakpoints.up('md')]: {
                             width: "398px"
                         },
                         fontFamily:"Inter"
