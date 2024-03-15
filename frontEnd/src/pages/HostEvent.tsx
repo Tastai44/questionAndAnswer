@@ -1,11 +1,11 @@
 import { Box, Divider, IconButton, Modal, Typography } from "@mui/material";
-import MenuIcon from '@mui/icons-material/Menu';
+import MenuIcon from "@mui/icons-material/Menu";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import QuestionCard from "../components/QuestionCard";
 import { getEventById } from "../api/event";
 import { IQuestion, Ievent } from "../interface/Ievent";
-import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined';
+import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined";
 import { getQuesByEId, readQuestion } from "../api/question";
 import HostEventMenu from "../components/HostEventMenu";
 import PopupAlert from "../components/PopupAlert";
@@ -25,7 +25,7 @@ export default function HostEvent(props: IData) {
     const [questions, setQuestions] = useState<IQuestion[]>([]);
     const [open, setOpen] = useState(false);
     const [openCard, setOpenCard] = useState(false);
-    const [selectedQId, setSelectedQId] = useState('');
+    const [selectedQId, setSelectedQId] = useState("");
 
     useEffect(() => {
         const fetch = async () => {
@@ -34,7 +34,7 @@ export default function HostEvent(props: IData) {
                 setEventData(data);
             } else {
                 PopupAlert("Sorry, there are no that event page", "warning");
-                navigatorPath('/');
+                navigatorPath("/");
             }
         };
         fetch();
@@ -43,11 +43,11 @@ export default function HostEvent(props: IData) {
 
     useEffect(() => {
         const fetch = async () => {
-            const data = await getQuesByEId(eventId ?? "") as IQuestion[];
+            const data = (await getQuesByEId(eventId ?? "")) as IQuestion[];
             setQuestions(data);
         };
         fetch();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.refresh]);
 
     const handleChange = (newValue: number) => {
@@ -56,7 +56,7 @@ export default function HostEvent(props: IData) {
 
     const handleCopyText = (text: string) => {
         navigator.clipboard.writeText(text);
-        alert('Text copied to clipboard!');
+        alert("Text copied to clipboard!");
     };
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -67,115 +67,141 @@ export default function HostEvent(props: IData) {
         setSelectedQId(id);
         handleOpenCard();
         props.handleRefresh();
-    }
+    };
 
     return (
         <>
             {eventData !== undefined && (
-                <Box sx={{
-                    display: "flex", 
-                    justifyContent: "center",
-                    width: "100%", 
-                    
-                }}>
-                    <Modal
-                        open={open}
-                    >
-                        <Box sx={{ display: "flex", justifyContent: "center" }}>
-                            <HostEventMenu handleClose={handleClose} eventId={eventId ?? ''} title={eventData.title} hostName={eventData.ownerName} />
-                        </Box>
-                    </Modal>
-                    <Modal
-                        open={openCard}
-                    >
-                        <Box sx={{
-                            position: 'absolute',
-                            top: '40%',
-                            left: '50%',
-                            transform: 'translate(-50%, -50%)',
-                            bgcolor: 'background.paper',
-                            borderRadius: "20px",
-                            width: "90%",
-                            [themeApp.breakpoints.up('md')]: {
-                                width: "398px"
-                            },
-                        }}>
-                            <PreviewQuestion questionId={selectedQId} handleCloseCard={handleCloseCard} handleRefresh={props.handleRefresh}/>
-                        </Box>
-                    </Modal>
-                    <Box sx={{
-                        display: "flex", flexDirection: "column", width: "100%", 
-                        [themeApp.breakpoints.up('md')]: {
-                            width: "430px"
-                        },
+                <Box
+                    sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        width: "100%",
                     }}>
-                        <Box sx={{
-                            background: "#1C1C1C", height: "112px", 
-                            width: "100%", 
-                            [themeApp.breakpoints.up('md')]: {
-                                width: "430px" 
+                    <Modal open={open}>
+                        <Box sx={{ display: "flex", justifyContent: "center" }}>
+                            <HostEventMenu
+                                handleClose={handleClose}
+                                eventId={eventId ?? ""}
+                                title={eventData.title}
+                                hostName={eventData.ownerName}
+                            />
+                        </Box>
+                    </Modal>
+                    <Modal open={openCard}>
+                        <Box
+                            sx={{
+                                position: "absolute",
+                                top: "40%",
+                                left: "50%",
+                                transform: "translate(-50%, -50%)",
+                                bgcolor: "background.paper",
+                                borderRadius: "20px",
+                                width: "90%",
+                                [themeApp.breakpoints.up("md")]: {
+                                    width: "398px",
+                                },
+                            }}>
+                            <PreviewQuestion
+                                questionId={selectedQId}
+                                handleCloseCard={handleCloseCard}
+                                handleRefresh={props.handleRefresh}
+                            />
+                        </Box>
+                    </Modal>
+                    <Box
+                        sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            width: "100%",
+                            [themeApp.breakpoints.up("md")]: {
+                                width: "430px",
                             },
                         }}>
-                            <Box sx={{ display: "flex", width: "100%", justifyContent: "space-between", alignContent: "center", alignItems: "center" }}>
-                                <Typography fontFamily={"Inter"} fontWeight={"bold"} color={"#2ECC71"} fontSize={"32px"} sx={{ paddingLeft: "16px", paddingTop: "10px" }}>
+                        <Box
+                            sx={{
+                                background: "black",
+                                height: "112px",
+                                width: "100%",
+                                [themeApp.breakpoints.up("md")]: {
+                                    width: "430px",
+                                },
+                            }}>
+                            <Box
+                                sx={{
+                                    display: "flex",
+                                    width: "100%",
+                                    justifyContent: "space-between",
+                                    alignContent: "center",
+                                    alignItems: "center",
+                                }}>
+                                <Typography
+                                    fontFamily={"Inter"}
+                                    fontWeight={"bold"}
+                                    color={"#2ECC71"}
+                                    fontSize={"32px"}
+                                    sx={{
+                                        paddingLeft: "16px",
+                                        paddingTop: "10px",
+                                    }}>
                                     {eventData.title}
                                 </Typography>
-                                <IconButton size="large" onClick={handleOpen} sx={{ width: "32px", height: "32px", marginRight: "10px", color:"white" }}>
+                                <IconButton
+                                    size="large"
+                                    onClick={handleOpen}
+                                    sx={{
+                                        width: "32px",
+                                        height: "32px",
+                                        marginRight: "10px",
+                                        color: "white",
+                                    }}>
                                     <MenuIcon />
                                 </IconButton>
                             </Box>
-                            <Box fontFamily={"Inter"} textAlign={"left"} color={"white"} fontSize={"17px"} sx={{ paddingLeft: "16px" }}>
+                            <Box
+                                fontFamily={"Inter"}
+                                textAlign={"left"}
+                                color={"white"}
+                                fontSize={"17px"}
+                                sx={{ paddingLeft: "16px" }}>
                                 {eventData.ownerName}
                             </Box>
                         </Box>
-                        <Box sx={{ width: '100%',
-                            [themeApp.breakpoints.up('lg')]: {
-                                width: "430px" 
-                            }, }}>
-                            <Box sx={{ fontSize: "16px", display: "flex", justifyContent: "space-between" }}>
-                                <Box sx={{ display: "flex", alignContent: "center", alignItems: "center", marginLeft: "16px", marginRight: "16px" }}>
+                        <Box
+                            sx={{
+                                width: "100%",
+                                [themeApp.breakpoints.up("lg")]: {
+                                    width: "430px",
+                                },
+                            }}>
+                            <Box
+                                sx={{
+                                    fontSize: "16px",
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                }}>
+                                <Box
+                                    sx={{
+                                        display: "flex",
+                                        alignContent: "center",
+                                        alignItems: "center",
+                                        marginLeft: "16px",
+                                        marginRight: "16px",
+                                    }}>
                                     <Box
                                         onClick={() => handleChange(0)}
                                         sx={{
-                                            borderBottom: value == 0 ? "2px solid #2ECC71" : "",
-                                            fontWeight: value == 0 ? "bold" : "",
+                                            borderBottom:
+                                                value == 0
+                                                    ? "2px solid #2ECC71"
+                                                    : "",
+                                            fontWeight:
+                                                value == 0 ? "bold" : "",
                                             borderRadius: "0px",
-                                            color: value == 0 ? "#2ECC71" : "#1C1C1C",
-                                            width: "87px",
-                                            height: "47px",
-                                            fontSize: "16px",
-                                            display: "flex",
-                                            justifyContent: "center",
-                                            alignItems: "center",
-                                            cursor:"pointer"
-                                        }}
-                                    >
-                                        Live
-                                    </Box>
-                                    <Box
-                                        onClick={() => handleChange(1)}
-                                        sx={{
-                                            borderBottom: value == 1 ? "2px solid #2ECC71" : "",
-                                            fontWeight: value == 1 ? "bold" : "",
-                                            borderRadius: "0px",
-                                            color: value == 1 ? "#2ECC71" : "#1C1C1C",
-                                            width: "87px",
-                                            height: "47px",
-                                            fontSize: "16px",
-                                            display: "flex",
-                                            justifyContent: "center",
-                                            alignItems: "center",
-                                            cursor: "pointer"
-                                        }}>
-                                        Popular
-                                    </Box>
-                                    <Box
-                                        onClick={() => handleChange(2)}
-                                        sx={{
-                                            borderBottom: value == 2 ? "2px solid #2ECC71" : "",
-                                            fontWeight: value == 2 ? "bold" : "",
-                                            borderRadius: "0px",
-                                            color: value == 2 ? "#2ECC71" : "#1C1C1C",
+                                            color:
+                                                value == 0
+                                                    ? "#2ECC71"
+                                                    : "#1C1C1C",
                                             width: "87px",
                                             height: "47px",
                                             fontSize: "16px",
@@ -184,21 +210,103 @@ export default function HostEvent(props: IData) {
                                             alignItems: "center",
                                             cursor: "pointer",
                                         }}>
-                                        Saved 
-                                        <Box sx={{
+                                        Live
+                                        <Box
+                                            sx={{
+                                                display: "flex",
+                                                fontSize: "12px",
+                                                alignItems: "center",
+                                                justifyContent: "center",
+                                                marginLeft: "10px",
+                                                borderRadius: "4px",
+                                                color:
+                                                    value == 0
+                                                        ? "white"
+                                                        : "#F7F7F7",
+                                                background:
+                                                    value == 0
+                                                        ? "#FA6056"
+                                                        : "#F7F7F7",
+                                                width: "16px",
+                                                height: "19px",
+                                            }}>
+                                            {questions.length}
+                                        </Box>
+                                    </Box>
+                                    <Box
+                                        onClick={() => handleChange(1)}
+                                        sx={{
+                                            borderBottom:
+                                                value == 1
+                                                    ? "2px solid #2ECC71"
+                                                    : "",
+                                            fontWeight:
+                                                value == 1 ? "bold" : "",
+                                            borderRadius: "0px",
+                                            color:
+                                                value == 1
+                                                    ? "#2ECC71"
+                                                    : "#1C1C1C",
+                                            width: "87px",
+                                            height: "47px",
+                                            fontSize: "16px",
                                             display: "flex",
+                                            justifyContent: "center",
                                             alignItems: "center",
-                                            justifyContent: "center", 
-                                            marginLeft: "10px",
-                                            borderRadius: "4px",
-                                            color: value == 2 ? "#2ECC71" : "#1C1C1C",
-                                            background: value != 2 ? "#eeeeee": "rgba(46, 204, 113, 0.2)", 
-                                            width: "19px",
-                                            height: "21px"
-                                        }}>{questions.filter((que) => que.isSave == true).length}</Box>
+                                            cursor: "pointer",
+                                        }}>
+                                        Popular
+                                    </Box>
+                                    <Box
+                                        onClick={() => handleChange(2)}
+                                        sx={{
+                                            borderBottom:
+                                                value == 2
+                                                    ? "2px solid #2ECC71"
+                                                    : "",
+                                            fontWeight:
+                                                value == 2 ? "bold" : "",
+                                            borderRadius: "0px",
+                                            color:
+                                                value == 2
+                                                    ? "#2ECC71"
+                                                    : "#1C1C1C",
+                                            width: "87px",
+                                            height: "47px",
+                                            fontSize: "16px",
+                                            display: "flex",
+                                            justifyContent: "center",
+                                            alignItems: "center",
+                                            cursor: "pointer",
+                                        }}>
+                                        Saved
+                                        <Box
+                                            sx={{
+                                                display: "flex",
+                                                alignItems: "center",
+                                                justifyContent: "center",
+                                                marginLeft: "10px",
+                                                borderRadius: "4px",
+                                                color:
+                                                    value == 2
+                                                        ? "#2ECC71"
+                                                        : "#1C1C1C",
+                                                background:
+                                                    value != 2
+                                                        ? "#eeeeee"
+                                                        : "rgba(46, 204, 113, 0.2)",
+                                                width: "19px",
+                                                height: "21px",
+                                            }}>
+                                            {
+                                                questions.filter(
+                                                    (que) => que.isSave == true
+                                                ).length
+                                            }
+                                        </Box>
                                     </Box>
                                 </Box>
-                                <Box
+                                {/* <Box
                                     sx={{
                                         borderRadius: "0px",
                                         color: "black",
@@ -211,42 +319,78 @@ export default function HostEvent(props: IData) {
                                         marginRight:"16px"
                                     }}>
                                     {`${questions.length} questions`}
-                                </Box>
+                                </Box> */}
                             </Box>
                             {value == 0 ? (
                                 <Box>
                                     {questions.length !== 0 ? (
-                                        questions.sort((a, b) => (a.isRead === b.isRead ? 0 : a.isRead ? 1 : -1)).filter((que) => que.isSave == false).map((item, index) => (
-                                            <Box 
-                                                key={index} 
-                                                onClick={() => handleSelectQuestion(item.questionId)}
-                                                sx={{cursor:"pointer"}}
-                                            >
-                                                <QuestionCard 
-                                                    name={item.name} 
-                                                    timestamp={item.timestamp} 
-                                                    likeNumber={item.likeNumber} 
-                                                    questionText={item.questionText} 
-                                                    isRead={item.isRead}
-                                                    questionId={item.questionId}
-                                                    handleRefresh={props.handleRefresh}
-                                                />
-                                                <Divider />
-                                            </Box>
-                                        ))
+                                        questions
+                                            .sort((a, b) =>
+                                                a.isRead === b.isRead
+                                                    ? 0
+                                                    : a.isRead
+                                                    ? 1
+                                                    : -1
+                                            )
+                                            .filter(
+                                                (que) => que.isSave == false
+                                            )
+                                            .map((item, index) => (
+                                                <Box
+                                                    key={index}
+                                                    // onClick={() => handleSelectQuestion(item.questionId)}
+                                                    sx={{ cursor: "pointer" }}>
+                                                    <QuestionCard
+                                                        name={item.name}
+                                                        timestamp={
+                                                            item.timestamp
+                                                        }
+                                                        likeNumber={
+                                                            item.likeNumber
+                                                        }
+                                                        questionText={
+                                                            item.questionText
+                                                        }
+                                                        isRead={item.isRead}
+                                                        isSave={item.isSave}
+                                                        questionId={
+                                                            item.questionId
+                                                        }
+                                                        handleRefresh={
+                                                            props.handleRefresh
+                                                        }
+                                                        handleSelectQuestion={
+                                                            handleSelectQuestion
+                                                        }
+                                                    />
+                                                    <Divider />
+                                                </Box>
+                                            ))
                                     ) : (
                                         <Box sx={{ textAlign: "center" }}>
-                                            <Typography sx={{ marginTop: "50%" }}>
+                                            <Typography
+                                                sx={{ marginTop: "50%" }}>
                                                 Your event now live!
                                             </Typography>
                                             <Typography>
                                                 Participant can send question at
                                             </Typography>
-                                            <Box sx={{ display: "flex", justifyContent: "center", alignContent: "center", alignItems: "center" }}>
+                                            <Box
+                                                sx={{
+                                                    display: "flex",
+                                                    justifyContent: "center",
+                                                    alignContent: "center",
+                                                    alignItems: "center",
+                                                }}>
                                                 <Typography>
                                                     Code: {eventId}
                                                 </Typography>
-                                                <IconButton onClick={() => handleCopyText(eventId ?? '')}>
+                                                <IconButton
+                                                    onClick={() =>
+                                                        handleCopyText(
+                                                            eventId ?? ""
+                                                        )
+                                                    }>
                                                     <ContentCopyOutlinedIcon />
                                                 </IconButton>
                                             </Box>
@@ -255,59 +399,107 @@ export default function HostEvent(props: IData) {
                                 </Box>
                             ) : value == 1 ? (
                                 <>
-                                    {questions !== undefined && (
-                                        questions.sort((a, b) => (a.isRead === b.isRead ? 0 : a.isRead ? 1 : -1)).sort((a, b) => {
-                                            return b.likeNumber.length - a.likeNumber.length;
-                                        }).filter((que) => que.isSave == false).map((item, index) => (
-                                            <Box 
-                                                key={index}
-                                                onClick={() => handleSelectQuestion(item.questionId)}
-                                                sx={{ cursor: "pointer" }}
-                                            >
-                                                <QuestionCard 
-                                                    name={item.name} 
-                                                    timestamp={item.timestamp} 
-                                                    likeNumber={item.likeNumber} 
-                                                    questionText={item.questionText} 
-                                                    isRead={item.isRead}
-                                                    questionId={item.questionId}
-                                                    handleRefresh={props.handleRefresh}
-                                                />
-                                                <Divider />
-                                            </Box>
-                                        ))
-                                    )}
-                                </>
-                            ) : (
-                                <>
-                                    {questions !== undefined && (
-                                        questions.filter((que) => que.isSave == true).length !== 0 ? (
-                                            questions.filter((que) => que.isSave == true).map((item, index) => (
-                                                <Box 
+                                    {questions !== undefined &&
+                                        questions
+                                            .sort((a, b) =>
+                                                a.isRead === b.isRead
+                                                    ? 0
+                                                    : a.isRead
+                                                    ? 1
+                                                    : -1
+                                            )
+                                            .sort((a, b) => {
+                                                return (
+                                                    b.likeNumber.length -
+                                                    a.likeNumber.length
+                                                );
+                                            })
+                                            .filter(
+                                                (que) => que.isSave == false
+                                            )
+                                            .map((item, index) => (
+                                                <Box
                                                     key={index}
-                                                    onClick={() => handleSelectQuestion(item.questionId)}
-                                                    sx={{ cursor: "pointer" }}
-                                                >
+                                                    // onClick={() => handleSelectQuestion(item.questionId)}
+                                                    sx={{ cursor: "pointer" }}>
                                                     <QuestionCard
                                                         name={item.name}
-                                                        timestamp={item.timestamp}
-                                                        likeNumber={item.likeNumber}
-                                                        questionText={item.questionText}
+                                                        timestamp={
+                                                            item.timestamp
+                                                        }
+                                                        likeNumber={
+                                                            item.likeNumber
+                                                        }
+                                                        questionText={
+                                                            item.questionText
+                                                        }
                                                         isRead={item.isRead}
-                                                        questionId={item.questionId}
-                                                        handleRefresh={props.handleRefresh}
+                                                        isSave={item.isSave}
+                                                        questionId={
+                                                            item.questionId
+                                                        }
+                                                        handleRefresh={
+                                                            props.handleRefresh
+                                                        }
+                                                        handleSelectQuestion={
+                                                            handleSelectQuestion
+                                                        }
                                                     />
                                                     <Divider />
                                                 </Box>
-                                            ))
+                                            ))}
+                                </>
+                            ) : (
+                                <>
+                                    {questions !== undefined &&
+                                        (questions.filter(
+                                            (que) => que.isSave == true
+                                        ).length !== 0 ? (
+                                            questions
+                                                .filter(
+                                                    (que) => que.isSave == true
+                                                )
+                                                .map((item, index) => (
+                                                    <Box
+                                                        key={index}
+                                                        // onClick={() => handleSelectQuestion(item.questionId)}
+                                                        sx={{
+                                                            cursor: "pointer",
+                                                        }}>
+                                                        <QuestionCard
+                                                            name={item.name}
+                                                            timestamp={
+                                                                item.timestamp
+                                                            }
+                                                            likeNumber={
+                                                                item.likeNumber
+                                                            }
+                                                            questionText={
+                                                                item.questionText
+                                                            }
+                                                            isRead={item.isRead}
+                                                            isSave={item.isSave}
+                                                            questionId={
+                                                                item.questionId
+                                                            }
+                                                            handleRefresh={
+                                                                props.handleRefresh
+                                                            }
+                                                            handleSelectQuestion={
+                                                                handleSelectQuestion
+                                                            }
+                                                        />
+                                                        <Divider />
+                                                    </Box>
+                                                ))
                                         ) : (
                                             <Box sx={{ textAlign: "center" }}>
-                                                <Typography sx={{ marginTop: "50%" }}>
+                                                <Typography
+                                                    sx={{ marginTop: "50%" }}>
                                                     There is no data to show
                                                 </Typography>
                                             </Box>
-                                        )
-                                    )}
+                                        ))}
                                 </>
                             )}
                         </Box>

@@ -17,7 +17,7 @@ export default function AddQuestion(props: IData) {
     const { eventId } = useParams();
     const [text, setText] = useState('');
 
-    const now = new Date();
+    const now = new Date().toISOString();
     
 
     const handleAddQuestion = async () => {

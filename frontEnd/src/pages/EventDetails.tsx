@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getEventById } from "../api/event";
 import PreviewQuestion from "../components/PreviewQuestion";
-import QuestionCard from "../components/QuestionCard";
+// import QuestionCard from "../components/QuestionCard";
 import { themeApp } from "../utils/Theme";
 import { getQuesByEId, getQuesByOwnerId, readQuestion } from "../api/question";
 import { IQuestion, Ievent } from "../interface/Ievent";
@@ -286,17 +286,17 @@ export default function EventDetails(props: IData) {
                                         }).map((item, index) => (
                                             <Box
                                                 key={index}
-                                                onClick={() => handleSelectQuestion(item.questionId)}
+                                                // onClick={() => handleSelectQuestion(item.questionId)}
                                                 sx={{ cursor: "pointer" }}
                                             >
-                                                <QuestionCard
+                                                <ALQuestionCard
                                                     name={item.name}
                                                     timestamp={item.timestamp}
                                                     likeNumber={item.likeNumber}
                                                     questionText={item.questionText}
-                                                    isRead={item.isRead}
                                                     questionId={item.questionId}
                                                     handleRefresh={props.handleRefresh}
+                                                    handleSelectQuestion={handleSelectQuestion}
                                                 />
                                                 <Divider />
                                             </Box>
@@ -310,17 +310,17 @@ export default function EventDetails(props: IData) {
                                             myQuestions.filter((que) => que.isSave == true).map((item, index) => (
                                                 <Box
                                                     key={index}
-                                                    onClick={() => handleSelectQuestion(item.questionId)}
+                                                    // onClick={() => handleSelectQuestion(item.questionId)}
                                                     sx={{ cursor: "pointer" }}
                                                 >
-                                                    <QuestionCard
+                                                    <ALQuestionCard
                                                         name={item.name}
                                                         timestamp={item.timestamp}
                                                         likeNumber={item.likeNumber}
                                                         questionText={item.questionText}
-                                                        isRead={item.isRead}
                                                         questionId={item.questionId}
                                                         handleRefresh={props.handleRefresh}
+                                                        handleSelectQuestion={handleSelectQuestion}
                                                     />
                                                     <Divider />
                                                 </Box>
