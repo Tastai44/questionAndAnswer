@@ -337,22 +337,28 @@ export default function EventDetails(props: IData) {
                                 </>
                             )}
                         </Box>
-                        <Box sx={{
-                            display: "flex", justifyContent: "flex-end", position: "fixed",
-                            bottom: 10, width: "100%"
-                        }}>
-                            <IconButton
-                                onClick={handleOpenQueCard}
-                                sx={{
-                                    width: "60px",
-                                    height: "60px",
-                                    background: "#2AC75F",
-                                    marginRight: "10px",
-                                }}
-                            >
-                                <AddIcon sx={{ color: "black", width: "24px", height: "24px" }} />
-                            </IconButton>
-                        </Box>
+                    </Box>
+                    <Box sx={{
+                        display: "flex", justifyContent: "flex-end", position: "fixed",
+                        bottom: 10, width: "100%",
+                        [themeApp.breakpoints.up('md')]: {
+                            width: "420px"
+                        },
+                    }}>
+                        <IconButton
+                            onClick={handleOpenQueCard}
+                            sx={{
+                                width: "60px",
+                                height: "60px",
+                                background: "#2AC75F",
+                                marginRight: "10px",
+                                [themeApp.breakpoints.up('md')]: {
+                                    marginRight: "0px"
+                                },
+                            }}
+                        >
+                            <AddIcon sx={{ color: "black", width: "24px", height: "24px" }} />
+                        </IconButton>
                     </Box>
                 </Box>
             )}
