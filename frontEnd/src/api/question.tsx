@@ -1,5 +1,5 @@
 import axios from "axios";
-import { IAddQuestion } from "../interface/IQuestion";
+import { IAddQuestion, IComment, IEditQuestion } from "../interface/IQuestion";
 
 export const getQuestions = async () => {
     try {
@@ -104,7 +104,8 @@ export const createQuestion = async (question: IAddQuestion) => {
 export const likeQuestion = async (questionId: string, userId: string) => {
     try {
         return await axios.post(
-            `${import.meta.env.VITE_EVENT}/likeQuestion/${questionId}/${userId}`);
+            `${import.meta.env.VITE_EVENT}/likeQuestion/${questionId}/${userId}`
+        );
     } catch (error) {
         console.error(error);
         throw error;
@@ -113,10 +114,39 @@ export const likeQuestion = async (questionId: string, userId: string) => {
 export const unlikeQuestion = async (questionId: string, userId: string) => {
     try {
         return await axios.post(
-            `${import.meta.env.VITE_EVENT}/unlikeQuestion/${questionId}/${userId}`);
+            `${
+                import.meta.env.VITE_EVENT
+            }/unlikeQuestion/${questionId}/${userId}`
+        );
     } catch (error) {
         console.error(error);
         throw error;
     }
 };
 
+export const addComment = async (comment: IComment, questionId: string) => {
+    try {
+        return await axios.post(
+            `${import.meta.env.VITE_EVENT}/addcomment/${questionId}`,
+            comment
+        );
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
+export const updateQuestion = async (
+    questionId: string,
+    question: IEditQuestion
+) => {
+    try {
+        return await axios.post(
+            `${import.meta.env.VITE_EVENT}/updateQuestion/${questionId}`,
+            question
+        );
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};

@@ -10,7 +10,7 @@ import { getQuesByEId, readQuestion } from "../api/question";
 import HostEventMenu from "../components/HostEventMenu";
 import PopupAlert from "../components/PopupAlert";
 import { themeApp } from "../utils/Theme";
-import PreviewQuestion from "../components/PreviewQuestion";
+import PreviewQuestion from "../components/PreviewQuestion/PreviewQuestion";
 
 interface IData {
     refresh: number;
@@ -106,6 +106,9 @@ export default function HostEvent(props: IData) {
                                 questionId={selectedQId}
                                 handleCloseCard={handleCloseCard}
                                 handleRefresh={props.handleRefresh}
+                                isHost={true}
+                                ownerId={eventData.eventId}
+                                ownerName={eventData.ownerName}
                             />
                         </Box>
                     </Modal>
@@ -290,10 +293,10 @@ export default function HostEvent(props: IData) {
                                                 color:
                                                     value == 2
                                                         ? "#2ECC71"
-                                                        : "#1C1C1C",
+                                                        : "#F7F7F7",
                                                 background:
                                                     value != 2
-                                                        ? "#eeeeee"
+                                                        ? "#F7F7F7"
                                                         : "rgba(46, 204, 113, 0.2)",
                                                 width: "19px",
                                                 height: "21px",

@@ -1,6 +1,12 @@
 import { Box, Typography } from "@mui/material";
 
-export default function Comment() {
+interface IData {
+    ownerName: string;
+    date: string;
+    context: string;
+}
+
+export default function Comment(props: IData) {
     return (
         <>
             <Box
@@ -25,18 +31,18 @@ export default function Comment() {
                         fontWeight={"mediums"}
                         sx={{ marginRight: "3px" }}
                         fontFamily={"Inter"}>
-                        Host
+                        {props.ownerName}
                     </Typography>
                     <Box sx={{ marginTop: "-4px" }}>.</Box>
                     <Box sx={{ color: "#6C6C6C", marginLeft: "5px" }}>
-                        a few seconds ago
+                        {props.date}
                     </Box>
                 </Box>
                 <Typography
                     color={"#1C1C1C"}
                     fontFamily={"Inter"}
                     fontSize={"17px"}>
-                    Its mean catch me if u can.
+                    {props.context}
                 </Typography>
             </Box>
         </>

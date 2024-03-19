@@ -1,4 +1,7 @@
+import { IComment } from "./IQuestion";
+
 export interface Ievent {
+    eventId: string;
     title: string;
     ownerName: string;
 }
@@ -12,5 +15,6 @@ export interface IQuestion {
     isRead: boolean;
     isSave: boolean;
     timestamp: string;
-    likeNumber: { userLikeId: string; }[];
+    likeNumber: { userLikeId: string }[];
+    comment: IComment[];
 }
