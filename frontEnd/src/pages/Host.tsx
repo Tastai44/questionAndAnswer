@@ -13,13 +13,13 @@ export default function Host() {
     const navigate = useNavigate();
 
     const handleCreateEvent = async () => {
-        if(errorEventName && errorHostName) {
+        if (hostName !== "" && eventName !=="") {
             const event = {
                 title: eventName,
                 ownerName: hostName
             };
             const response = await createEvent(event);
-            const responseBody = await response;
+            const responseBody = response;
             navigate(`/eventHostDetails/${responseBody.data}`);
             setEventName("");
             setHostName("");
@@ -42,7 +42,7 @@ export default function Host() {
                 display: "flex",
                 gap: "10px",
                 flexDirection: "column",
-                textAlign: "center",
+                textAlign: "left",
                 position: "fixed",
                 top: "50%",
                 left: "50%",
@@ -58,7 +58,7 @@ export default function Host() {
                 }
             }}
         >
-            <Typography fontFamily={"Inter"} color={"black"} fontSize={"32px"} fontWeight={"bold"}>
+            <Typography fontFamily={"Inter"} color={"#2ECC71"} fontSize={"32px"} fontWeight={"bold"}>
                     Fill your info
                 </Typography>
             <Typography fontFamily={"Inter"} color={"#6C6C6C"} fontSize={"17px"}>
@@ -67,7 +67,7 @@ export default function Host() {
                 <FormControl 
                     sx={{
                         width: '100%', marginTop: "24px",
-                        [themeApp.breakpoints.up('lg')]: {
+                        [themeApp.breakpoints.up('sm')]: {
                             width: "398px"
                         },
                     }} variant="outlined">
@@ -181,7 +181,7 @@ export default function Host() {
                     }}
                     onClick={() => navigate('/')}
                 >
-                    Back to Homepage
+                    Back to Home
                 </Button>
             </Box>
     );

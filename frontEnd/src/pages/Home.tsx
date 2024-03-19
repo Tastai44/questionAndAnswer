@@ -21,6 +21,9 @@ export default function Home() {
         setInvitedCode(event.target.value);
     };
 
+
+
+
     return (
         <Box
             sx={{
@@ -43,7 +46,7 @@ export default function Home() {
                 }
             }}
         >
-            <Typography fontFamily={"Inter"} color={"black"} fontSize={"32px"} fontWeight={"bold"}>
+            <Typography fontFamily={"Inter"} color={"#2ECC71"} fontSize={"32px"} fontWeight={"bold"}>
                 Invite code
             </Typography>
             <Typography fontFamily={"Inter"} color={"#6C6C6C"} fontSize={"17px"}>
@@ -52,13 +55,13 @@ export default function Home() {
             <Box>
                 <FormControl sx={{
                     width: '100%', marginTop: "24px",
-                    [themeApp.breakpoints.up('lg')]: {
+                    [themeApp.breakpoints.up('sm')]: {
                         width: "398px"
                     },
                 }} variant="outlined">
                     <InputLabel sx={{ fontFamily: "Inter" }} htmlFor="Enter code here">Enter code here</InputLabel>
                     <OutlinedInput
-                        sx={{ borderRadius: "14px", background:"white" }}
+                        sx={{ borderRadius: "14px", background: "white" }}
                         id="Enter code here"
                         value={invitedCode}
                         onChange={handleTypeCode}
@@ -103,10 +106,10 @@ export default function Home() {
                             color: invitedCode ? "black" : "gray",
                             border: invitedCode ? "1px solid black" : "none"
                         },
-                        [themeApp.breakpoints.up('lg')]: {
+                        [themeApp.breakpoints.up('md')]: {
                             width: "398px"
                         },
-                        fontFamily:"Inter"
+                        fontFamily: "Inter"
                     }}
                     onClick={handleContinue}
                 >
@@ -114,7 +117,7 @@ export default function Home() {
                 </Button>
             </Box>
             <Typography fontFamily={"Inter"} color={"#6C6C6C"} fontSize={"17px"} sx={{ marginTop: "32px" }}>
-                Want to be a host? <u style={{ cursor: "pointer" }} onClick={() => navigate("/host")}>Create</u>
+                Want to be a host? <u style={{ cursor: "pointer", color: "#2ECC71" }} onClick={() => navigate("/host")}>Create</u>
             </Typography>
         </Box>
     );

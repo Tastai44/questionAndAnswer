@@ -16,12 +16,17 @@ export const themeApp = createTheme({
         MuiButton: {
             styleOverrides: {
                 root: {
+                    textTransform: "none",
                     border: "0px",
+                    fontSize: "17px",
                     "&:focus": {
                         outline: "none",
                     },
                     "&:active": {
                         boxShadow: "none",
+                    },
+                    "&:hover": {
+                        backgroundColor: "transparent",
                     },
                 },
             },
@@ -44,6 +49,7 @@ export const themeApp = createTheme({
         MuiIconButton: {
             styleOverrides: {
                 root: {
+                    textTransform: "none",
                     border: "0px",
                     "&:focus": {
                         outline: "none",
@@ -57,12 +63,9 @@ export const themeApp = createTheme({
     },
 
     palette: {
-        primary: { main: "#8E51E2", dark: "#000000", contrastText: "#CCCCCC" },
+        primary: { main: "#000000", dark: "#000000", contrastText: "#CCCCCC" },
         secondary: { main: "#456086", dark: "#CCC1BE" },
         action: { active: "#000" },
-        background: {
-            default: "#EEE6E2",
-        },
     },
 
     breakpoints: {
