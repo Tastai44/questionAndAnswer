@@ -49,6 +49,7 @@ export default function AddQuestion(props: IData) {
 
             props.handleRefresh();
             props.handleClose();
+            setText("");
         } catch (error) {
             console.error(error);
         }
@@ -109,16 +110,7 @@ export default function AddQuestion(props: IData) {
                                     }}>
                                     {props.ownerName}
                                 </Box>
-                                {/* <Box sx={{ marginTop: "-3px" }}>.</Box>
-                        <Box sx={{ color: "#6C6C6C", marginLeft: "5px", fontFamily: "Inter" }}>Tas</Box> */}
                             </Box>
-                            {/* <Box sx={{ marginRight: "16px", display: "flex", alignContent: "center", alignItems: "center" }}>
-                        <IconButton
-                            sx={{ fontSize: "13px" }}
-                        >
-                            <ThumbUpOutlinedIcon sx={{ width: "20px", height: "20px" }} />
-                        </IconButton>
-                    </Box> */}
                         </Box>
                         <Box
                             sx={{
@@ -195,6 +187,7 @@ export default function AddQuestion(props: IData) {
                                 Cancel
                             </Button>
                             <Button
+                                disabled={text == ""}
                                 sx={{
                                     height: "49px",
                                     color: "black",

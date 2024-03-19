@@ -30,7 +30,7 @@ export default function Event() {
             if (data) {
                 setEventData(data);
             } else {
-                navigate("/");
+                navigate("/page404");
             }
         };
 
@@ -132,85 +132,91 @@ export default function Event() {
                         flexDirection: "column",
                         width: "100%",
                     }}>
-                    <FormControl
-                        sx={{
-                            width: "398px",
-                            marginTop: "32px",
-                            [themeApp.breakpoints.down("md")]: {
-                                width: "100%",
-                            },
-                        }}
-                        variant="outlined">
-                        <InputLabel htmlFor="What should everyone call you?">
-                            What should everyone call you?
-                        </InputLabel>
-                        <OutlinedInput
-                            sx={{ borderRadius: "14px" }}
-                            value={userName}
-                            onChange={handleName}
-                            endAdornment={
-                                <InputAdornment position="end">
-                                    {userName ? (
-                                        <IconButton
-                                            edge="end"
-                                            sx={{ border: "0px" }}
-                                            onClick={() => setUsername("")}>
-                                            <CancelIcon />
-                                        </IconButton>
-                                    ) : (
-                                        <></>
-                                    )}
-                                </InputAdornment>
-                            }
-                            label="What should everyone call you?"
-                        />
-                    </FormControl>
+                    <Box>
+                        <FormControl
+                            sx={{
+                                width: "398px",
+                                marginTop: "32px",
+                                [themeApp.breakpoints.down("md")]: {
+                                    width: "100%",
+                                },
+                            }}
+                            variant="outlined">
+                            <InputLabel htmlFor="What should everyone call you?">
+                                What should everyone call you?
+                            </InputLabel>
+                            <OutlinedInput
+                                sx={{ borderRadius: "14px" }}
+                                value={userName}
+                                onChange={handleName}
+                                endAdornment={
+                                    <InputAdornment position="end">
+                                        {userName ? (
+                                            <IconButton
+                                                edge="end"
+                                                sx={{ border: "0px" }}
+                                                onClick={() => setUsername("")}>
+                                                <CancelIcon />
+                                            </IconButton>
+                                        ) : (
+                                            <></>
+                                        )}
+                                    </InputAdornment>
+                                }
+                                label="What should everyone call you?"
+                            />
+                        </FormControl>
+                    </Box>
                     {error !== "" && !userName && (
                         <Typography color={"red"}>{error}</Typography>
                     )}
-                    <Button
-                        sx={{
-                            height: "61px",
-                            width: "398px",
-                            background: "#2ECC71",
-                            color: "white",
-                            borderRadius: "14px",
-                            marginTop: "24px",
-                            fontSize: "17px",
-                            "&:hover": {
-                                background: "black",
-                            },
-                            [themeApp.breakpoints.down("lg")]: {
-                                width: "100%",
-                            },
-                            fontFamily: "Inter",
-                        }}
-                        onClick={handleContinue}>
-                        Join the event
-                    </Button>
-                    <Button
-                        variant="outlined"
-                        sx={{
-                            height: "61px",
-                            fontSize: "17px",
-                            width: "398px",
-                            color: "black",
-                            borderRadius: "14px",
-                            marginTop: "14px",
-                            border: "1px solid black",
-                            "&:hover": {
-                                background: "white",
+                    <Box>
+                        <Button
+                            sx={{
+                                height: "61px",
+                                width: "398px",
+                                background: "#2ECC71",
+                                color: "white",
+                                borderRadius: "14px",
+                                marginTop: "24px",
+                                fontSize: "17px",
+                                "&:hover": {
+                                    background: "black",
+                                },
+                                [themeApp.breakpoints.down("lg")]: {
+                                    width: "100%",
+                                },
+                                fontFamily: "Inter",
+                            }}
+                            onClick={handleContinue}>
+                            Join the event
+                        </Button>
+                    </Box>
+                    <Box>
+                        <Button
+                            variant="outlined"
+                            sx={{
+                                height: "61px",
+                                fontSize: "17px",
+                                width: "398px",
                                 color: "black",
+                                borderRadius: "14px",
+                                marginTop: "14px",
                                 border: "1px solid black",
-                            },
-                            [themeApp.breakpoints.down("lg")]: {
-                                width: "100%",
-                            },
-                            fontFamily: "Inter",
-                        }}
-                        onClick={() => navigate("/")}>
-                        Leave
-                    </Button>
+                                "&:hover": {
+                                    background: "white",
+                                    color: "black",
+                                    border: "1px solid black",
+                                },
+                                [themeApp.breakpoints.down("lg")]: {
+                                    width: "100%",
+                                },
+                                fontFamily: "Inter",
+                            }}
+                            onClick={() => navigate("/")}>
+                            Leave
+                        </Button>
+                    </Box>
                 </Box>
             </Box>
         </Box>

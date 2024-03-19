@@ -11,6 +11,7 @@ import HostEventMenu from "../components/HostEventMenu";
 import PopupAlert from "../components/PopupAlert";
 import { themeApp } from "../utils/Theme";
 import PreviewQuestion from "../components/PreviewQuestion/PreviewQuestion";
+import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 
 interface IData {
     refresh: number;
@@ -26,6 +27,7 @@ export default function HostEvent(props: IData) {
     const [open, setOpen] = useState(false);
     const [openCard, setOpenCard] = useState(false);
     const [selectedQId, setSelectedQId] = useState("");
+    const patch = window.location.pathname;
 
     useEffect(() => {
         const fetch = async () => {
@@ -213,6 +215,14 @@ export default function HostEvent(props: IData) {
                                             alignItems: "center",
                                             cursor: "pointer",
                                         }}>
+                                        <FiberManualRecordIcon
+                                            sx={{
+                                                color: "red",
+                                                width: "8px",
+                                                height: "8px",
+                                                marginRight: "8px",
+                                            }}
+                                        />
                                         Live
                                         <Box
                                             sx={{
@@ -224,12 +234,12 @@ export default function HostEvent(props: IData) {
                                                 borderRadius: "4px",
                                                 color:
                                                     value == 0
-                                                        ? "white"
-                                                        : "#F7F7F7",
+                                                        ? "#2ECC71"
+                                                        : "#000000",
                                                 background:
-                                                    value == 0
-                                                        ? "#FA6056"
-                                                        : "#F7F7F7",
+                                                    value != 0
+                                                        ? "rgba(201, 204, 208, 0.2)"
+                                                        : "rgba(46, 204, 113, 0.2)",
                                                 width: "16px",
                                                 height: "19px",
                                             }}>
@@ -293,10 +303,10 @@ export default function HostEvent(props: IData) {
                                                 color:
                                                     value == 2
                                                         ? "#2ECC71"
-                                                        : "#F7F7F7",
+                                                        : "#000000",
                                                 background:
                                                     value != 2
-                                                        ? "#F7F7F7"
+                                                        ? "rgba(201, 204, 208, 0.2)"
                                                         : "rgba(46, 204, 113, 0.2)",
                                                 width: "19px",
                                                 height: "21px",
@@ -309,25 +319,20 @@ export default function HostEvent(props: IData) {
                                         </Box>
                                     </Box>
                                 </Box>
-                                {/* <Box
-                                    sx={{
-                                        borderRadius: "0px",
-                                        color: "black",
-                                        width: "87px",
-                                        height: "47px",
-                                        fontSize: "16px",
-                                        display: "flex",
-                                        justifyContent: "center",
-                                        alignItems: "center",
-                                        marginRight:"16px"
-                                    }}>
-                                    {`${questions.length} questions`}
-                                </Box> */}
                             </Box>
                             {value == 0 ? (
                                 <Box>
                                     {questions.length !== 0 ? (
                                         questions
+                                            .sort(
+                                                (a, b) =>
+                                                    Number(
+                                                        new Date(b.timestamp)
+                                                    ) -
+                                                    Number(
+                                                        new Date(a.timestamp)
+                                                    )
+                                            )
                                             .sort((a, b) =>
                                                 a.isRead === b.isRead
                                                     ? 0
@@ -370,7 +375,10 @@ export default function HostEvent(props: IData) {
                                                 </Box>
                                             ))
                                     ) : (
-                                        <Box sx={{ textAlign: "center" }}>
+                                        <Box
+                                            sx={{
+                                                textAlign: "center",
+                                            }}>
                                             <Typography
                                                 sx={{ marginTop: "50%" }}>
                                                 Your event now live!
@@ -397,12 +405,32 @@ export default function HostEvent(props: IData) {
                                                     <ContentCopyOutlinedIcon />
                                                 </IconButton>
                                             </Box>
+                                            <Box
+                                                sx={{
+                                                    display: "flex",
+                                                    justifyContent: "center",
+                                                    alignContent: "center",
+                                                    alignItems: "center",
+                                                }}>
+                                                <Typography>
+                                                    Link: {patch}
+                                                </Typography>
+                                                <IconButton
+                                                    onClick={() =>
+                                                        handleCopyText(
+                                                            "http://localhost:5173" +
+                                                                patch
+                                                        )
+                                                    }>
+                                                    <ContentCopyOutlinedIcon />
+                                                </IconButton>
+                                            </Box>
                                         </Box>
                                     )}
                                 </Box>
                             ) : value == 1 ? (
                                 <>
-                                    {questions !== undefined &&
+                                    {questions !== undefined ? (
                                         questions
                                             .sort((a, b) =>
                                                 a.isRead === b.isRead
@@ -423,7 +451,6 @@ export default function HostEvent(props: IData) {
                                             .map((item, index) => (
                                                 <Box
                                                     key={index}
-                                                    // onClick={() => handleSelectQuestion(item.questionId)}
                                                     sx={{ cursor: "pointer" }}>
                                                     <QuestionCard
                                                         name={item.name}
@@ -450,7 +477,15 @@ export default function HostEvent(props: IData) {
                                                     />
                                                     <Divider />
                                                 </Box>
-                                            ))}
+                                            ))
+                                    ) : (
+                                        <Box sx={{ textAlign: "center" }}>
+                                            <Typography
+                                                sx={{ marginTop: "50%" }}>
+                                                There is no data to show
+                                            </Typography>
+                                        </Box>
+                                    )}
                                 </>
                             ) : (
                                 <>
@@ -465,7 +500,6 @@ export default function HostEvent(props: IData) {
                                                 .map((item, index) => (
                                                     <Box
                                                         key={index}
-                                                        // onClick={() => handleSelectQuestion(item.questionId)}
                                                         sx={{
                                                             cursor: "pointer",
                                                         }}>

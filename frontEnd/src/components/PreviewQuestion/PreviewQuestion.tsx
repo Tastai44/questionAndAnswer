@@ -224,7 +224,7 @@ export default function PreviewQuestion(props: IData) {
                                             <ListItemIcon>
                                                 <AddCircleOutlineOutlinedIcon />
                                             </ListItemIcon>
-                                            <Box>Keep</Box>
+                                            <Box>Save</Box>
                                         </MenuItem>
                                     )}
                                     <MenuItem
@@ -233,11 +233,7 @@ export default function PreviewQuestion(props: IData) {
                                             alignContent: "center",
                                             alignItems: "center",
                                         }}
-                                        onClick={() =>
-                                            handleDeleteQuestion(
-                                                props.questionId
-                                            )
-                                        }>
+                                        onClick={handleCloseCard}>
                                         <ListItemIcon>
                                             <DeleteOutlineOutlinedIcon />
                                         </ListItemIcon>
@@ -269,11 +265,7 @@ export default function PreviewQuestion(props: IData) {
                                             alignContent: "center",
                                             alignItems: "center",
                                         }}
-                                        onClick={() =>
-                                            handleDeleteQuestion(
-                                                props.questionId
-                                            )
-                                        }>
+                                        onClick={handleCloseCard}>
                                         <ListItemIcon>
                                             <DeleteOutlineOutlinedIcon />
                                         </ListItemIcon>

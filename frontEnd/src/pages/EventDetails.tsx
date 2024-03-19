@@ -13,6 +13,7 @@ import AddIcon from "@mui/icons-material/Add";
 import AddQuestion from "../components/AddQuestion";
 import ALQuestionCard from "../components/ALQuestionCard";
 import AlerQuestion from "../components/AlerQuestion";
+import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 
 interface IData {
     refresh: number;
@@ -45,7 +46,7 @@ export default function EventDetails(props: IData) {
         };
         fetch();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [eventId]);
+    }, []);
     useEffect(() => {
         const fetch = async () => {
             const data = (await getQuesByEId(eventId ?? "")) as IQuestion[];
@@ -242,6 +243,14 @@ export default function EventDetails(props: IData) {
                                             alignItems: "center",
                                             cursor: "pointer",
                                         }}>
+                                        <FiberManualRecordIcon
+                                            sx={{
+                                                color: "red",
+                                                width: "8px",
+                                                height: "8px",
+                                                marginRight: "8px",
+                                            }}
+                                        />
                                         Live
                                         <Box
                                             sx={{
@@ -253,12 +262,12 @@ export default function EventDetails(props: IData) {
                                                 borderRadius: "4px",
                                                 color:
                                                     value == 0
-                                                        ? "white"
-                                                        : "#F7F7F7",
+                                                        ? "#2ECC71"
+                                                        : "#000000",
                                                 background:
-                                                    value == 0
-                                                        ? "#FA6056"
-                                                        : "#F7F7F7",
+                                                    value != 0
+                                                        ? "rgba(201, 204, 208, 0.2)"
+                                                        : "rgba(46, 204, 113, 0.2)",
                                                 width: "16px",
                                                 height: "19px",
                                             }}>
@@ -383,7 +392,7 @@ export default function EventDetails(props: IData) {
                                 </Box>
                             ) : value == 1 ? (
                                 <>
-                                    {questions !== undefined &&
+                                    {questions !== undefined ? (
                                         questions
                                             .sort(
                                                 (a, b) =>
@@ -417,41 +426,64 @@ export default function EventDetails(props: IData) {
                                                     />
                                                     <Divider />
                                                 </Box>
-                                            ))}
+                                            ))
+                                    ) : (
+                                        <Box sx={{ textAlign: "center" }}>
+                                            <Typography
+                                                sx={{ marginTop: "50%" }}>
+                                                There is no data to show
+                                            </Typography>
+                                        </Box>
+                                    )}
                                 </>
                             ) : (
                                 <>
                                     {myQuestions !== undefined &&
                                         (myQuestions.length !== 0 ? (
-                                            myQuestions.map((item, index) => (
-                                                <Box
-                                                    key={index}
-                                                    // onClick={() => handleSelectQuestion(item.questionId)}
-                                                    sx={{ cursor: "pointer" }}>
-                                                    <ALQuestionCard
-                                                        name={item.name}
-                                                        timestamp={
-                                                            item.timestamp
-                                                        }
-                                                        likeNumber={
-                                                            item.likeNumber
-                                                        }
-                                                        questionText={
-                                                            item.questionText
-                                                        }
-                                                        questionId={
-                                                            item.questionId
-                                                        }
-                                                        handleRefresh={
-                                                            props.handleRefresh
-                                                        }
-                                                        handleSelectQuestion={
-                                                            handleSelectQuestion
-                                                        }
-                                                    />
-                                                    <Divider />
-                                                </Box>
-                                            ))
+                                            myQuestions
+                                                .sort(
+                                                    (a, b) =>
+                                                        Number(
+                                                            new Date(
+                                                                b.timestamp
+                                                            )
+                                                        ) -
+                                                        Number(
+                                                            new Date(
+                                                                a.timestamp
+                                                            )
+                                                        )
+                                                )
+                                                .map((item, index) => (
+                                                    <Box
+                                                        key={index}
+                                                        sx={{
+                                                            cursor: "pointer",
+                                                        }}>
+                                                        <ALQuestionCard
+                                                            name={item.name}
+                                                            timestamp={
+                                                                item.timestamp
+                                                            }
+                                                            likeNumber={
+                                                                item.likeNumber
+                                                            }
+                                                            questionText={
+                                                                item.questionText
+                                                            }
+                                                            questionId={
+                                                                item.questionId
+                                                            }
+                                                            handleRefresh={
+                                                                props.handleRefresh
+                                                            }
+                                                            handleSelectQuestion={
+                                                                handleSelectQuestion
+                                                            }
+                                                        />
+                                                        <Divider />
+                                                    </Box>
+                                                ))
                                         ) : (
                                             <Box sx={{ textAlign: "center" }}>
                                                 <Typography

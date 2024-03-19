@@ -1,22 +1,32 @@
-import { Box, Typography, Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput } from "@mui/material";
+import {
+    Box,
+    Typography,
+    Button,
+    FormControl,
+    IconButton,
+    InputAdornment,
+    InputLabel,
+    OutlinedInput,
+} from "@mui/material";
 import { useState } from "react";
 import { createEvent } from "../api/event";
-import CancelIcon from '@mui/icons-material/Cancel';
+import CancelIcon from "@mui/icons-material/Cancel";
 import { useNavigate } from "react-router-dom";
 import { themeApp } from "../utils/Theme";
 
 export default function Host() {
     const [eventName, setEventName] = useState("");
-    const [errorEventName, setErrorEventName] = useState('');
-    const [errorHostName, setErrorHostName] = useState('');
+    const [errorEventName, setErrorEventName] = useState("");
+    const [errorHostName, setErrorHostName] = useState("");
     const [hostName, setHostName] = useState("");
     const navigate = useNavigate();
 
     const handleCreateEvent = async () => {
-        if (hostName !== "" && eventName !=="") {
+        if (hostName !== "" && eventName !== "") {
             const event = {
+                eventId: "",
                 title: eventName,
-                ownerName: hostName
+                ownerName: hostName,
             };
             const response = await createEvent(event);
             const responseBody = response;
@@ -24,10 +34,9 @@ export default function Host() {
             setEventName("");
             setHostName("");
         } else {
-            setErrorEventName('Please type event name!');
-            setErrorHostName('Please type host name!');
+            setErrorEventName("Please type event name!");
+            setErrorHostName("Please type host name!");
         }
-        
     };
     const handleEventName = (event: React.ChangeEvent<HTMLInputElement>) => {
         setEventName(event.target.value);
@@ -42,103 +51,117 @@ export default function Host() {
                 display: "flex",
                 gap: "10px",
                 flexDirection: "column",
-                textAlign: "left",
+                textAlign: "center",
                 position: "fixed",
                 top: "50%",
                 left: "50%",
                 transform: "translate(-50%, -50%)",
-                [themeApp.breakpoints.down('sm')]: {
-                    width: "90%"
+                [themeApp.breakpoints.down("sm")]: {
+                    width: "90%",
                 },
-                [themeApp.breakpoints.up('md')]: {
-                    width: "70%"
+                [themeApp.breakpoints.up("md")]: {
+                    width: "70%",
                 },
-                [themeApp.breakpoints.up('lg')]: {
-                    width: "50%"
-                }
-            }}
-        >
-            <Typography fontFamily={"Inter"} color={"#2ECC71"} fontSize={"32px"} fontWeight={"bold"}>
-                    Fill your info
-                </Typography>
-            <Typography fontFamily={"Inter"} color={"#6C6C6C"} fontSize={"17px"}>
-                    Complete your event details.
-                </Typography>
-                <FormControl 
+                [themeApp.breakpoints.up("lg")]: {
+                    width: "50%",
+                },
+            }}>
+            <Typography
+                fontFamily={"Inter"}
+                color={"#2ECC71"}
+                fontSize={"32px"}
+                fontWeight={"bold"}>
+                Fill your info
+            </Typography>
+            <Typography
+                fontFamily={"Inter"}
+                color={"#6C6C6C"}
+                fontSize={"17px"}>
+                Complete your event details.
+            </Typography>
+            <Box>
+                <FormControl
                     sx={{
-                        width: '100%', marginTop: "24px",
-                        [themeApp.breakpoints.up('sm')]: {
-                            width: "398px"
+                        width: "398px",
+                        marginTop: "32px",
+                        [themeApp.breakpoints.down("md")]: {
+                            width: "100%",
                         },
-                    }} variant="outlined">
-                    <InputLabel sx={{ fontFamily: "Inter" }} htmlFor="Enter code here">Event name</InputLabel>
+                    }}
+                    variant="outlined">
+                    <InputLabel
+                        sx={{ fontFamily: "Inter" }}
+                        htmlFor="Enter code here">
+                        Event name
+                    </InputLabel>
                     <OutlinedInput
-                    sx={{ background: "white", borderRadius: "14px" }}
+                        sx={{ background: "white", borderRadius: "14px" }}
                         id="Event name"
                         value={eventName}
                         onChange={handleEventName}
                         endAdornment={
                             <InputAdornment position="end">
-                                {
-                                    eventName ? (
-                                        <IconButton
-                                            edge="end"
-                                            sx={{ border: "0px" }}
-                                            onClick={() => setEventName('')}
-                                        >
-                                            <CancelIcon />
-                                        </IconButton>
-                                    ) : (
-                                        <></>
-                                    )
-                                }
+                                {eventName ? (
+                                    <IconButton
+                                        edge="end"
+                                        sx={{ border: "0px" }}
+                                        onClick={() => setEventName("")}>
+                                        <CancelIcon />
+                                    </IconButton>
+                                ) : (
+                                    <></>
+                                )}
                             </InputAdornment>
                         }
                         label="Event name"
                     />
                 </FormControl>
-            {(errorEventName !== '' && !eventName) && (
-                <Typography color={"red"}>
-                    {errorEventName}
-                </Typography>
+            </Box>
+            {errorEventName !== "" && !eventName && (
+                <Typography color={"red"}>{errorEventName}</Typography>
             )}
-            <FormControl sx={{
-                width: '100%', marginTop: "24px",
-                [themeApp.breakpoints.up('lg')]: {
-                    width: "398px"
-                },
-            }} variant="outlined">
-                <InputLabel sx={{ fontFamily: "Inter" }} htmlFor="Enter code here">Host name</InputLabel>
+            <Box>
+                <FormControl
+                    sx={{
+                        width: "100%",
+                        marginTop: "24px",
+                        [themeApp.breakpoints.up("lg")]: {
+                            width: "398px",
+                        },
+                    }}
+                    variant="outlined">
+                    <InputLabel
+                        sx={{ fontFamily: "Inter" }}
+                        htmlFor="Enter code here">
+                        Host name
+                    </InputLabel>
                     <OutlinedInput
-                        sx={{ background: "white", borderRadius:"14px" }}
+                        sx={{ background: "white", borderRadius: "14px" }}
                         id="Host name"
                         value={hostName}
                         onChange={handleHostName}
                         endAdornment={
                             <InputAdornment position="end">
-                                {
-                                    hostName ? (
-                                        <IconButton
-                                            edge="end"
-                                            sx={{ border: "0px" }}
-                                            onClick={() => setHostName('')}
-                                        >
-                                            <CancelIcon />
-                                        </IconButton>
-                                    ) : (
-                                        <></>
-                                    )
-                                }
+                                {hostName ? (
+                                    <IconButton
+                                        edge="end"
+                                        sx={{ border: "0px" }}
+                                        onClick={() => setHostName("")}>
+                                        <CancelIcon />
+                                    </IconButton>
+                                ) : (
+                                    <></>
+                                )}
                             </InputAdornment>
                         }
                         label="Host name"
                     />
                 </FormControl>
-                {(errorHostName !== '' && !hostName) && (
-                    <Typography color={"red"}>
-                    {errorHostName}
-                    </Typography>
-                )}
+            </Box>
+            {errorHostName !== "" && !hostName && (
+                <Typography color={"red"}>{errorHostName}</Typography>
+            )}
+            <Box>
                 <Button
                     sx={{
                         height: "61px",
@@ -151,15 +174,16 @@ export default function Host() {
                             background: "black",
                             color: "white",
                         },
-                        [themeApp.breakpoints.up('lg')]: {
-                            width: "398px"
+                        [themeApp.breakpoints.up("lg")]: {
+                            width: "398px",
                         },
-                        fontFamily: "Inter"
+                        fontFamily: "Inter",
                     }}
-                    onClick={handleCreateEvent}
-                >
+                    onClick={handleCreateEvent}>
                     Continue
                 </Button>
+            </Box>
+            <Box>
                 <Button
                     variant="outlined"
                     sx={{
@@ -172,17 +196,17 @@ export default function Host() {
                         "&:hover": {
                             background: "white",
                             color: "black",
-                            border: "1px solid black"
+                            border: "1px solid black",
                         },
-                        [themeApp.breakpoints.up('lg')]: {
-                            width: "398px"
+                        [themeApp.breakpoints.up("lg")]: {
+                            width: "398px",
                         },
-                        fontFamily: "Inter"
+                        fontFamily: "Inter",
                     }}
-                    onClick={() => navigate('/')}
-                >
+                    onClick={() => navigate("/")}>
                     Back to Home
                 </Button>
             </Box>
+        </Box>
     );
 }

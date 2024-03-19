@@ -1,5 +1,6 @@
 import {
     Box,
+    Button,
     IconButton,
     ListItemIcon,
     Menu,
@@ -8,7 +9,6 @@ import {
 } from "@mui/material";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined";
-import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
 import { useState } from "react";
@@ -19,6 +19,7 @@ import {
 } from "../api/question";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import RemoveCircleOutlineOutlinedIcon from "@mui/icons-material/RemoveCircleOutlineOutlined";
+import DeleteCard from "./DeleteCard";
 
 interface IData {
     name: string;
@@ -36,6 +37,7 @@ interface IData {
 export default function QuestionCard(props: IData) {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
+    const [openDeleteCard, setOpenDeleteCard] = useState(false);
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
@@ -53,6 +55,9 @@ export default function QuestionCard(props: IData) {
         props.handleRefresh();
         handleClose();
     };
+    const handleCloseDeleteCard = () => setOpenDeleteCard(false);
+    const handleOpenDeleteCard = () => setOpenDeleteCard(true);
+
     const handleDeleteQuestion = async (id: string) => {
         await deleteQuestionById(id);
         props.handleRefresh();
@@ -88,6 +93,12 @@ export default function QuestionCard(props: IData) {
                         {props.timestamp}
                     </Box>
                 </Box>
+                <DeleteCard
+                    handleClose={handleCloseDeleteCard}
+                    id={props.questionId}
+                    handleDeleteQuestion={handleDeleteQuestion}
+                    open={openDeleteCard}
+                />
                 <IconButton
                     aria-controls={open ? "basic-menu" : undefined}
                     aria-haspopup="true"
@@ -97,10 +108,10 @@ export default function QuestionCard(props: IData) {
                     <MoreHorizOutlinedIcon />
                 </IconButton>
                 <Menu
-                    id="basic-menu"
                     anchorEl={anchorEl}
                     open={open}
-                    onClose={handleClose}>
+                    onClose={handleClose}
+                    sx={{ borderRadius: "100px" }}>
                     {props.isSave ? (
                         <MenuItem
                             sx={{
@@ -131,7 +142,7 @@ export default function QuestionCard(props: IData) {
                             <ListItemIcon>
                                 <AddCircleOutlineOutlinedIcon />
                             </ListItemIcon>
-                            <Box>Keep</Box>
+                            <Box>Save</Box>
                         </MenuItem>
                     )}
                     <MenuItem
@@ -140,7 +151,7 @@ export default function QuestionCard(props: IData) {
                             alignContent: "center",
                             alignItems: "center",
                         }}
-                        onClick={() => handleDeleteQuestion(props.questionId)}>
+                        onClick={handleOpenDeleteCard}>
                         <ListItemIcon>
                             <DeleteOutlineOutlinedIcon />
                         </ListItemIcon>
@@ -162,17 +173,41 @@ export default function QuestionCard(props: IData) {
                     justifyContent: "space-between",
                     marginTop: "10px",
                 }}>
-                <Box
-                    sx={{
-                        display: "flex",
-                        alignContent: "center",
-                        alignItems: "center",
-                        gap: "10px",
-                        color: "#6C6C6C",
-                    }}>
-                    <ThumbUpOutlinedIcon sx={{ color: "#6C6C6C" }} />
-                    {props.likeNumber.length}
-                </Box>
+                {props.likeNumber.length == 0 ? (
+                    <>
+                        <Box
+                            sx={{
+                                width: "53px",
+                                height: "24px",
+                                color: "#6C6C6C",
+                                borderRadius: "8px",
+                            }}>
+                            <ThumbUpOutlinedIcon sx={{ fontSize: "16px" }} />
+                        </Box>
+                    </>
+                ) : (
+                    <Button
+                        sx={{
+                            width: "53px",
+                            height: "24px",
+                            color: "#6C6C6C",
+                            borderRadius: "8px",
+                            background: "#F7F7F7",
+                            fontSize: "16px",
+                        }}
+                        startIcon={
+                            <ThumbUpOutlinedIcon
+                                sx={{
+                                    width: "16px",
+                                    height: "16px",
+                                }}
+                            />
+                        }>
+                        <Typography fontSize={13}>
+                            {props.likeNumber.length}
+                        </Typography>
+                    </Button>
+                )}
                 {props.isRead ? (
                     <Box
                         sx={{
@@ -183,7 +218,7 @@ export default function QuestionCard(props: IData) {
                             color: "#6C6C6C",
                             fontSize: "13px",
                         }}>
-                        Readed{" "}
+                        Read{" "}
                         <CheckOutlinedIcon
                             sx={{
                                 color: "#6C6C6C",
@@ -201,16 +236,7 @@ export default function QuestionCard(props: IData) {
                             alignItems: "center",
                             color: "#6C6C6C",
                             fontSize: "13px",
-                        }}>
-                        UnRead{" "}
-                        <CloseOutlinedIcon
-                            sx={{
-                                color: "#6C6C6C",
-                                width: "12px",
-                                height: "12px",
-                            }}
-                        />
-                    </Box>
+                        }}></Box>
                 )}
             </Box>
         </Box>

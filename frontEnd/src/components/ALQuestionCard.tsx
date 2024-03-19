@@ -1,5 +1,6 @@
 import {
     Box,
+    Button,
     IconButton,
     ListItemIcon,
     Menu,
@@ -19,6 +20,7 @@ import AddQuestion from "./AddQuestion";
 import { useState } from "react";
 import AlerQuestion from "./AlerQuestion";
 import DeleteCard from "./DeleteCard";
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 
 interface IData {
     name: string;
@@ -121,8 +123,17 @@ export default function ALQuestionCard(props: IData) {
                         {props.name}
                     </Box>
                     <Box sx={{ marginTop: "-3px" }}>.</Box>
-                    <Box sx={{ color: "#6C6C6C", marginLeft: "5px" }}>
+                    <Box
+                        sx={{
+                            color: "#6C6C6C",
+                            marginLeft: "5px",
+                            marginRight: "5px",
+                        }}>
                         {props.timestamp}
+                    </Box>
+                    <Box sx={{ marginTop: "-3px" }}>.</Box>
+                    <Box sx={{ color: "#2ECC71", marginLeft: "5px" }}>
+                        Edited
                     </Box>
                 </Box>
                 <IconButton
@@ -188,34 +199,70 @@ export default function ALQuestionCard(props: IData) {
                         gap: "10px",
                         color: "#6C6C6C",
                         cursor: "pointer",
-                        background: isUserLiked ? "black" : "",
-                        borderRadius: "8px",
-                        width: "53px",
-                        height: "24px",
                     }}>
-                    {isUserLiked ? (
+                    {props.likeNumber.length == 0 ? (
                         <>
-                            <ThumbUpOutlinedIcon
-                                onClick={() => handleUnLike()} // If already liked, handle unlike
+                            <Box
+                                onClick={() => handleLike()}
                                 sx={{
-                                    color: "#2ECC71",
-                                    padding: "5px 0 5px 5px",
-                                }}
-                            />
-                            <Typography color={"white"}>
-                                {props.likeNumber.length}
-                            </Typography>
+                                    width: "53px",
+                                    height: "24px",
+                                    color: "#6C6C6C",
+                                    borderRadius: "8px",
+                                }}>
+                                <ThumbUpOutlinedIcon
+                                    sx={{ fontSize: "16px" }}
+                                />
+                            </Box>
                         </>
                     ) : (
                         <>
-                            <ThumbUpOutlinedIcon
-                                onClick={() => handleLike()} // If not liked, handle like
-                                sx={{
-                                    color: "#6C6C6C",
-                                    padding: "5px 0 5px 5px",
-                                }}
-                            />
-                            <Typography>{props.likeNumber.length}</Typography>
+                            {isUserLiked ? (
+                                <Button
+                                    startIcon={
+                                        <ThumbUpIcon
+                                            sx={{
+                                                width: "16px",
+                                                height: "16px",
+                                            }}
+                                        />
+                                    }
+                                    onClick={() => handleUnLike()}
+                                    sx={{
+                                        width: "53px",
+                                        height: "24px",
+                                        color: "#2ECC71",
+                                        borderRadius: "8px",
+                                        background: "black",
+                                    }}>
+                                    <Typography fontSize={13} color={"white"}>
+                                        {props.likeNumber.length}
+                                    </Typography>
+                                </Button>
+                            ) : (
+                                <Button
+                                    onClick={() => handleLike()}
+                                    sx={{
+                                        width: "53px",
+                                        height: "24px",
+                                        color: "#6C6C6C",
+                                        borderRadius: "8px",
+                                        background: "#F7F7F7",
+                                        fontSize: "16px",
+                                    }}
+                                    startIcon={
+                                        <ThumbUpOutlinedIcon
+                                            sx={{
+                                                width: "16px",
+                                                height: "16px",
+                                            }}
+                                        />
+                                    }>
+                                    <Typography fontSize={13}>
+                                        {props.likeNumber.length}
+                                    </Typography>
+                                </Button>
+                            )}
                         </>
                     )}
                 </Box>
