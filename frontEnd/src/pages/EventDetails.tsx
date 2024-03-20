@@ -371,6 +371,7 @@ export default function EventDetails(props: IData) {
                                                         questionId={
                                                             item.questionId
                                                         }
+                                                        isEdit={item.isEdit}
                                                         handleRefresh={
                                                             props.handleRefresh
                                                         }
@@ -384,15 +385,25 @@ export default function EventDetails(props: IData) {
                                     ) : (
                                         <Box sx={{ textAlign: "center" }}>
                                             <Typography
-                                                sx={{ marginTop: "50%" }}>
-                                                There is no question to show!
+                                                fontWeight={"bold"}
+                                                fontSize={20}
+                                                sx={{
+                                                    marginTop: "50%",
+                                                    marginBottom: "10px",
+                                                }}>
+                                                No question yet
+                                            </Typography>
+                                            <Typography>
+                                                Start making question and all{" "}
+                                                <br />
+                                                will be display here
                                             </Typography>
                                         </Box>
                                     )}
                                 </Box>
                             ) : value == 1 ? (
                                 <>
-                                    {questions !== undefined ? (
+                                    {questions.length !== 0 ? (
                                         questions
                                             .sort(
                                                 (a, b) =>
@@ -417,6 +428,7 @@ export default function EventDetails(props: IData) {
                                                         questionId={
                                                             item.questionId
                                                         }
+                                                        isEdit={item.isEdit}
                                                         handleRefresh={
                                                             props.handleRefresh
                                                         }
@@ -430,8 +442,18 @@ export default function EventDetails(props: IData) {
                                     ) : (
                                         <Box sx={{ textAlign: "center" }}>
                                             <Typography
-                                                sx={{ marginTop: "50%" }}>
-                                                There is no data to show
+                                                fontWeight={"bold"}
+                                                fontSize={20}
+                                                sx={{
+                                                    marginTop: "50%",
+                                                    marginBottom: "10px",
+                                                }}>
+                                                No question yet
+                                            </Typography>
+                                            <Typography>
+                                                Start making question and all{" "}
+                                                <br />
+                                                will be display here
                                             </Typography>
                                         </Box>
                                     )}
@@ -474,6 +496,7 @@ export default function EventDetails(props: IData) {
                                                             questionId={
                                                                 item.questionId
                                                             }
+                                                            isEdit={item.isEdit}
                                                             handleRefresh={
                                                                 props.handleRefresh
                                                             }
@@ -492,6 +515,7 @@ export default function EventDetails(props: IData) {
                                                         fontSize: "20px",
                                                         marginTop: "50%",
                                                         fontWeight: "bold",
+                                                        marginBottom: "10px",
                                                     }}>
                                                     You have no question yet
                                                 </Typography>

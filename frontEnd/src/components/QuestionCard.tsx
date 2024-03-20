@@ -28,6 +28,7 @@ interface IData {
     questionText: string;
     isRead: boolean;
     isSave?: boolean;
+    isEdit: boolean;
     questionId: string;
     isMy?: boolean;
     handleRefresh: () => void;
@@ -62,6 +63,7 @@ export default function QuestionCard(props: IData) {
         await deleteQuestionById(id);
         props.handleRefresh();
         handleClose();
+        handleCloseDeleteCard();
     };
 
     return (
@@ -92,6 +94,14 @@ export default function QuestionCard(props: IData) {
                     <Box sx={{ color: "#6C6C6C", marginLeft: "5px" }}>
                         {props.timestamp}
                     </Box>
+                    {props.isEdit && (
+                        <>
+                            <Box sx={{ marginTop: "-3px" }}>.</Box>
+                            <Box sx={{ color: "#2ECC71", marginLeft: "5px" }}>
+                                Edited
+                            </Box>
+                        </>
+                    )}
                 </Box>
                 <DeleteCard
                     handleClose={handleCloseDeleteCard}
@@ -111,7 +121,11 @@ export default function QuestionCard(props: IData) {
                     anchorEl={anchorEl}
                     open={open}
                     onClose={handleClose}
-                    sx={{ borderRadius: "100px" }}>
+                    PaperProps={{
+                        sx: {
+                            borderRadius: "10px",
+                        },
+                    }}>
                     {props.isSave ? (
                         <MenuItem
                             sx={{

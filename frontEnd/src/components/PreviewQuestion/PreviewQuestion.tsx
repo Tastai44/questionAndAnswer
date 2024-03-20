@@ -349,7 +349,7 @@ export default function PreviewQuestion(props: IData) {
 
                     {props.isHost && (
                         <>
-                            <Divider sx={{ marginTop: "200px" }} />
+                            <Box sx={{ marginTop: "200px" }} />
                             <Box
                                 sx={{
                                     display: "flex",
@@ -362,6 +362,7 @@ export default function PreviewQuestion(props: IData) {
                                     }}
                                     variant="outlined">
                                     <OutlinedInput
+                                        placeholder="Add your comment..."
                                         multiline
                                         sx={{
                                             background: "white",

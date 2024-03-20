@@ -14,6 +14,7 @@ export interface IQuestion {
     eventId: string;
     isRead: boolean;
     isSave: boolean;
+    isEdit: boolean;
     timestamp: string;
     likeNumber: { userLikeId: string }[];
     comment: IComment[];

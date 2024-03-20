@@ -361,6 +361,7 @@ export default function HostEvent(props: IData) {
                                                         }
                                                         isRead={item.isRead}
                                                         isSave={item.isSave}
+                                                        isEdit={item.isEdit}
                                                         questionId={
                                                             item.questionId
                                                         }
@@ -379,13 +380,22 @@ export default function HostEvent(props: IData) {
                                             sx={{
                                                 textAlign: "center",
                                             }}>
-                                            <Typography
-                                                sx={{ marginTop: "50%" }}>
-                                                Your event now live!
-                                            </Typography>
-                                            <Typography>
-                                                Participant can send question at
-                                            </Typography>
+                                            <Box sx={{ marginBottom: "10px" }}>
+                                                <Typography
+                                                    sx={{
+                                                        marginTop: "50%",
+                                                        fontSize: "20px",
+                                                        fontWeight: "bold",
+                                                    }}>
+                                                    Your event now live!
+                                                </Typography>
+                                            </Box>
+                                            <Box sx={{ marginBottom: "10px" }}>
+                                                <Typography>
+                                                    Participant can send
+                                                    question at
+                                                </Typography>
+                                            </Box>
                                             <Box
                                                 sx={{
                                                     display: "flex",
@@ -393,9 +403,7 @@ export default function HostEvent(props: IData) {
                                                     alignContent: "center",
                                                     alignItems: "center",
                                                 }}>
-                                                <Typography>
-                                                    Code: {eventId}
-                                                </Typography>
+                                                Code: {eventId}
                                                 <IconButton
                                                     onClick={() =>
                                                         handleCopyText(
@@ -412,9 +420,7 @@ export default function HostEvent(props: IData) {
                                                     alignContent: "center",
                                                     alignItems: "center",
                                                 }}>
-                                                <Typography>
-                                                    Link: {patch}
-                                                </Typography>
+                                                Link: {patch}
                                                 <IconButton
                                                     onClick={() =>
                                                         handleCopyText(
@@ -430,7 +436,7 @@ export default function HostEvent(props: IData) {
                                 </Box>
                             ) : value == 1 ? (
                                 <>
-                                    {questions !== undefined ? (
+                                    {questions.length !== 0 ? (
                                         questions
                                             .sort((a, b) =>
                                                 a.isRead === b.isRead
@@ -465,6 +471,7 @@ export default function HostEvent(props: IData) {
                                                         }
                                                         isRead={item.isRead}
                                                         isSave={item.isSave}
+                                                        isEdit={item.isEdit}
                                                         questionId={
                                                             item.questionId
                                                         }
@@ -481,8 +488,18 @@ export default function HostEvent(props: IData) {
                                     ) : (
                                         <Box sx={{ textAlign: "center" }}>
                                             <Typography
-                                                sx={{ marginTop: "50%" }}>
-                                                There is no data to show
+                                                fontWeight={"bold"}
+                                                fontSize={20}
+                                                sx={{
+                                                    marginTop: "50%",
+                                                    marginBottom: "10px",
+                                                }}>
+                                                No question yet
+                                            </Typography>
+                                            <Typography>
+                                                Start making question and all{" "}
+                                                <br />
+                                                will be display here
                                             </Typography>
                                         </Box>
                                     )}
@@ -516,6 +533,7 @@ export default function HostEvent(props: IData) {
                                                             }
                                                             isRead={item.isRead}
                                                             isSave={item.isSave}
+                                                            isEdit={item.isEdit}
                                                             questionId={
                                                                 item.questionId
                                                             }
@@ -532,8 +550,18 @@ export default function HostEvent(props: IData) {
                                         ) : (
                                             <Box sx={{ textAlign: "center" }}>
                                                 <Typography
-                                                    sx={{ marginTop: "50%" }}>
-                                                    There is no data to show
+                                                    fontWeight={"bold"}
+                                                    fontSize={20}
+                                                    sx={{
+                                                        marginTop: "50%",
+                                                        marginBottom: "10px",
+                                                    }}>
+                                                    No question yet
+                                                </Typography>
+                                                <Typography>
+                                                    Start making question and
+                                                    all <br />
+                                                    will be display here
                                                 </Typography>
                                             </Box>
                                         ))}

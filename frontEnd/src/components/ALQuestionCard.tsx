@@ -29,6 +29,7 @@ interface IData {
     questionText: string;
     questionId: string;
     isMy?: boolean;
+    isEdit: boolean;
     handleRefresh: () => void;
     handleSelectQuestion: (id: string) => void;
 }
@@ -131,10 +132,14 @@ export default function ALQuestionCard(props: IData) {
                         }}>
                         {props.timestamp}
                     </Box>
-                    <Box sx={{ marginTop: "-3px" }}>.</Box>
-                    <Box sx={{ color: "#2ECC71", marginLeft: "5px" }}>
-                        Edited
-                    </Box>
+                    {props.isEdit && (
+                        <>
+                            <Box sx={{ marginTop: "-3px" }}>.</Box>
+                            <Box sx={{ color: "#2ECC71", marginLeft: "5px" }}>
+                                Edited
+                            </Box>
+                        </>
+                    )}
                 </Box>
                 <IconButton
                     aria-controls={open ? "basic-menu" : undefined}
@@ -145,10 +150,18 @@ export default function ALQuestionCard(props: IData) {
                     <MoreHorizOutlinedIcon />
                 </IconButton>
                 <Menu
+                    anchorOrigin={{
+                        vertical: "bottom",
+                        horizontal: "right",
+                    }}
                     onClose={handleClose}
-                    id="basic-menu"
                     anchorEl={anchorEl}
-                    open={open}>
+                    open={open}
+                    PaperProps={{
+                        sx: {
+                            borderRadius: "10px",
+                        },
+                    }}>
                     <MenuItem
                         onClick={handleOpenQueCard}
                         sx={{

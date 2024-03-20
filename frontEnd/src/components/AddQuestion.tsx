@@ -1,4 +1,4 @@
-import { Box, Divider, Button, Modal } from "@mui/material";
+import { Box, Button, Modal } from "@mui/material";
 import { themeApp } from "../utils/Theme";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
@@ -154,7 +154,6 @@ export default function AddQuestion(props: IData) {
                                 </Box>
                             </Box>
                         </Box>
-                        <Divider sx={{ marginTop: "20px", color: "#9C9C9C" }} />
                         <Box
                             sx={{
                                 display: "flex",
