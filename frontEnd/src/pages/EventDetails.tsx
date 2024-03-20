@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getEventById } from "../api/event";
 import PreviewQuestion from "../components/PreviewQuestion/PreviewQuestion";
-// import QuestionCard from "../components/QuestionCard";
+import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined";
 import { themeApp } from "../utils/Theme";
 import { getQuesByEId, getQuesByOwnerId, readQuestion } from "../api/question";
 import { IQuestion, Ievent } from "../interface/Ievent";
@@ -33,7 +33,7 @@ export default function EventDetails(props: IData) {
     const [questions, setQuestions] = useState<IQuestion[]>([]);
     const [myQuestions, setMyQuestions] = useState<IQuestion[]>([]);
     const [selectedQId, setSelectedQId] = useState("");
-    // const [refresh, setRefresh] = useState(0);
+    const patch = window.location.pathname;
 
     useEffect(() => {
         const fetch = async () => {
@@ -82,6 +82,10 @@ export default function EventDetails(props: IData) {
         setSelectedQId(id);
         handleOpenCard();
         props.handleRefresh();
+    };
+    const handleCopyText = (text: string) => {
+        navigator.clipboard.writeText(text);
+        alert("Text copied to clipboard!");
     };
 
     return (
@@ -383,21 +387,61 @@ export default function EventDetails(props: IData) {
                                                 </Box>
                                             ))
                                     ) : (
-                                        <Box sx={{ textAlign: "center" }}>
-                                            <Typography
-                                                fontWeight={"bold"}
-                                                fontSize={20}
+                                        <Box
+                                            sx={{
+                                                textAlign: "center",
+                                            }}>
+                                            <Box sx={{ marginBottom: "10px" }}>
+                                                <Typography
+                                                    sx={{
+                                                        marginTop: "50%",
+                                                        fontSize: "20px",
+                                                        fontWeight: "bold",
+                                                    }}>
+                                                    Share link to invite
+                                                </Typography>
+                                            </Box>
+                                            <Box sx={{ marginBottom: "10px" }}>
+                                                <Typography>
+                                                    Copies link or code for join
+                                                    real quick
+                                                </Typography>
+                                            </Box>
+                                            <Box
                                                 sx={{
-                                                    marginTop: "50%",
-                                                    marginBottom: "10px",
+                                                    display: "flex",
+                                                    justifyContent: "center",
+                                                    alignContent: "center",
+                                                    alignItems: "center",
                                                 }}>
-                                                No question yet
-                                            </Typography>
-                                            <Typography>
-                                                Start making question and all{" "}
-                                                <br />
-                                                will be display here
-                                            </Typography>
+                                                Code: {eventId}
+                                                <IconButton
+                                                    onClick={() =>
+                                                        handleCopyText(
+                                                            eventId ?? ""
+                                                        )
+                                                    }>
+                                                    <ContentCopyOutlinedIcon />
+                                                </IconButton>
+                                            </Box>
+                                            <Box
+                                                sx={{
+                                                    display: "flex",
+                                                    justifyContent: "center",
+                                                    alignContent: "center",
+                                                    alignItems: "center",
+                                                }}>
+                                                Link: {patch}
+                                                <IconButton
+                                                    onClick={() =>
+                                                        handleCopyText(
+                                                            "http://localhost:5173" +
+                                                                patch
+                                                        )
+                                                    }>
+                                                    <ContentCopyOutlinedIcon />
+                                                </IconButton>
+                                            </Box>
                                         </Box>
                                     )}
                                 </Box>

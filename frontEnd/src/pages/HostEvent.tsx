@@ -346,7 +346,6 @@ export default function HostEvent(props: IData) {
                                             .map((item, index) => (
                                                 <Box
                                                     key={index}
-                                                    // onClick={() => handleSelectQuestion(item.questionId)}
                                                     sx={{ cursor: "pointer" }}>
                                                     <QuestionCard
                                                         name={item.name}

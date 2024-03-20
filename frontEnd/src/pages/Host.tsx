@@ -20,11 +20,20 @@ export default function Host() {
     const [errorHostName, setErrorHostName] = useState("");
     const [hostName, setHostName] = useState("");
     const navigate = useNavigate();
-
+    const generateRandomNumber = () => {
+        const random: number = Math.floor(Math.random() * 900) + 100;
+        const currentHour = new Date().getHours();
+        const combinedNumber =
+            currentHour.toString().padStart(2, "0") +
+            random.toString().padStart(2, "0");
+        return combinedNumber;
+    };
+    console.log(generateRandomNumber());
     const handleCreateEvent = async () => {
         if (hostName !== "" && eventName !== "") {
             const event = {
                 eventId: "",
+                temRoomId: generateRandomNumber(),
                 title: eventName,
                 ownerName: hostName,
             };
@@ -56,6 +65,10 @@ export default function Host() {
                 top: "50%",
                 left: "50%",
                 transform: "translate(-50%, -50%)",
+                width: "398px",
+                [themeApp.breakpoints.down("sm")]: {
+                    width: "90%",
+                },
             }}>
             <Typography
                 fontFamily={"Inter"}

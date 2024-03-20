@@ -2,6 +2,7 @@ import { IComment } from "./IQuestion";
 
 export interface Ievent {
     eventId: string;
+    temRoomId: string;
     title: string;
     ownerName: string;
 }

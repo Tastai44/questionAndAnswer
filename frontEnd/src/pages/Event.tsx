@@ -85,14 +85,9 @@ export default function Event() {
                 top: "50%",
                 left: "50%",
                 transform: "translate(-50%, -50%)",
+                width: "398px",
                 [themeApp.breakpoints.down("sm")]: {
                     width: "90%",
-                },
-                [themeApp.breakpoints.up("md")]: {
-                    width: "70%",
-                },
-                [themeApp.breakpoints.up("lg")]: {
-                    width: "50%",
                 },
             }}>
             <Box sx={{ display: "flex", justifyContent: "center" }}>
