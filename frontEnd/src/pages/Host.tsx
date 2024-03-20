@@ -56,15 +56,6 @@ export default function Host() {
                 top: "50%",
                 left: "50%",
                 transform: "translate(-50%, -50%)",
-                [themeApp.breakpoints.down("sm")]: {
-                    width: "90%",
-                },
-                [themeApp.breakpoints.up("md")]: {
-                    width: "70%",
-                },
-                [themeApp.breakpoints.up("lg")]: {
-                    width: "50%",
-                },
             }}>
             <Typography
                 fontFamily={"Inter"}
@@ -84,7 +75,7 @@ export default function Host() {
                     sx={{
                         width: "398px",
                         marginTop: "32px",
-                        [themeApp.breakpoints.down("md")]: {
+                        [themeApp.breakpoints.down("sm")]: {
                             width: "100%",
                         },
                     }}
@@ -123,10 +114,10 @@ export default function Host() {
             <Box>
                 <FormControl
                     sx={{
-                        width: "100%",
+                        width: "398px",
                         marginTop: "24px",
-                        [themeApp.breakpoints.up("lg")]: {
-                            width: "398px",
+                        [themeApp.breakpoints.down("sm")]: {
+                            width: "100%",
                         },
                     }}
                     variant="outlined">
@@ -165,7 +156,7 @@ export default function Host() {
                 <Button
                     sx={{
                         height: "61px",
-                        width: "100%",
+                        width: "398px",
                         background: "black",
                         color: "white",
                         borderRadius: "14px",
@@ -174,8 +165,8 @@ export default function Host() {
                             background: "black",
                             color: "white",
                         },
-                        [themeApp.breakpoints.up("lg")]: {
-                            width: "398px",
+                        [themeApp.breakpoints.down("sm")]: {
+                            width: "100%",
                         },
                         fontFamily: "Inter",
                     }}
@@ -188,7 +179,7 @@ export default function Host() {
                     variant="outlined"
                     sx={{
                         height: "61px",
-                        width: "100%",
+                        width: "398px",
                         color: "black",
                         borderRadius: "14px",
                         marginTop: "24px",
@@ -198,8 +189,8 @@ export default function Host() {
                             color: "black",
                             border: "1px solid black",
                         },
-                        [themeApp.breakpoints.up("lg")]: {
-                            width: "398px",
+                        [themeApp.breakpoints.down("sm")]: {
+                            width: "100%",
                         },
                         fontFamily: "Inter",
                     }}
