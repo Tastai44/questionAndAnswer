@@ -83,6 +83,7 @@ export default function AddQuestion(props: IData) {
                 handleDeleteDiscard={handleOpenConfirm}
                 open={openConfirm}
                 discard={true}
+                context="Changes you made will not be saved"
             />
             <Modal open={props.openQueCard}>
                 <Box

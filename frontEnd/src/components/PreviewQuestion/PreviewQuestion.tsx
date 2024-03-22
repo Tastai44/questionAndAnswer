@@ -194,6 +194,7 @@ export default function PreviewQuestion(props: IData) {
                         discard={false}
                         handleClose={() => setOpenConfirm(!openConfirm)}
                         handleDeleteDiscard={handleOpenConfirm}
+                        context="Deleting question is permanent and cannot be undone."
                     />
                     {questions !== undefined && (
                         <Box
@@ -220,7 +221,7 @@ export default function PreviewQuestion(props: IData) {
                                             fontFamily: "Inter",
                                             fontSize: "17px",
                                         }}>
-                                        {questions.name}'s question
+                                        Question
                                     </Box>
                                 </Box>
 
@@ -338,6 +339,14 @@ export default function PreviewQuestion(props: IData) {
                             <Box
                                 sx={{
                                     padding: "0px 14px 14px 14px",
+                                    height:
+                                        questions.comment.length != 0
+                                            ? "210px"
+                                            : "0px",
+                                    overflow:
+                                        questions.comment.length != 0
+                                            ? "auto"
+                                            : "none",
                                 }}>
                                 {questions.comment.length != 0 &&
                                     questions.comment
@@ -355,7 +364,9 @@ export default function PreviewQuestion(props: IData) {
                                         .map((item, index) => (
                                             <Box
                                                 key={index}
-                                                sx={{ marginBottom: "16px" }}>
+                                                sx={{
+                                                    marginBottom: "16px",
+                                                }}>
                                                 <Comment
                                                     isHost={props.isHost}
                                                     ownerName={item.name}

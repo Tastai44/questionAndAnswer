@@ -13,6 +13,7 @@ import CloseIcon from "@mui/icons-material/Close";
 interface IData {
     open: boolean;
     discard: boolean;
+    context: string;
     handleClose: () => void;
     handleDeleteDiscard: () => void;
 }
@@ -87,9 +88,7 @@ export default function ConfirmModalCard(props: IData) {
                             textAlign: "left",
                             marginLeft: "14px",
                         }}>
-                        {props.discard
-                            ? "Changes you made will not be saved"
-                            : "Deleting question is permanent and cannot be undone"}
+                        {props.context}
                     </Box>
 
                     <Box

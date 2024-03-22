@@ -37,18 +37,9 @@ export default function HostButton(props: IData) {
     const [hoveredDelete, setHoveredDelete] = useState(false);
     const [hoveredSave, setHoveredSave] = useState(false);
     const [openComment, setOpenComment] = useState(false);
-    const [saved, setSaved] = useState(props.isSave);
 
     const handleOpenComment = () => {
         setOpenComment(!openComment);
-    };
-    const handleSaved = () => {
-        if (saved) {
-            props.handleUnSaveQuestion();
-        } else {
-            props.handleSaveQuestion();
-        }
-        setSaved(!saved);
     };
 
     return (
@@ -110,11 +101,15 @@ export default function HostButton(props: IData) {
                     )}
                 </Button>
                 <Button
-                    onClick={handleSaved}
+                    onClick={
+                        props.isSave
+                            ? props.handleUnSaveQuestion
+                            : props.handleSaveQuestion
+                    }
                     onMouseEnter={() => setHoveredSave(true)}
                     onMouseLeave={() => setHoveredSave(false)}
                     sx={{
-                        width: hoveredSave || saved ? "101px" : "52px",
+                        width: hoveredSave || props.isSave ? "101px" : "52px",
                         height: "36px",
                         borderRadius: "50px",
                         background: "#FFFFFF",
@@ -122,7 +117,7 @@ export default function HostButton(props: IData) {
                         color: "black",
                         textTransform: "none",
                     }}>
-                    {hoveredSave || saved ? (
+                    {hoveredSave || props.isSave ? (
                         <>
                             <BookmarkAddedOutlinedIcon
                                 sx={{ color: "#2ECC71" }}

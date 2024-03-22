@@ -1,6 +1,8 @@
 import { Box, IconButton, Typography } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { deleteComment } from "../../api/question";
+import ConfirmModalCard from "../ConfirmModalCard";
+import { useState } from "react";
 
 interface IData {
     ownerName: string;
@@ -13,13 +15,27 @@ interface IData {
 }
 
 export default function Comment(props: IData) {
+    const [openConfirm, setOpenConfirm] = useState(false);
+
     const handleDeleteComment = async () => {
         await deleteComment(props.commentId, props.questionId);
         props.handleRefresh();
     };
+    const handleOpenConfirm = () => {
+        handleDeleteComment();
+        setOpenConfirm(!openConfirm);
+        props.handleRefresh;
+    };
 
     return (
         <>
+            <ConfirmModalCard
+                handleClose={() => setOpenConfirm(!openConfirm)}
+                handleDeleteDiscard={handleOpenConfirm}
+                open={openConfirm}
+                discard={false}
+                context="Deleting comment is permanent and cannot be undone."
+            />
             <Box
                 sx={{
                     display: "flex",
@@ -57,7 +73,9 @@ export default function Comment(props: IData) {
                         </Box>
                     </Box>
                     {props.isHost && (
-                        <IconButton onClick={handleDeleteComment} size="small">
+                        <IconButton
+                            onClick={() => setOpenConfirm(!openConfirm)}
+                            size="small">
                             <DeleteOutlineIcon sx={{ fontSize: "18px" }} />
                         </IconButton>
                     )}
