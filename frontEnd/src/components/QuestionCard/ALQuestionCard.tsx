@@ -15,7 +15,7 @@ import {
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import ModeEditOutlinedIcon from "@mui/icons-material/ModeEditOutlined";
-import AddQuestion from "../AddQuestion";
+import AddQuestion from "../AddEditQuestion";
 import { useState } from "react";
 import AlerQuestion from "../AlerQuestion";
 import DeleteCard from "../DeleteCard";

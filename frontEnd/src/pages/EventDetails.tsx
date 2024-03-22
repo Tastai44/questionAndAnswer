@@ -10,7 +10,7 @@ import { IQuestion, Ievent } from "../interface/Ievent";
 import MenuIcon from "@mui/icons-material/Menu";
 import AudienceMenu from "../components/AudienceMenu";
 import AddIcon from "@mui/icons-material/Add";
-import AddQuestion from "../components/AddQuestion";
+import AddQuestion from "../components/AddEditQuestion";
 import ALQuestionCard from "../components/QuestionCard/ALQuestionCard";
 import AlerQuestion from "../components/AlerQuestion";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";

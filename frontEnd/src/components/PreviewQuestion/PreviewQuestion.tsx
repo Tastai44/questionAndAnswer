@@ -17,14 +17,14 @@ import {
     unlikeQuestion,
     unSaveQuestion,
 } from "../../api/question";
-import DeleteCard from "../DeleteCard";
 import Comment from "../QuestionCard/Comment";
-import AddQuestion from "../AddQuestion";
+import AddQuestion from "../AddEditQuestion";
 import AlerQuestion from "../AlerQuestion";
 import CloseIcon from "@mui/icons-material/Close";
 import { themeApp } from "../../utils/Theme";
 import AudienceButton from "./AudienceButton";
 import HostButton from "./HostButton";
+import ConfirmModalCard from "../ConfirmModalCard";
 
 interface IData {
     questionId: string;
@@ -48,6 +48,7 @@ export default function PreviewQuestion(props: IData) {
     const [isUserLiked, SetIsUserLiked] = useState(false);
     const [oldContext, setOldContext] = useState("");
     const now = new Date();
+    const [openConfirm, setOpenConfirm] = useState(false);
 
     useEffect(() => {
         const fetch = async () => {
@@ -135,6 +136,13 @@ export default function PreviewQuestion(props: IData) {
         handleRefresh();
     };
 
+    const handleOpenConfirm = () => {
+        handleDeleteQuestion(props.questionId);
+        setOpenConfirm(!openConfirm);
+        handleCloseCard();
+        props.handleRefresh;
+    };
+
     return (
         <Modal open={props.openPreviewCard}>
             <Box
@@ -172,11 +180,17 @@ export default function PreviewQuestion(props: IData) {
                         open={openAlert}
                         context={"Your question has been edited!"}
                     />
-                    <DeleteCard
+                    {/* <DeleteCard
                         handleClose={handleCloseCard}
                         id={props.questionId}
                         handleDeleteQuestion={handleDeleteQuestion}
                         open={open}
+                    /> */}
+                    <ConfirmModalCard
+                        open={openConfirm}
+                        discard={false}
+                        handleClose={() => setOpenConfirm(!openConfirm)}
+                        handleDeleteDiscard={handleOpenConfirm}
                     />
                     {questions !== undefined && (
                         <Box
@@ -365,7 +379,9 @@ export default function PreviewQuestion(props: IData) {
                                     isSave={questions.isSave}
                                     handleUnLike={handleUnLike}
                                     handleLike={handleLike}
-                                    handleCloseCard={handleCloseCard}
+                                    handleCloseCard={() =>
+                                        setOpenConfirm(!openConfirm)
+                                    }
                                     handleOpenQueCard={handleOpenQueCard}
                                     handleAddComment={handleAddComment}
                                     handleSetComment={handleSetComment}
@@ -380,7 +396,9 @@ export default function PreviewQuestion(props: IData) {
                                     context={questions.questionText}
                                     handleUnLike={handleUnLike}
                                     handleLike={handleLike}
-                                    handleCloseCard={handleCloseCard}
+                                    handleCloseCard={() =>
+                                        setOpenConfirm(!openConfirm)
+                                    }
                                     handleOpenQueCard={handleOpenQueCard}
                                 />
                             )}
