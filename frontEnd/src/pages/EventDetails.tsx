@@ -396,7 +396,8 @@ export default function EventDetails(props: IData) {
                                                 <IconButton
                                                     onClick={() =>
                                                         handleCopyText(
-                                                            eventId ?? ""
+                                                            eventData.temRoomId ??
+                                                                ""
                                                         )
                                                     }>
                                                     <ContentCopyOutlinedIcon />
