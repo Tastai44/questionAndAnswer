@@ -313,14 +313,12 @@ export default function HostEvent(props: IData) {
                                     {questions.length !== 0 ? (
                                         questions
                                             .sort((a, b) => {
-                                                const timestampA =
-                                                    a.timestamp instanceof Date
-                                                        ? a.timestamp.getTime()
-                                                        : 0;
-                                                const timestampB =
-                                                    b.timestamp instanceof Date
-                                                        ? b.timestamp.getTime()
-                                                        : 0;
+                                                const timestampA = new Date(
+                                                    a.timestamp
+                                                ).getTime();
+                                                const timestampB = new Date(
+                                                    b.timestamp
+                                                ).getTime();
                                                 return timestampB - timestampA;
                                             })
                                             .sort((a, b) =>
@@ -467,6 +465,17 @@ export default function HostEvent(props: IData) {
                                             (que) => que.isSave == true
                                         ).length !== 0 ? (
                                             questions
+                                                .sort((a, b) => {
+                                                    const timestampA = new Date(
+                                                        a.timestamp
+                                                    ).getTime();
+                                                    const timestampB = new Date(
+                                                        b.timestamp
+                                                    ).getTime();
+                                                    return (
+                                                        timestampB - timestampA
+                                                    );
+                                                })
                                                 .filter(
                                                     (que) => que.isSave == true
                                                 )

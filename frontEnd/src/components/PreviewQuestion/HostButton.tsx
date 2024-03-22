@@ -50,6 +50,7 @@ export default function HostButton(props: IData) {
                     gap: "8px",
                     marginLeft: "16px",
                     marginBottom: "14px",
+                    flexWrap: "wrap",
                 }}>
                 <Button
                     sx={{

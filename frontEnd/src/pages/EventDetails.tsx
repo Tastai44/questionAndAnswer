@@ -341,14 +341,12 @@ export default function EventDetails(props: IData) {
                                     {questions.length !== 0 ? (
                                         questions
                                             .sort((a, b) => {
-                                                const timestampA =
-                                                    a.timestamp instanceof Date
-                                                        ? a.timestamp.getTime()
-                                                        : 0;
-                                                const timestampB =
-                                                    b.timestamp instanceof Date
-                                                        ? b.timestamp.getTime()
-                                                        : 0;
+                                                const timestampA = new Date(
+                                                    a.timestamp
+                                                ).getTime();
+                                                const timestampB = new Date(
+                                                    b.timestamp
+                                                ).getTime();
                                                 return timestampB - timestampA;
                                             })
                                             .map((item, index) => (
@@ -523,7 +521,7 @@ export default function EventDetails(props: IData) {
                             justifyContent: "flex-end",
                             position: "fixed",
                             bottom: 10,
-                            width: "100%",
+                            right: "0px",
                             [themeApp.breakpoints.up("md")]: {
                                 width: "420px",
                             },

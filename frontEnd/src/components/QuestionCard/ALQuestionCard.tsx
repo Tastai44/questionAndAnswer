@@ -1,5 +1,6 @@
 import {
     Box,
+    Button,
     IconButton,
     ListItemIcon,
     Menu,
@@ -23,6 +24,7 @@ import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import { IQuestion } from "../../interface/Ievent";
 import Comment from "./Comment";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import { getTimeDifferenceInMinutes } from "../../helper/getTime";
 
 interface IData {
     isMy?: boolean;
@@ -114,14 +116,20 @@ export default function ALQuestionCard(props: IData) {
             <Box
                 sx={{
                     display: "flex",
-                    paddingLeft: "20px",
+                    marginLeft: "16px",
                     paddingTop: "15px",
                     fontSize: "13px",
                     justifyContent: "space-between",
                     alignItems: "center",
                     alignContent: "center",
                 }}>
-                <Box sx={{ width: "90%", display: "flex" }}>
+                <Box
+                    sx={{
+                        width: "90%",
+                        display: "flex",
+                        alignItems: "center",
+                        alignContent: "center",
+                    }}>
                     <Box sx={{ color: "black", marginRight: "5px" }}>
                         {props.questions.name}
                     </Box>
@@ -132,8 +140,42 @@ export default function ALQuestionCard(props: IData) {
                             marginLeft: "5px",
                             marginRight: "5px",
                         }}>
-                        {props.questions.timestamp.toLocaleString()}
+                        {(() => {
+                            const timeDifferenceInMinutes =
+                                getTimeDifferenceInMinutes(
+                                    new Date(props.questions.timestamp)
+                                );
+                            if (Number(timeDifferenceInMinutes) > 60) {
+                                return (
+                                    <>
+                                        {Math.floor(
+                                            Number(timeDifferenceInMinutes) / 60
+                                        )}{" "}
+                                        hr
+                                    </>
+                                );
+                            } else {
+                                return <>{timeDifferenceInMinutes} m</>;
+                            }
+                        })()}{" "}
                     </Box>
+                    {props.questions.comment.length > 0 && (
+                        <>
+                            <Box sx={{ marginTop: "-3px" }}>.</Box>
+                            <Button
+                                sx={{
+                                    color: "white",
+                                    marginLeft: "5px",
+                                    background: "#2ECC71",
+                                    height: "22px",
+                                    width: "86px",
+                                    textTransform: "none",
+                                    borderRadius: "4px",
+                                }}>
+                                Answered
+                            </Button>
+                        </>
+                    )}
                     {props.questions.isEdit && (
                         <>
                             <Box sx={{ marginTop: "-3px" }}>.</Box>
@@ -188,17 +230,23 @@ export default function ALQuestionCard(props: IData) {
                     </MenuItem>
                 </Menu>
             </Box>
-            <Typography
-                onClick={() =>
-                    props.handleSelectQuestion(props.questions.questionId)
-                }
-                sx={{ paddingLeft: "20px", cursor: "pointer" }}
-                fontWeight={"mediums"}>
-                {props.questions.questionText}
-            </Typography>
+            <Box sx={{ width: "95%", marginLeft: "16px" }}>
+                <Typography
+                    onClick={() =>
+                        props.handleSelectQuestion(props.questions.questionId)
+                    }
+                    sx={{
+                        cursor: "pointer",
+                        textAlign: "justify",
+                        fontSize: "17px",
+                    }}
+                    fontWeight={"mediums"}>
+                    {props.questions.questionText}
+                </Typography>
+            </Box>
             <Box
                 sx={{
-                    marginLeft: "20px",
+                    marginLeft: "16px",
                     display: "flex",
                     alignContent: "center",
                     alignItems: "center",
@@ -286,7 +334,7 @@ export default function ALQuestionCard(props: IData) {
             </Box>
             <Box
                 sx={{
-                    padding: "10px 14px 0px 14px",
+                    padding: "10px 14px 0px 16px",
                 }}>
                 {props.questions.comment.length != 0 &&
                     props.questions.comment

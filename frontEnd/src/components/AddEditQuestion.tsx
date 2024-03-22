@@ -217,6 +217,7 @@ export default function AddQuestion(props: IData) {
                                                 fontFamily: "Inter",
                                                 height: "250px",
                                             }}
+                                            maxLength={800}
                                             placeholder="What is in your mind?"
                                         />
                                     </Box>

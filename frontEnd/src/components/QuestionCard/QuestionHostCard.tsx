@@ -1,5 +1,6 @@
 import {
     Box,
+    Button,
     IconButton,
     ListItemIcon,
     Menu,
@@ -23,6 +24,7 @@ import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import { IQuestion } from "../../interface/Ievent";
 import Comment from "./Comment";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import { getTimeDifferenceInMinutes } from "../../helper/getTime";
 
 interface IData {
     questions: IQuestion;
@@ -80,7 +82,7 @@ export default function QuestionCard(props: IData) {
             <Box
                 sx={{
                     display: "flex",
-                    paddingLeft: "20px",
+                    marginLeft: "16px",
                     paddingTop: "15px",
                     marginBottom: "5px",
                     fontSize: "13px",
@@ -88,14 +90,59 @@ export default function QuestionCard(props: IData) {
                     alignItems: "center",
                     alignContent: "center",
                 }}>
-                <Box sx={{ width: "90%", display: "flex" }}>
+                <Box
+                    sx={{
+                        width: "90%",
+                        display: "flex",
+                        alignItems: "center",
+                        alignContent: "center",
+                    }}>
                     <Box sx={{ color: "black", marginRight: "5px" }}>
                         {props.questions.name}
                     </Box>
                     <Box sx={{ marginTop: "-3px" }}>.</Box>
-                    <Box sx={{ color: "#6C6C6C", marginLeft: "5px" }}>
-                        {props.questions.timestamp.toLocaleString()}
+                    <Box
+                        sx={{
+                            color: "#6C6C6C",
+                            marginLeft: "5px",
+                            marginRight: "5px",
+                        }}>
+                        {(() => {
+                            const timeDifferenceInMinutes =
+                                getTimeDifferenceInMinutes(
+                                    new Date(props.questions.timestamp)
+                                );
+                            if (Number(timeDifferenceInMinutes) > 60) {
+                                return (
+                                    <>
+                                        {Math.floor(
+                                            Number(timeDifferenceInMinutes) / 60
+                                        )}{" "}
+                                        hr
+                                    </>
+                                );
+                            } else {
+                                return <>{timeDifferenceInMinutes} m</>;
+                            }
+                        })()}{" "}
                     </Box>
+                    {props.questions.comment.length > 0 && (
+                        <>
+                            <Box sx={{ marginTop: "-3px" }}>.</Box>
+                            <Button
+                                sx={{
+                                    color: "white",
+                                    marginLeft: "5px",
+                                    background: "#2ECC71",
+                                    height: "22px",
+                                    width: "86px",
+                                    textTransform: "none",
+                                    borderRadius: "4px",
+                                }}>
+                                Answered
+                            </Button>
+                        </>
+                    )}
                     {props.questions.isEdit && (
                         <>
                             <Box sx={{ marginTop: "-3px" }}>.</Box>
@@ -175,17 +222,23 @@ export default function QuestionCard(props: IData) {
                     </MenuItem>
                 </Menu>
             </Box>
-            <Box
-                onClick={() =>
-                    props.handleSelectQuestion(props.questions.questionId)
-                }>
-                <Typography sx={{ paddingLeft: "20px" }} fontWeight={"mediums"}>
+            <Box sx={{ width: "95%", marginLeft: "16px" }}>
+                <Typography
+                    onClick={() =>
+                        props.handleSelectQuestion(props.questions.questionId)
+                    }
+                    sx={{
+                        cursor: "pointer",
+                        textAlign: "justify",
+                        fontSize: "17px",
+                    }}
+                    fontWeight={"mediums"}>
                     {props.questions.questionText}
                 </Typography>
             </Box>
             <Box
                 sx={{
-                    marginLeft: "20px",
+                    marginLeft: "16px",
                     display: "flex",
                     alignContent: "center",
                     alignItems: "center",

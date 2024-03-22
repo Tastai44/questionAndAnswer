@@ -322,7 +322,7 @@ export default function PreviewQuestion(props: IData) {
                                 fontWeight={"mediums"}
                                 sx={{
                                     marginLeft: "16px",
-                                    marginBottom: "10px",
+                                    marginBottom: "16px",
                                 }}
                                 fontFamily={"Inter"}>
                                 {questions.questionText}
@@ -332,7 +332,7 @@ export default function PreviewQuestion(props: IData) {
                                 sx={{
                                     color: "#6C6C6C",
                                     marginLeft: "16px",
-                                    marginBottom: "16px",
+                                    marginBottom: "5px",
                                 }}>
                                 {questions.timestamp.toLocaleString()}
                             </Typography>
