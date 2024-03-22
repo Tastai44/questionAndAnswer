@@ -76,7 +76,6 @@ export default function QuestionCard(props: IData) {
                 flexDirection: "column",
                 width: "100%",
                 height: "auto",
-                paddingBottom: "14px",
             }}>
             <Box
                 sx={{
@@ -203,7 +202,9 @@ export default function QuestionCard(props: IData) {
                                 alignItems: "center",
                                 borderRadius: "8px",
                             }}>
-                            <ThumbUpIcon sx={{ fontSize: "20px" }} />
+                            <ThumbUpIcon
+                                sx={{ width: "20px", height: "20px" }}
+                            />
                         </Box>
                     </>
                 ) : (
@@ -219,7 +220,8 @@ export default function QuestionCard(props: IData) {
                         }}>
                         <ThumbUpIcon
                             sx={{
-                                fontSize: "20px",
+                                width: "20px",
+                                height: "20px",
                             }}
                         />
                         {props.questions.likeNumber.length}

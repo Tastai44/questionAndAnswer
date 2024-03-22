@@ -6,7 +6,6 @@ import {
     MenuItem,
     Typography,
 } from "@mui/material";
-import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import {
     deleteQuestionById,
     likeQuestion,
@@ -20,6 +19,7 @@ import { useState } from "react";
 import AlerQuestion from "../AlerQuestion";
 import DeleteCard from "../DeleteCard";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import { IQuestion } from "../../interface/Ievent";
 import Comment from "./Comment";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
@@ -271,7 +271,7 @@ export default function ALQuestionCard(props: IData) {
                                         alignItems: "center",
                                         gap: "3px",
                                     }}>
-                                    <ThumbUpIcon
+                                    <ThumbUpOutlinedIcon
                                         sx={{
                                             width: "16px",
                                             height: "16px",

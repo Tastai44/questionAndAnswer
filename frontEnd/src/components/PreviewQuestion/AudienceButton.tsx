@@ -7,6 +7,7 @@ import { useState } from "react";
 
 interface IData {
     isUserLiked: boolean;
+    isOwner: boolean;
     likeNumber: number;
     context: string;
     openQueCard: boolean;
@@ -45,10 +46,10 @@ export default function AudienceButton(props: IData) {
                         height: "38px",
                         borderRadius: "50px",
                         background: "#FFFFFF",
-                        color: "black",
+                        color: "#2ECC71",
                         border: "1px solid #C9CCD0",
                     }}>
-                    <Typography fontSize={15} color={"black"}>
+                    <Typography fontSize={15} color={"#2ECC71"}>
                         {props.likeNumber}
                     </Typography>
                 </Button>
@@ -83,58 +84,66 @@ export default function AudienceButton(props: IData) {
                     )}
                 </Button>
             )}
-            <Button
-                onClick={() => props.handleOpenQueCard(props.context)}
-                onMouseEnter={() => setHovered(true)}
-                onMouseLeave={() => setHovered(false)}
-                sx={{
-                    width: hovered ? "84px" : "52px",
-                    height: "36px",
-                    borderRadius: "50px",
-                    background: "#FFFFFF",
-                    border: "1px solid #C9CCD0",
-                    color: "black",
-                    textTransform: "none",
-                }}>
-                {hovered ? (
-                    <>
-                        <ModeEditOutlinedIcon sx={{ color: "#2ECC71" }} />
-                        <Typography color={"#2ECC71"} fontSize={15}>
-                            Edit
-                        </Typography>
-                    </>
-                ) : (
-                    <>
-                        <ModeEditOutlinedIcon />
-                    </>
-                )}
-            </Button>
-            <Button
-                onMouseEnter={() => setHoveredDelete(true)}
-                onMouseLeave={() => setHoveredDelete(false)}
-                onClick={props.handleCloseCard}
-                sx={{
-                    width: hoveredDelete ? "103px" : "52px",
-                    height: "36px",
-                    borderRadius: "50px",
-                    background: "#FFFFFF",
-                    border: "1px solid #C9CCD0",
-                    color: "black",
-                    textTransform: "none",
-                }}>
-                {hoveredDelete ? (
-                    <>
-                        <DeleteOutlineOutlinedIcon sx={{ color: "#FA6056" }} />
-                        <Typography color={"#FA6056"} fontSize={15}>
-                            Delete
-                        </Typography>
-                    </>
-                ) : (
-                    <>
-                        <DeleteOutlineOutlinedIcon />
-                    </>
-                )}
-            </Button>
+            {props.isOwner && (
+                <>
+                    <Button
+                        onClick={() => props.handleOpenQueCard(props.context)}
+                        onMouseEnter={() => setHovered(true)}
+                        onMouseLeave={() => setHovered(false)}
+                        sx={{
+                            width: hovered ? "84px" : "52px",
+                            height: "36px",
+                            borderRadius: "50px",
+                            background: "#FFFFFF",
+                            border: "1px solid #C9CCD0",
+                            color: "black",
+                            textTransform: "none",
+                        }}>
+                        {hovered ? (
+                            <>
+                                <ModeEditOutlinedIcon
+                                    sx={{ color: "#2ECC71" }}
+                                />
+                                <Typography color={"#2ECC71"} fontSize={15}>
+                                    Edit
+                                </Typography>
+                            </>
+                        ) : (
+                            <>
+                                <ModeEditOutlinedIcon />
+                            </>
+                        )}
+                    </Button>
+                    <Button
+                        onMouseEnter={() => setHoveredDelete(true)}
+                        onMouseLeave={() => setHoveredDelete(false)}
+                        onClick={props.handleCloseCard}
+                        sx={{
+                            width: hoveredDelete ? "103px" : "52px",
+                            height: "36px",
+                            borderRadius: "50px",
+                            background: "#FFFFFF",
+                            border: "1px solid #C9CCD0",
+                            color: "black",
+                            textTransform: "none",
+                        }}>
+                        {hoveredDelete ? (
+                            <>
+                                <DeleteOutlineOutlinedIcon
+                                    sx={{ color: "#FA6056" }}
+                                />
+                                <Typography color={"#FA6056"} fontSize={15}>
+                                    Delete
+                                </Typography>
+                            </>
+                        ) : (
+                            <>
+                                <DeleteOutlineOutlinedIcon />
+                            </>
+                        )}
+                    </Button>
+                </>
+            )}
         </Box>
     );
 }

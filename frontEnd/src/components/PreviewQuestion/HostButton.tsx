@@ -8,7 +8,7 @@ import {
     Typography,
 } from "@mui/material";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import BookmarkAddOutlinedIcon from "@mui/icons-material/BookmarkAddOutlined";
 import { ChangeEvent, useState } from "react";
 import SendIcon from "@mui/icons-material/Send";
@@ -69,8 +69,9 @@ export default function HostButton(props: IData) {
                         border: "1px solid #C9CCD0",
                         color: "black",
                         textTransform: "none",
+                        gap: "3px",
                     }}>
-                    <ThumbUpOutlinedIcon
+                    <ThumbUpIcon
                         sx={{
                             width: "20px",
                             height: "20px",

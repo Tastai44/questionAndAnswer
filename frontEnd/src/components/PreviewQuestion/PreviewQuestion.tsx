@@ -46,19 +46,22 @@ export default function PreviewQuestion(props: IData) {
     const [openAlert, setOpenAlert] = useState(false);
     const userInfo = JSON.parse(localStorage.getItem("user") || "null");
     const [isUserLiked, SetIsUserLiked] = useState(false);
+    const [isOwner, SetIsOwner] = useState(false);
     const [oldContext, setOldContext] = useState("");
     const now = new Date();
     const [openConfirm, setOpenConfirm] = useState(false);
 
     useEffect(() => {
         const fetch = async () => {
-            const data = await getQuesById(props.questionId ?? "");
+            const data: IQuestion = await getQuesById(props.questionId ?? "");
             if (data) {
                 setQuestions(data);
                 const isUserLiked = data.likeNumber.some(
                     (item: { userLikeId: string }) =>
                         item.userLikeId === userInfo.userId
                 );
+                const isOwner = data.ownerId == userInfo.userId;
+                SetIsOwner(isOwner);
                 SetIsUserLiked(isUserLiked);
             }
         };
@@ -390,6 +393,7 @@ export default function PreviewQuestion(props: IData) {
                                 />
                             ) : (
                                 <AudienceButton
+                                    isOwner={isOwner}
                                     isUserLiked={isUserLiked}
                                     openQueCard={openQueCard}
                                     likeNumber={questions.likeNumber.length}

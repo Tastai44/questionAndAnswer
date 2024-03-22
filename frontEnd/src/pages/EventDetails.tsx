@@ -103,6 +103,7 @@ export default function EventDetails(props: IData) {
                                 eventId={eventId ?? ""}
                                 title={eventData.title}
                                 hostName={eventData.ownerName}
+                                roomId={eventData.temRoomId}
                             />
                         </Box>
                     </Modal>

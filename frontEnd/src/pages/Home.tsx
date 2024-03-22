@@ -17,11 +17,16 @@ export default function Home() {
     const navigate = useNavigate();
     const [invitedCode, setInvitedCode] = useState("");
     const [error, setError] = useState("");
+    const userInfo = JSON.parse(localStorage.getItem("user") || "null");
     const handleContinue = () => {
-        if (invitedCode) {
-            navigate(`/event/${invitedCode}`);
+        if (userInfo) {
+            alert("Only one user can be logged in at a time!");
         } else {
-            setError("Please type the code!");
+            if (invitedCode) {
+                navigate(`/event/${invitedCode}`);
+            } else {
+                setError("Please type the code!");
+            }
         }
     };
 
