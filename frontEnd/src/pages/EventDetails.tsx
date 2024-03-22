@@ -5,13 +5,13 @@ import { getEventById } from "../api/event";
 import PreviewQuestion from "../components/PreviewQuestion/PreviewQuestion";
 import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined";
 import { themeApp } from "../utils/Theme";
-import { getQuesByEId, getQuesByOwnerId, readQuestion } from "../api/question";
+import { getQuesByEId, getQuesByOwnerId } from "../api/question";
 import { IQuestion, Ievent } from "../interface/Ievent";
 import MenuIcon from "@mui/icons-material/Menu";
 import AudienceMenu from "../components/AudienceMenu";
 import AddIcon from "@mui/icons-material/Add";
 import AddQuestion from "../components/AddQuestion";
-import ALQuestionCard from "../components/ALQuestionCard";
+import ALQuestionCard from "../components/QuestionCard/ALQuestionCard";
 import AlerQuestion from "../components/AlerQuestion";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 
@@ -33,7 +33,6 @@ export default function EventDetails(props: IData) {
     const [questions, setQuestions] = useState<IQuestion[]>([]);
     const [myQuestions, setMyQuestions] = useState<IQuestion[]>([]);
     const [selectedQId, setSelectedQId] = useState("");
-    const patch = window.location.pathname;
 
     useEffect(() => {
         const fetch = async () => {
@@ -76,9 +75,9 @@ export default function EventDetails(props: IData) {
     const handleClose = () => setOpen(false);
     const handleChange = (newValue: number) => {
         setValue(newValue);
+        props.handleRefresh();
     };
     const handleSelectQuestion = async (id: string) => {
-        await readQuestion(id);
         setSelectedQId(id);
         handleOpenCard();
         props.handleRefresh();
@@ -103,34 +102,21 @@ export default function EventDetails(props: IData) {
                                 handleClose={handleClose}
                                 eventId={eventId ?? ""}
                                 title={eventData.title}
-                                hostName={userInfo.userId}
+                                hostName={eventData.ownerName}
                             />
                         </Box>
                     </Modal>
-                    <Modal open={openCard}>
-                        <Box
-                            sx={{
-                                position: "absolute",
-                                top: "40%",
-                                left: "50%",
-                                transform: "translate(-50%, -50%)",
-                                bgcolor: "background.paper",
-                                borderRadius: "20px",
-                                width: "90%",
-                                [themeApp.breakpoints.up("md")]: {
-                                    width: "398px",
-                                },
-                            }}>
-                            <PreviewQuestion
-                                questionId={selectedQId}
-                                handleCloseCard={handleCloseCard}
-                                handleRefresh={props.handleRefresh}
-                                isHost={false}
-                                ownerId={eventData.eventId}
-                                ownerName={eventData.ownerName}
-                            />
-                        </Box>
-                    </Modal>
+
+                    <PreviewQuestion
+                        questionId={selectedQId}
+                        handleCloseCard={handleCloseCard}
+                        handleRefresh={props.handleRefresh}
+                        isHost={false}
+                        openPreviewCard={openCard}
+                        ownerId={eventData.eventId}
+                        ownerName={eventData.ownerName}
+                        refresh={props.refresh}
+                    />
 
                     <AddQuestion
                         handleClose={handleCloseQueCard}
@@ -259,7 +245,7 @@ export default function EventDetails(props: IData) {
                                         <Box
                                             sx={{
                                                 display: "flex",
-                                                fontSize: "12px",
+                                                fontSize: "14px",
                                                 alignItems: "center",
                                                 justifyContent: "center",
                                                 marginLeft: "10px",
@@ -332,13 +318,14 @@ export default function EventDetails(props: IData) {
                                                 justifyContent: "center",
                                                 marginLeft: "10px",
                                                 borderRadius: "4px",
+                                                fontSize: "14px",
                                                 color:
                                                     value == 2
                                                         ? "#2ECC71"
-                                                        : "#F7F7F7",
+                                                        : "#000000",
                                                 background:
                                                     value != 2
-                                                        ? "#F7F7F7"
+                                                        ? "rgba(201, 204, 208, 0.2)"
                                                         : "rgba(46, 204, 113, 0.2)",
                                                 width: "19px",
                                                 height: "21px",
@@ -352,30 +339,21 @@ export default function EventDetails(props: IData) {
                                 <Box>
                                     {questions.length !== 0 ? (
                                         questions
-                                            .sort((a, b) =>
-                                                a.isRead === b.isRead
-                                                    ? 0
-                                                    : a.isRead
-                                                    ? 1
-                                                    : -1
-                                            )
+                                            .sort((a, b) => {
+                                                const timestampA =
+                                                    a.timestamp instanceof Date
+                                                        ? a.timestamp.getTime()
+                                                        : 0;
+                                                const timestampB =
+                                                    b.timestamp instanceof Date
+                                                        ? b.timestamp.getTime()
+                                                        : 0;
+                                                return timestampB - timestampA;
+                                            })
                                             .map((item, index) => (
                                                 <Box key={index}>
                                                     <ALQuestionCard
-                                                        name={item.name}
-                                                        timestamp={
-                                                            item.timestamp
-                                                        }
-                                                        likeNumber={
-                                                            item.likeNumber
-                                                        }
-                                                        questionText={
-                                                            item.questionText
-                                                        }
-                                                        questionId={
-                                                            item.questionId
-                                                        }
-                                                        isEdit={item.isEdit}
+                                                        questions={item}
                                                         handleRefresh={
                                                             props.handleRefresh
                                                         }
@@ -414,29 +392,11 @@ export default function EventDetails(props: IData) {
                                                     alignContent: "center",
                                                     alignItems: "center",
                                                 }}>
-                                                Code: {eventId}
+                                                Code: {eventData.temRoomId}
                                                 <IconButton
                                                     onClick={() =>
                                                         handleCopyText(
                                                             eventId ?? ""
-                                                        )
-                                                    }>
-                                                    <ContentCopyOutlinedIcon />
-                                                </IconButton>
-                                            </Box>
-                                            <Box
-                                                sx={{
-                                                    display: "flex",
-                                                    justifyContent: "center",
-                                                    alignContent: "center",
-                                                    alignItems: "center",
-                                                }}>
-                                                Link: {patch}
-                                                <IconButton
-                                                    onClick={() =>
-                                                        handleCopyText(
-                                                            "http://localhost:5173" +
-                                                                patch
                                                         )
                                                     }>
                                                     <ContentCopyOutlinedIcon />
@@ -459,20 +419,7 @@ export default function EventDetails(props: IData) {
                                                     key={index}
                                                     sx={{ cursor: "pointer" }}>
                                                     <ALQuestionCard
-                                                        name={item.name}
-                                                        timestamp={
-                                                            item.timestamp
-                                                        }
-                                                        likeNumber={
-                                                            item.likeNumber
-                                                        }
-                                                        questionText={
-                                                            item.questionText
-                                                        }
-                                                        questionId={
-                                                            item.questionId
-                                                        }
-                                                        isEdit={item.isEdit}
+                                                        questions={item}
                                                         handleRefresh={
                                                             props.handleRefresh
                                                         }
@@ -507,19 +454,21 @@ export default function EventDetails(props: IData) {
                                     {myQuestions !== undefined &&
                                         (myQuestions.length !== 0 ? (
                                             myQuestions
-                                                .sort(
-                                                    (a, b) =>
-                                                        Number(
-                                                            new Date(
-                                                                b.timestamp
-                                                            )
-                                                        ) -
-                                                        Number(
-                                                            new Date(
-                                                                a.timestamp
-                                                            )
-                                                        )
-                                                )
+                                                .sort((a, b) => {
+                                                    const timestampA =
+                                                        a.timestamp instanceof
+                                                        Date
+                                                            ? a.timestamp.getTime()
+                                                            : 0;
+                                                    const timestampB =
+                                                        b.timestamp instanceof
+                                                        Date
+                                                            ? b.timestamp.getTime()
+                                                            : 0;
+                                                    return (
+                                                        timestampB - timestampA
+                                                    );
+                                                })
                                                 .map((item, index) => (
                                                     <Box
                                                         key={index}
@@ -527,20 +476,7 @@ export default function EventDetails(props: IData) {
                                                             cursor: "pointer",
                                                         }}>
                                                         <ALQuestionCard
-                                                            name={item.name}
-                                                            timestamp={
-                                                                item.timestamp
-                                                            }
-                                                            likeNumber={
-                                                                item.likeNumber
-                                                            }
-                                                            questionText={
-                                                                item.questionText
-                                                            }
-                                                            questionId={
-                                                                item.questionId
-                                                            }
-                                                            isEdit={item.isEdit}
+                                                            questions={item}
                                                             handleRefresh={
                                                                 props.handleRefresh
                                                             }
@@ -599,6 +535,10 @@ export default function EventDetails(props: IData) {
                                 marginRight: "10px",
                                 [themeApp.breakpoints.up("md")]: {
                                     marginRight: "0px",
+                                },
+                                "&:hover": {
+                                    background: "#2AC75F",
+                                    color: "black",
                                 },
                             }}>
                             <AddIcon

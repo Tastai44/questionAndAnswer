@@ -1,6 +1,5 @@
 import {
     Box,
-    Button,
     IconButton,
     ListItemIcon,
     Menu,
@@ -12,24 +11,22 @@ import {
     deleteQuestionById,
     likeQuestion,
     unlikeQuestion,
-} from "../api/question";
+} from "../../api/question";
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import ModeEditOutlinedIcon from "@mui/icons-material/ModeEditOutlined";
-import AddQuestion from "./AddQuestion";
+import AddQuestion from "../AddQuestion";
 import { useState } from "react";
-import AlerQuestion from "./AlerQuestion";
-import DeleteCard from "./DeleteCard";
+import AlerQuestion from "../AlerQuestion";
+import DeleteCard from "../DeleteCard";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import { IQuestion } from "../../interface/Ievent";
+import Comment from "./Comment";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 
 interface IData {
-    name: string;
-    timestamp: string;
-    likeNumber: { userLikeId: string }[];
-    questionText: string;
-    questionId: string;
     isMy?: boolean;
-    isEdit: boolean;
+    questions: IQuestion;
     handleRefresh: () => void;
     handleSelectQuestion: (id: string) => void;
 }
@@ -39,9 +36,11 @@ export default function ALQuestionCard(props: IData) {
     const [openQueCard, setOpenQueCard] = useState(false);
     const [openDeleteCard, setOpenDeleteCard] = useState(false);
     const [openAlert, setOpenAlert] = useState(false);
-    const isUserLiked = props.likeNumber.some(
+    const isUserLiked = props.questions.likeNumber.some(
         (item) => item.userLikeId === userInfo.userId
     );
+    const [commentNumber, setCommentNumber] = useState(1);
+    const [isExpandComment, setIsExpandComment] = useState(false);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -52,11 +51,11 @@ export default function ALQuestionCard(props: IData) {
     };
 
     const handleLike = async () => {
-        await likeQuestion(props.questionId, userInfo.userId);
+        await likeQuestion(props.questions.questionId, userInfo.userId);
         props.handleRefresh();
     };
     const handleUnLike = async () => {
-        await unlikeQuestion(props.questionId, userInfo.userId);
+        await unlikeQuestion(props.questions.questionId, userInfo.userId);
         props.handleRefresh();
     };
     const handleOpenQueCard = () => {
@@ -74,6 +73,12 @@ export default function ALQuestionCard(props: IData) {
         await deleteQuestionById(id);
         props.handleRefresh();
         handleCloseDeleteCard();
+        handleClose();
+    };
+
+    const handleExpandComment = () => {
+        setIsExpandComment(true);
+        setCommentNumber(props.questions.comment.length);
     };
 
     return (
@@ -83,7 +88,7 @@ export default function ALQuestionCard(props: IData) {
                 display: "flex",
                 flexDirection: "column",
                 width: "100%",
-                height: "130px",
+                height: "auto",
             }}>
             <AlerQuestion
                 open={openAlert}
@@ -91,29 +96,26 @@ export default function ALQuestionCard(props: IData) {
             />
             <DeleteCard
                 handleClose={handleCloseDeleteCard}
-                id={props.questionId}
+                id={props.questions.questionId}
                 handleDeleteQuestion={handleDeleteQuestion}
                 open={openDeleteCard}
             />
-
             <AddQuestion
                 handleClose={handleCloseQueCard}
                 handleRefresh={props.handleRefresh}
                 handleCloseAlert={handleCloseAlert}
                 handleOpenAlert={handleOpenAlert}
                 isEdit={true}
-                questionId={props.questionId}
-                context={props.questionText}
-                ownerName={props.name}
+                questionId={props.questions.questionId}
+                context={props.questions.questionText}
+                ownerName={props.questions.name}
                 openQueCard={openQueCard}
             />
-
             <Box
                 sx={{
                     display: "flex",
                     paddingLeft: "20px",
                     paddingTop: "15px",
-                    marginBottom: "5px",
                     fontSize: "13px",
                     justifyContent: "space-between",
                     alignItems: "center",
@@ -121,7 +123,7 @@ export default function ALQuestionCard(props: IData) {
                 }}>
                 <Box sx={{ width: "90%", display: "flex" }}>
                     <Box sx={{ color: "black", marginRight: "5px" }}>
-                        {props.name}
+                        {props.questions.name}
                     </Box>
                     <Box sx={{ marginTop: "-3px" }}>.</Box>
                     <Box
@@ -130,9 +132,9 @@ export default function ALQuestionCard(props: IData) {
                             marginLeft: "5px",
                             marginRight: "5px",
                         }}>
-                        {props.timestamp}
+                        {props.questions.timestamp.toLocaleString()}
                     </Box>
-                    {props.isEdit && (
+                    {props.questions.isEdit && (
                         <>
                             <Box sx={{ marginTop: "-3px" }}>.</Box>
                             <Box sx={{ color: "#2ECC71", marginLeft: "5px" }}>
@@ -142,6 +144,7 @@ export default function ALQuestionCard(props: IData) {
                     )}
                 </Box>
                 <IconButton
+                    disabled={userInfo.userId !== props.questions.ownerId}
                     aria-controls={open ? "basic-menu" : undefined}
                     aria-haspopup="true"
                     aria-expanded={open ? "true" : undefined}
@@ -150,10 +153,6 @@ export default function ALQuestionCard(props: IData) {
                     <MoreHorizOutlinedIcon />
                 </IconButton>
                 <Menu
-                    anchorOrigin={{
-                        vertical: "bottom",
-                        horizontal: "right",
-                    }}
                     onClose={handleClose}
                     anchorEl={anchorEl}
                     open={open}
@@ -190,10 +189,12 @@ export default function ALQuestionCard(props: IData) {
                 </Menu>
             </Box>
             <Typography
-                onClick={() => props.handleSelectQuestion(props.questionId)}
+                onClick={() =>
+                    props.handleSelectQuestion(props.questions.questionId)
+                }
                 sx={{ paddingLeft: "20px", cursor: "pointer" }}
                 fontWeight={"mediums"}>
-                {props.questionText}
+                {props.questions.questionText}
             </Typography>
             <Box
                 sx={{
@@ -213,14 +214,18 @@ export default function ALQuestionCard(props: IData) {
                         color: "#6C6C6C",
                         cursor: "pointer",
                     }}>
-                    {props.likeNumber.length == 0 ? (
+                    {props.questions.likeNumber.length == 0 ? (
                         <>
                             <Box
                                 onClick={() => handleLike()}
                                 sx={{
                                     width: "53px",
                                     height: "24px",
-                                    color: "#6C6C6C",
+                                    color: "#1C1C1C",
+                                    display: "flex",
+                                    fontSize: "13px",
+                                    alignContent: "center",
+                                    alignItems: "center",
                                     borderRadius: "8px",
                                 }}>
                                 <ThumbUpOutlinedIcon
@@ -231,55 +236,108 @@ export default function ALQuestionCard(props: IData) {
                     ) : (
                         <>
                             {isUserLiked ? (
-                                <Button
-                                    startIcon={
-                                        <ThumbUpIcon
-                                            sx={{
-                                                width: "16px",
-                                                height: "16px",
-                                            }}
-                                        />
-                                    }
+                                <Box
                                     onClick={() => handleUnLike()}
                                     sx={{
                                         width: "53px",
                                         height: "24px",
-                                        color: "#2ECC71",
+                                        color: "#1C1C1C",
                                         borderRadius: "8px",
-                                        background: "black",
+                                        display: "flex",
+                                        fontSize: "13px",
+                                        alignContent: "center",
+                                        alignItems: "center",
+                                        gap: "3px",
                                     }}>
-                                    <Typography fontSize={13} color={"white"}>
-                                        {props.likeNumber.length}
-                                    </Typography>
-                                </Button>
+                                    <ThumbUpIcon
+                                        sx={{
+                                            width: "16px",
+                                            height: "16px",
+                                        }}
+                                    />
+                                    {props.questions.likeNumber.length}
+                                </Box>
                             ) : (
-                                <Button
+                                <Box
                                     onClick={() => handleLike()}
                                     sx={{
                                         width: "53px",
                                         height: "24px",
-                                        color: "#6C6C6C",
+                                        color: "#1C1C1C",
                                         borderRadius: "8px",
-                                        background: "#F7F7F7",
-                                        fontSize: "16px",
-                                    }}
-                                    startIcon={
-                                        <ThumbUpOutlinedIcon
-                                            sx={{
-                                                width: "16px",
-                                                height: "16px",
-                                            }}
-                                        />
-                                    }>
-                                    <Typography fontSize={13}>
-                                        {props.likeNumber.length}
-                                    </Typography>
-                                </Button>
+                                        display: "flex",
+                                        fontSize: "13px",
+                                        alignContent: "center",
+                                        alignItems: "center",
+                                        gap: "3px",
+                                    }}>
+                                    <ThumbUpIcon
+                                        sx={{
+                                            width: "16px",
+                                            height: "16px",
+                                        }}
+                                    />
+                                    {props.questions.likeNumber.length}
+                                </Box>
                             )}
                         </>
                     )}
                 </Box>
             </Box>
+            <Box
+                sx={{
+                    padding: "10px 14px 0px 14px",
+                }}>
+                {props.questions.comment.length != 0 &&
+                    props.questions.comment
+                        .slice(0, commentNumber)
+                        .sort((a, b) => {
+                            const timestampA =
+                                a.timestamp instanceof Date
+                                    ? a.timestamp.getTime()
+                                    : 0;
+                            const timestampB =
+                                b.timestamp instanceof Date
+                                    ? b.timestamp.getTime()
+                                    : 0;
+                            return timestampB - timestampA;
+                        })
+                        .map((item, index) => (
+                            <Box key={index} sx={{ marginBottom: "16px" }}>
+                                <Comment
+                                    isHost={false}
+                                    ownerName={item.name}
+                                    date={item.timestamp.toLocaleString()}
+                                    context={item.context}
+                                    commentId={item.commentId}
+                                    questionId={props.questions.questionId}
+                                    handleRefresh={props.handleRefresh}
+                                />
+                            </Box>
+                        ))}
+            </Box>
+            {props.questions.comment.length > 1 && !isExpandComment && (
+                <Box
+                    onClick={handleExpandComment}
+                    sx={{
+                        padding: "0px 14px 10px 14px",
+                        display: "flex",
+                        alignContent: "center",
+                        alignItems: "center",
+                        gap: "5px",
+                        cursor: "pointer",
+                    }}>
+                    <AddCircleOutlineIcon sx={{ color: "#2ECC71" }} />
+                    <Box
+                        sx={{
+                            color: "#6C6C6C",
+                            fontSize: "15px",
+                            fontFamily: "Inter",
+                        }}>
+                        {props.questions.comment.length - 1} more comment
+                    </Box>
+                </Box>
+            )}
         </Box>
     );
 }

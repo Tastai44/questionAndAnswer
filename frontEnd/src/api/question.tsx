@@ -1,5 +1,9 @@
 import axios from "axios";
-import { IAddQuestion, IComment, IEditQuestion } from "../interface/IQuestion";
+import {
+    IAddComment,
+    IAddQuestion,
+    IEditQuestion,
+} from "../interface/IQuestion";
 
 export const getQuestions = async () => {
     try {
@@ -124,7 +128,7 @@ export const unlikeQuestion = async (questionId: string, userId: string) => {
     }
 };
 
-export const addComment = async (comment: IComment, questionId: string) => {
+export const addComment = async (comment: IAddComment, questionId: string) => {
     try {
         return await axios.post(
             `${import.meta.env.VITE_EVENT}/addcomment/${questionId}`,
@@ -144,6 +148,19 @@ export const updateQuestion = async (
         return await axios.post(
             `${import.meta.env.VITE_EVENT}/updateQuestion/${questionId}`,
             question
+        );
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
+export const deleteComment = async (commentId: string, questionId: string) => {
+    try {
+        return await axios.delete(
+            `${
+                import.meta.env.VITE_EVENT
+            }/deleteComment/${commentId}/${questionId}`
         );
     } catch (error) {
         console.error(error);

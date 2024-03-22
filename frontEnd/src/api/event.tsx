@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Ievent } from "../interface/Ievent";
+import { IPostevent } from "../interface/Ievent";
 
 export const getEvent = async () => {
     try {
@@ -23,8 +23,19 @@ export const getEventById = async (eventId: string) => {
         throw error;
     }
 };
+export const getEventByRoomId = async (roomId: string) => {
+    try {
+        const response = await axios.get(
+            `${import.meta.env.VITE_EVENT}/eventByRoomId/${roomId}`
+        );
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
 
-export const createEvent = async (event: Ievent) => {
+export const createEvent = async (event: IPostevent) => {
     try {
         return await axios.post(
             `${import.meta.env.VITE_EVENT}/createEvent`,

@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { themeApp } from "../utils/Theme";
-import { getEventById } from "../api/event";
+import { getEventByRoomId } from "../api/event";
 import { Ievent } from "../interface/Ievent";
 import { addUser } from "../api/audience";
 
@@ -26,9 +26,9 @@ export default function Event() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const data = await getEventById(eventId ?? "");
-            if (data) {
-                setEventData(data);
+            const data = await getEventByRoomId(eventId ?? "");
+            if (data[0]) {
+                setEventData(data[0]);
             } else {
                 navigate("/page404");
             }
@@ -36,7 +36,7 @@ export default function Event() {
 
         fetchData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [eventId]);
+    }, []);
 
     const handleName = (event: React.ChangeEvent<HTMLInputElement>) => {
         setUsername(event.target.value);
@@ -54,7 +54,7 @@ export default function Event() {
                 name: userName,
             };
             localStorage.setItem("user", JSON.stringify(saveUser));
-            navigate(`/eventDetails/${eventId}/${userName}`);
+            navigate(`/eventDetails/${eventData?.eventId}/${userName}`);
         } else {
             setError("Please type your name!");
         }

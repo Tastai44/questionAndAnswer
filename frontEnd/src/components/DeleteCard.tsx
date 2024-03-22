@@ -1,4 +1,4 @@
-import { Box, Typography, Divider, Button, Modal } from "@mui/material";
+import { Box, Typography, Button, Modal } from "@mui/material";
 import { themeApp } from "../utils/Theme";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 
@@ -55,19 +55,13 @@ export default function DeleteCard(props: IData) {
                             Your question will be remove from Q&A <br />
                             and no way to return it.
                         </Box>
-                        <Divider
-                            sx={{
-                                width: "100%",
-                                marginTop: "60px",
-                                border: "0.5px solid #1C1C1C",
-                            }}
-                        />
                         <Box
                             sx={{
                                 display: "flex",
                                 flexDirection: "column",
                                 textAlign: "center",
                                 width: "100%",
+                                marginTop: "60px",
                             }}>
                             <Box
                                 sx={{
@@ -93,7 +87,7 @@ export default function DeleteCard(props: IData) {
                                             width: "370px",
                                         },
                                     }}>
-                                    Delete
+                                    Remove
                                 </Button>
                             </Box>
                             <Box
@@ -111,11 +105,11 @@ export default function DeleteCard(props: IData) {
                                         marginTop: "10px",
                                         height: "49px",
                                         marginBottom: "10px",
-                                        border: "1px solid black",
+                                        border: "1px solid #9C9C9C",
                                         "&:hover": {
                                             background: "white",
                                             color: "black",
-                                            border: "1px solid black",
+                                            border: "1px solid #9C9C9C",
                                         },
                                         [themeApp.breakpoints.up("md")]: {
                                             width: "370px",

@@ -3,17 +3,25 @@ export interface IAddQuestion {
     ownerId: string;
     name: string;
     eventId: string;
-    timestamp: string;
+    timestamp: Date;
 }
 
 export interface IEditQuestion {
     questionText: string;
-    timestamp: string;
+    timestamp: Date;
 }
 
 export interface IComment {
+    commentId: string;
     ownerId: string;
     name: string;
     context: string;
-    timestamp: string;
+    timestamp: Date;
+}
+
+export interface IAddComment {
+    ownerId: string;
+    name: string;
+    context: string;
+    timestamp: Date;
 }

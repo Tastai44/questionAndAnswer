@@ -1,9 +1,17 @@
-import { Box, Button, Modal } from "@mui/material";
+import {
+    Box,
+    Button,
+    Divider,
+    IconButton,
+    Modal,
+    Typography,
+} from "@mui/material";
 import { themeApp } from "../utils/Theme";
 import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createQuestion, updateQuestion } from "../api/question";
 // import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
+import CloseIcon from "@mui/icons-material/Close";
 
 interface IData {
     handleClose: () => void;
@@ -20,9 +28,13 @@ interface IData {
 export default function AddQuestion(props: IData) {
     const userInfo = JSON.parse(localStorage.getItem("user") || "null");
     const { eventId } = useParams();
-    const [text, setText] = useState(props.context);
+    const [text, setText] = useState("");
 
-    const now = new Date().toISOString();
+    useEffect(() => {
+        setText(props.context);
+    }, [props.context]);
+
+    const now = new Date();
 
     const handleAddQuestion = async () => {
         try {
@@ -31,11 +43,11 @@ export default function AddQuestion(props: IData) {
                 ownerId: userInfo.userId,
                 name: userInfo.name,
                 eventId: eventId || "",
-                timestamp: `${now}`,
+                timestamp: now,
             };
             const editData = {
                 questionText: text,
-                timestamp: `${now}`,
+                timestamp: now,
             };
             if (props.isEdit) {
                 await updateQuestion(props.questionId ?? "", editData);
@@ -86,7 +98,8 @@ export default function AddQuestion(props: IData) {
                         <Box
                             sx={{
                                 display: "flex",
-                                paddingLeft: "20px",
+                                paddingLeft: "14px",
+                                paddingRight: "14px",
                                 paddingTop: "10px",
                                 marginBottom: "5px",
                                 fontSize: "13px",
@@ -96,21 +109,50 @@ export default function AddQuestion(props: IData) {
                             }}>
                             <Box
                                 sx={{
-                                    width: "50%",
+                                    width: "100%",
                                     display: "flex",
-                                    paddingTop: "10px",
-                                    marginBottom: "5px",
+                                    justifyContent: "space-between",
+                                    alignContent: "center",
+                                    alignItems: "center",
                                 }}>
-                                <Box
-                                    sx={{
-                                        fontSize: "13px",
-                                        color: "black",
-                                        marginRight: "5px",
-                                        fontFamily: "Inter",
-                                    }}>
-                                    {props.ownerName}
-                                </Box>
+                                {props.isEdit ? (
+                                    <Box
+                                        sx={{
+                                            fontSize: "17px",
+                                            color: "black",
+                                            marginRight: "5px",
+                                            fontFamily: "Inter",
+                                            fontWeight: "medium",
+                                        }}>
+                                        Edit question
+                                    </Box>
+                                ) : (
+                                    <Box
+                                        sx={{
+                                            fontSize: "17px",
+                                            color: "black",
+                                            marginRight: "5px",
+                                            fontFamily: "Inter",
+                                            fontWeight: "medium",
+                                        }}>
+                                        New question
+                                    </Box>
+                                )}
+                                <IconButton
+                                    onClick={props.handleClose}
+                                    size="small">
+                                    <CloseIcon />
+                                </IconButton>
                             </Box>
+                        </Box>
+                        <Divider sx={{ marginBottom: "16px" }} />
+                        <Box
+                            sx={{
+                                marginBottom: "14px",
+                                marginLeft: "14px",
+                                textAlign: "left",
+                            }}>
+                            <Typography>{props.ownerName}</Typography>
                         </Box>
                         <Box
                             sx={{
@@ -122,15 +164,18 @@ export default function AddQuestion(props: IData) {
                             <Box
                                 sx={{
                                     display: "flex",
-                                    background: "#F7F7F7",
-                                    borderRadius: "14px",
-                                    width: "95%",
+                                    background: "white",
+                                    borderRadius: "8px",
+                                    width: "100%",
+                                    marginRight: "14px",
+                                    marginLeft: "14px",
+                                    border: "1px solid #2ECC71",
                                 }}>
                                 <Box
                                     sx={{
                                         width: "100%",
                                         borderRadius: "14px",
-                                        marginTop: "20px",
+                                        marginTop: "10px",
                                     }}>
                                     <textarea
                                         value={text}
@@ -140,7 +185,6 @@ export default function AddQuestion(props: IData) {
                                         style={{
                                             borderRadius: "14px",
                                             fontSize: "17px",
-                                            background: "#F7F7F7",
                                             width: "95%",
                                             border: "none",
                                             outline: "none",
@@ -156,51 +200,29 @@ export default function AddQuestion(props: IData) {
                         </Box>
                         <Box
                             sx={{
+                                width: "100%",
                                 display: "flex",
-                                justifyContent: "flex-end",
-                                marginBottom: "14px",
-                                marginLeft: "10px",
-                                marginRight: "10px",
-                                gap: "10px",
+                                justifyContent: "center",
                             }}>
-                            <Button
-                                sx={{
-                                    height: "49px",
-                                    color: "#000000",
-                                    borderRadius: "14px",
-                                    marginTop: "24px",
-                                    border: "1px solid #9C9C9C",
-                                    width: "86px",
-                                    textTransform: "none",
-                                    "&:hover": {
-                                        background: "white",
-                                        color: "black",
-                                        border: "1px solid #000000",
-                                    },
-                                    [themeApp.breakpoints.up("lg")]: {
-                                        width: "86px",
-                                    },
-                                    fontFamily: "Inter",
-                                }}
-                                onClick={props.handleClose}>
-                                Cancel
-                            </Button>
                             <Button
                                 disabled={text == ""}
                                 sx={{
                                     height: "49px",
                                     color: "black",
                                     borderRadius: "14px",
-                                    marginTop: "24px",
+                                    marginTop: "25px",
                                     border: "1px solid #2ECC71",
+                                    marginLeft: "10px",
+                                    marginRight: "10px",
                                     background: "#2ECC71",
-                                    width: "147px",
+                                    marginBottom: "13px",
+                                    width: "100%",
                                     "&:hover": {
                                         background: "#2ECC71",
                                         color: "black",
                                     },
                                     [themeApp.breakpoints.up("lg")]: {
-                                        width: "147px",
+                                        width: "370px",
                                     },
                                     fontFamily: "Inter",
                                     textTransform: "none",

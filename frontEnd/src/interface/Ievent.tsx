@@ -7,6 +7,12 @@ export interface Ievent {
     ownerName: string;
 }
 
+export interface IPostevent {
+    temRoomId: string;
+    title: string;
+    ownerName: string;
+}
+
 export interface IQuestion {
     questionId: string;
     questionText: string;
@@ -16,7 +22,7 @@ export interface IQuestion {
     isRead: boolean;
     isSave: boolean;
     isEdit: boolean;
-    timestamp: string;
+    timestamp: Date;
     likeNumber: { userLikeId: string }[];
     comment: IComment[];
 }

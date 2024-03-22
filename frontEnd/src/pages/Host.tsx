@@ -28,11 +28,10 @@ export default function Host() {
             random.toString().padStart(2, "0");
         return combinedNumber;
     };
-    console.log(generateRandomNumber());
+
     const handleCreateEvent = async () => {
         if (hostName !== "" && eventName !== "") {
             const event = {
-                eventId: "",
                 temRoomId: generateRandomNumber(),
                 title: eventName,
                 ownerName: hostName,

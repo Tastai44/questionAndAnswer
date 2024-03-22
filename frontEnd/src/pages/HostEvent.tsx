@@ -2,7 +2,7 @@ import { Box, Divider, IconButton, Modal, Typography } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import QuestionCard from "../components/QuestionCard";
+import QuestionCard from "../components/QuestionCard/QuestionHostCard";
 import { getEventById } from "../api/event";
 import { IQuestion, Ievent } from "../interface/Ievent";
 import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined";
@@ -54,6 +54,7 @@ export default function HostEvent(props: IData) {
 
     const handleChange = (newValue: number) => {
         setValue(newValue);
+        props.handleRefresh();
     };
 
     const handleCopyText = (text: string) => {
@@ -84,36 +85,22 @@ export default function HostEvent(props: IData) {
                         <Box sx={{ display: "flex", justifyContent: "center" }}>
                             <HostEventMenu
                                 handleClose={handleClose}
-                                eventId={eventId ?? ""}
+                                eventId={eventData.temRoomId}
                                 title={eventData.title}
                                 hostName={eventData.ownerName}
                             />
                         </Box>
                     </Modal>
-                    <Modal open={openCard}>
-                        <Box
-                            sx={{
-                                position: "absolute",
-                                top: "40%",
-                                left: "50%",
-                                transform: "translate(-50%, -50%)",
-                                bgcolor: "background.paper",
-                                borderRadius: "20px",
-                                width: "90%",
-                                [themeApp.breakpoints.up("md")]: {
-                                    width: "398px",
-                                },
-                            }}>
-                            <PreviewQuestion
-                                questionId={selectedQId}
-                                handleCloseCard={handleCloseCard}
-                                handleRefresh={props.handleRefresh}
-                                isHost={true}
-                                ownerId={eventData.eventId}
-                                ownerName={eventData.ownerName}
-                            />
-                        </Box>
-                    </Modal>
+                    <PreviewQuestion
+                        questionId={selectedQId}
+                        handleCloseCard={handleCloseCard}
+                        handleRefresh={props.handleRefresh}
+                        isHost={true}
+                        ownerId={eventData.eventId}
+                        ownerName={eventData.ownerName}
+                        openPreviewCard={openCard}
+                        refresh={props.refresh}
+                    />
                     <Box
                         sx={{
                             display: "flex",
@@ -227,7 +214,7 @@ export default function HostEvent(props: IData) {
                                         <Box
                                             sx={{
                                                 display: "flex",
-                                                fontSize: "12px",
+                                                fontSize: "14px",
                                                 alignItems: "center",
                                                 justifyContent: "center",
                                                 marginLeft: "10px",
@@ -300,6 +287,7 @@ export default function HostEvent(props: IData) {
                                                 justifyContent: "center",
                                                 marginLeft: "10px",
                                                 borderRadius: "4px",
+                                                fontSize: "14px",
                                                 color:
                                                     value == 2
                                                         ? "#2ECC71"
@@ -324,15 +312,17 @@ export default function HostEvent(props: IData) {
                                 <Box>
                                     {questions.length !== 0 ? (
                                         questions
-                                            .sort(
-                                                (a, b) =>
-                                                    Number(
-                                                        new Date(b.timestamp)
-                                                    ) -
-                                                    Number(
-                                                        new Date(a.timestamp)
-                                                    )
-                                            )
+                                            .sort((a, b) => {
+                                                const timestampA =
+                                                    a.timestamp instanceof Date
+                                                        ? a.timestamp.getTime()
+                                                        : 0;
+                                                const timestampB =
+                                                    b.timestamp instanceof Date
+                                                        ? b.timestamp.getTime()
+                                                        : 0;
+                                                return timestampB - timestampA;
+                                            })
                                             .sort((a, b) =>
                                                 a.isRead === b.isRead
                                                     ? 0
@@ -340,30 +330,12 @@ export default function HostEvent(props: IData) {
                                                     ? 1
                                                     : -1
                                             )
-                                            .filter(
-                                                (que) => que.isSave == false
-                                            )
                                             .map((item, index) => (
                                                 <Box
                                                     key={index}
                                                     sx={{ cursor: "pointer" }}>
                                                     <QuestionCard
-                                                        name={item.name}
-                                                        timestamp={
-                                                            item.timestamp
-                                                        }
-                                                        likeNumber={
-                                                            item.likeNumber
-                                                        }
-                                                        questionText={
-                                                            item.questionText
-                                                        }
-                                                        isRead={item.isRead}
-                                                        isSave={item.isSave}
-                                                        isEdit={item.isEdit}
-                                                        questionId={
-                                                            item.questionId
-                                                        }
+                                                        questions={item}
                                                         handleRefresh={
                                                             props.handleRefresh
                                                         }
@@ -402,11 +374,11 @@ export default function HostEvent(props: IData) {
                                                     alignContent: "center",
                                                     alignItems: "center",
                                                 }}>
-                                                Code: {eventId}
+                                                Code: {eventData.temRoomId}
                                                 <IconButton
                                                     onClick={() =>
                                                         handleCopyText(
-                                                            eventId ?? ""
+                                                            eventData.temRoomId
                                                         )
                                                     }>
                                                     <ContentCopyOutlinedIcon />
@@ -458,22 +430,7 @@ export default function HostEvent(props: IData) {
                                                     key={index}
                                                     sx={{ cursor: "pointer" }}>
                                                     <QuestionCard
-                                                        name={item.name}
-                                                        timestamp={
-                                                            item.timestamp
-                                                        }
-                                                        likeNumber={
-                                                            item.likeNumber
-                                                        }
-                                                        questionText={
-                                                            item.questionText
-                                                        }
-                                                        isRead={item.isRead}
-                                                        isSave={item.isSave}
-                                                        isEdit={item.isEdit}
-                                                        questionId={
-                                                            item.questionId
-                                                        }
+                                                        questions={item}
                                                         handleRefresh={
                                                             props.handleRefresh
                                                         }
@@ -520,22 +477,7 @@ export default function HostEvent(props: IData) {
                                                             cursor: "pointer",
                                                         }}>
                                                         <QuestionCard
-                                                            name={item.name}
-                                                            timestamp={
-                                                                item.timestamp
-                                                            }
-                                                            likeNumber={
-                                                                item.likeNumber
-                                                            }
-                                                            questionText={
-                                                                item.questionText
-                                                            }
-                                                            isRead={item.isRead}
-                                                            isSave={item.isSave}
-                                                            isEdit={item.isEdit}
-                                                            questionId={
-                                                                item.questionId
-                                                            }
+                                                            questions={item}
                                                             handleRefresh={
                                                                 props.handleRefresh
                                                             }
