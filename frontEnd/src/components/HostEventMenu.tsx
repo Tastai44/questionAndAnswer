@@ -13,6 +13,7 @@ interface IData {
     eventId: string;
     title: string;
     hostName: string;
+    open: boolean;
 }
 
 export default function HostEventMenu(props: IData) {
@@ -34,139 +35,142 @@ export default function HostEventMenu(props: IData) {
     };
 
     return (
-        <>
-            <Modal open={open}>
-                <Box
-                    sx={{
-                        position: "absolute",
-                        top: "40%",
-                        left: "50%",
-                        transform: "translate(-50%, -50%)",
-                        bgcolor: "background.paper",
-                        boxShadow: 24,
-                        borderRadius: "20px",
-                        width: "90%",
-                        [themeApp.breakpoints.up("md")]: {
-                            width: "398px",
-                        },
-                    }}>
-                    <CloseEventCard
-                        handleClose={handleCloseCard}
-                        id={props.eventId}
-                        handleDelete={handleEndEvent}
-                    />
-                </Box>
-            </Modal>
-            <Box
-                sx={{
-                    background: "black",
-                    height: "250px",
-                    width: "100%",
+        <Box>
+            <CloseEventCard
+                handleClose={handleCloseCard}
+                id={props.eventId}
+                open={open}
+                handleDelete={handleEndEvent}
+            />
+            <Modal open={props.open}>
+                <Box sx={{
+                    display: "flex",
+                    justifyContent: "center",
                     [themeApp.breakpoints.up("md")]: {
-                        width: "430px",
+                        marginLeft: "-16px",
                     },
                 }}>
-                <Box
-                    sx={{
-                        display: "flex",
-                        width: "100%",
-                        justifyContent: "space-between",
-                        alignContent: "center",
-                        alignItems: "center",
-                    }}>
-                    <Typography
-                        fontFamily={"Inter"}
-                        color={"#2ECC71"}
-                        fontSize={"32px"}
+                    <Box
+                        // sx={{
+                        //     background: "black",
+                        //     height: "250px",
+                        //     width: "100%",
+                        //     [themeApp.breakpoints.up("md")]: {
+                        //         width: "430px",
+                        //     },
+                        // }}
                         sx={{
-                            marginLeft: "16px",
-                            marginTop: "10px",
-                            fontWeight: "bold",
-                        }}>
-                        {props.title}
-                    </Typography>
-                    <IconButton
-                        size="large"
-                        sx={{
-                            width: "32px",
-                            height: "32px",
-                            marginRight: "16px",
-                            color: "white",
+                            background: "black",
+                            border: "0px",
+                            width: "100%",
+                            [themeApp.breakpoints.up("md")]: {
+                                width: "430px",
+                            },
                         }}
-                        onClick={props.handleClose}>
-                        <CloseIcon />
-                    </IconButton>
-                </Box>
-                <Box
-                    textAlign={"left"}
-                    color={"white"}
-                    fontSize={"17px"}
-                    sx={{
-                        marginBottom: "30px",
-                        marginLeft: "16px",
-                        fontFamily: "Inter",
-                    }}>
-                    {props.hostName}
-                </Box>
+                    >
+                        <Box
+                            sx={{
+                                display: "flex",
+                                width: "100%",
+                                justifyContent: "space-between",
+                                alignContent: "center",
+                                alignItems: "center",
+                            }}>
+                            <Typography
+                                fontFamily={"Inter"}
+                                color={"#2ECC71"}
+                                fontSize={"32px"}
+                                sx={{
+                                    marginLeft: "16px",
+                                    marginTop: "10px",
+                                    fontWeight: "bold",
+                                }}>
+                                {props.title}
+                            </Typography>
+                            <IconButton
+                                size="large"
+                                sx={{
+                                    width: "32px",
+                                    height: "32px",
+                                    marginRight: "16px",
+                                    color: "white",
+                                }}
+                                onClick={props.handleClose}>
+                                <CloseIcon />
+                            </IconButton>
+                        </Box>
+                        <Box
+                            textAlign={"left"}
+                            color={"white"}
+                            fontSize={"17px"}
+                            sx={{
+                                marginBottom: "30px",
+                                marginLeft: "16px",
+                                fontFamily: "Inter",
+                            }}>
+                            {props.hostName}
+                        </Box>
 
-                <Box
-                    sx={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignContent: "center",
-                        alignItems: "center",
-                        marginTop: "10px",
-                        marginLeft: "16px",
-                        color: "white",
-                    }}>
-                    <Box>Link: {patch}</Box>
-                    <IconButton
-                        onClick={() =>
-                            handleCopyText("http://localhost:5173" + patch)
-                        }
-                        sx={{ marginRight: "16px", color: "white" }}>
-                        <ContentCopy fontSize="small" />
-                    </IconButton>
-                </Box>
-                <Box
-                    sx={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignContent: "center",
-                        alignItems: "center",
-                        marginTop: "10px",
-                        marginLeft: "16px",
-                        color: "white",
-                    }}>
-                    <Box>Code: {props.eventId}</Box>
-                    <IconButton
-                        onClick={() => handleCopyText(props.eventId)}
-                        sx={{ marginRight: "16px", color: "white" }}>
-                        <ContentCopy fontSize="small" />
-                    </IconButton>
-                </Box>
+                        <Box
+                            sx={{
+                                display: "flex",
+                                justifyContent: "space-between",
+                                alignContent: "center",
+                                alignItems: "center",
+                                marginTop: "10px",
+                                marginLeft: "16px",
+                                color: "white",
+                            }}>
+                            <Box>Link: {patch}</Box>
+                            <IconButton
+                                onClick={() =>
+                                    handleCopyText("http://localhost:5173" + patch)
+                                }
+                                sx={{ marginRight: "16px", color: "white" }}>
+                                <ContentCopy fontSize="small" />
+                            </IconButton>
+                        </Box>
+                        <Box
+                            sx={{
+                                display: "flex",
+                                justifyContent: "space-between",
+                                alignContent: "center",
+                                alignItems: "center",
+                                marginTop: "10px",
+                                marginLeft: "16px",
+                                color: "white",
+                            }}>
+                            <Box>Code: {props.eventId}</Box>
+                            <IconButton
+                                onClick={() => handleCopyText(props.eventId)}
+                                sx={{ marginRight: "16px", color: "white" }}>
+                                <ContentCopy fontSize="small" />
+                            </IconButton>
+                        </Box>
 
-                <Box
-                    sx={{
-                        display: "flex",
-                        alignContent: "center",
-                        alignItems: "center",
-                        marginTop: "10px",
-                        cursor: "pointer",
-                        color: "black",
-                        transition: "background-color 0.3s ease",
-                        marginLeft: "10px",
-                        "&:hover": {
-                            backgroundColor: "rgba(0, 0, 0, 0.1)",
-                        },
-                    }}
-                    onClick={handleCloseCard}>
-                    <IconButton sx={{ color: "white" }}>
-                        <LogoutIcon fontSize="small" />
-                    </IconButton>
-                    <Box sx={{ color: "white" }}>End this event</Box>
+                        <Box
+                            sx={{
+                                display: "flex",
+                                alignContent: "center",
+                                alignItems: "center",
+                                marginTop: "10px",
+                                cursor: "pointer",
+                                color: "black",
+                                transition: "background-color 0.3s ease",
+                                marginLeft: "10px",
+                                "&:hover": {
+                                    backgroundColor: "rgba(0, 0, 0, 0.1)",
+                                },
+                            }}
+                            onClick={handleCloseCard}>
+                            <IconButton sx={{ color: "white" }}>
+                                <LogoutIcon fontSize="small" />
+                            </IconButton>
+                            <Box sx={{ color: "white" }}>End this event</Box>
+                        </Box>
+                    </Box>
                 </Box>
-            </Box>
-        </>
+            </Modal>
+        </Box>
     );
 }

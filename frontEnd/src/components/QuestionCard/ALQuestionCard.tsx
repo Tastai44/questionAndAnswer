@@ -18,13 +18,13 @@ import ModeEditOutlinedIcon from "@mui/icons-material/ModeEditOutlined";
 import AddQuestion from "../AddEditQuestion";
 import { useState } from "react";
 import AlerQuestion from "../AlerQuestion";
-import DeleteCard from "../DeleteCard";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import { IQuestion } from "../../interface/Ievent";
 import Comment from "./Comment";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { getTimeDifferenceInMinutes } from "../../helper/getTime";
+import ConfirmModalCard from "../ConfirmModalCard";
 
 interface IData {
     isMy?: boolean;
@@ -83,6 +83,11 @@ export default function ALQuestionCard(props: IData) {
         setCommentNumber(props.questions.comment.length);
     };
 
+    const handleOpenConfirm = () => {
+        handleDeleteQuestion(props.questions.questionId);
+        setOpenDeleteCard(!openDeleteCard);
+    };
+
     return (
         <Box
             sx={{
@@ -96,11 +101,18 @@ export default function ALQuestionCard(props: IData) {
                 open={openAlert}
                 context="Your question has been edited!"
             />
-            <DeleteCard
+            {/* <DeleteCard
                 handleClose={handleCloseDeleteCard}
                 id={props.questions.questionId}
                 handleDeleteQuestion={handleDeleteQuestion}
                 open={openDeleteCard}
+            /> */}
+            <ConfirmModalCard
+                open={openDeleteCard}
+                discard={false}
+                handleClose={() => setOpenDeleteCard(!openDeleteCard)}
+                handleDeleteDiscard={handleOpenConfirm}
+                context="Deleting question is permanent and cannot be undone."
             />
             <AddQuestion
                 handleClose={handleCloseQueCard}

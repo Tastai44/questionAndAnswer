@@ -25,6 +25,8 @@ import { themeApp } from "../../utils/Theme";
 import AudienceButton from "./AudienceButton";
 import HostButton from "./HostButton";
 import ConfirmModalCard from "../ConfirmModalCard";
+import dayjs from 'dayjs';
+
 
 interface IData {
     questionId: string;
@@ -57,7 +59,7 @@ export default function PreviewQuestion(props: IData) {
             if (data) {
                 setQuestions(data);
                 const isUserLiked = data.likeNumber.some(
-                    (item: { userLikeId: string }) =>
+                    (item: { userLikeId: string; }) =>
                         item.userLikeId === userInfo.userId
                 );
                 const isOwner = data.ownerId == userInfo.userId;
@@ -156,6 +158,7 @@ export default function PreviewQuestion(props: IData) {
                     transform: "translate(-50%, -50%)",
                     bgcolor: "background.paper",
                     borderRadius: "20px",
+                    border: "0px",
                     width: "90%",
                     height: "auto",
                     [themeApp.breakpoints.up("md")]: {
@@ -327,15 +330,31 @@ export default function PreviewQuestion(props: IData) {
                                 fontFamily={"Inter"}>
                                 {questions.questionText}
                             </Typography>
-                            <Typography
-                                textAlign={"left"}
-                                sx={{
-                                    color: "#6C6C6C",
-                                    marginLeft: "16px",
-                                    marginBottom: "5px",
-                                }}>
-                                {questions.timestamp.toLocaleString()}
-                            </Typography>
+                            <Box sx={{
+                                display: "flex", marginLeft: "16px",
+                                marginBottom: "5px",
+                            }}>
+                                <Typography
+                                    textAlign={"left"}
+                                    sx={{
+                                        color: "#6C6C6C",
+                                    }}>
+                                    {
+                                        dayjs(questions.timestamp.toLocaleString()).format('hh:mm:ss A')
+                                    }
+                                </Typography>
+                                <Box sx={{ marginTop: "-2.5px", marginLeft: "3px", marginRight: "3px" }}>.</Box>
+                                <Typography
+                                    textAlign={"left"}
+                                    sx={{
+                                        color: "#6C6C6C",
+                                    }}>
+                                    {
+                                        dayjs(questions.timestamp.toLocaleString()).format('YYYY-MM-DD')
+                                    }
+                                </Typography>
+
+                            </Box>
                             <Box
                                 sx={{
                                     padding: "0px 14px 14px 14px",

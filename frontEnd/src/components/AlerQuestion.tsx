@@ -19,6 +19,7 @@ export default function AlerQuestion(props: IData) {
                         transform: "translate(-50%, -50%)",
                         bgcolor: "background.paper",
                         boxShadow: 24,
+                        border: "0px",
                         borderRadius: "20px",
                         width: "80%",
                         [themeApp.breakpoints.up("md")]: {

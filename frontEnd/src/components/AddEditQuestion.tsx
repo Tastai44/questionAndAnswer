@@ -94,6 +94,7 @@ export default function AddQuestion(props: IData) {
                         transform: "translate(-50%, -50%)",
                         bgcolor: "background.paper",
                         borderRadius: "20px",
+                        border: "0px",
                         width: "90%",
                         [themeApp.breakpoints.up("md")]: {
                             width: "398px",
@@ -159,9 +160,9 @@ export default function AddQuestion(props: IData) {
                                         onClick={
                                             text != ""
                                                 ? () =>
-                                                      setOpenConfirm(
-                                                          !openConfirm
-                                                      )
+                                                    setOpenConfirm(
+                                                        !openConfirm
+                                                    )
                                                 : props.handleClose
                                         }
                                         size="small">

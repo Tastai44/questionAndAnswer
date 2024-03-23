@@ -17,7 +17,6 @@ import {
     unSaveQuestion,
 } from "../../api/question";
 import BookmarkRemoveOutlinedIcon from "@mui/icons-material/BookmarkRemoveOutlined";
-import DeleteCard from "../DeleteCard";
 import BookmarkAddOutlinedIcon from "@mui/icons-material/BookmarkAddOutlined";
 import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
@@ -25,6 +24,7 @@ import { IQuestion } from "../../interface/Ievent";
 import Comment from "./Comment";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { getTimeDifferenceInMinutes } from "../../helper/getTime";
+import ConfirmModalCard from "../ConfirmModalCard";
 
 interface IData {
     questions: IQuestion;
@@ -68,6 +68,11 @@ export default function QuestionCard(props: IData) {
     const handleExpandComment = () => {
         setIsExpandComment(true);
         setCommentNumber(props.questions.comment.length);
+    };
+
+    const handleOpenConfirm = () => {
+        handleDeleteQuestion(props.questions.questionId);
+        setOpenDeleteCard(!openDeleteCard);
     };
 
     return (
@@ -152,11 +157,18 @@ export default function QuestionCard(props: IData) {
                         </>
                     )}
                 </Box>
-                <DeleteCard
+                {/* <DeleteCard
                     handleClose={handleCloseDeleteCard}
                     id={props.questions.questionId}
                     handleDeleteQuestion={handleDeleteQuestion}
                     open={openDeleteCard}
+                /> */}
+                <ConfirmModalCard
+                    open={openDeleteCard}
+                    discard={false}
+                    handleClose={() => setOpenDeleteCard(!openDeleteCard)}
+                    handleDeleteDiscard={handleOpenConfirm}
+                    context="Deleting question is permanent and cannot be undone."
                 />
                 <IconButton
                     aria-controls={open ? "basic-menu" : undefined}

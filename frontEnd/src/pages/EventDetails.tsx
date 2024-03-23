@@ -135,9 +135,12 @@ export default function EventDetails(props: IData) {
                     />
                     <Box
                         sx={{
+                            position: "relative",
                             display: "flex",
                             flexDirection: "column",
                             width: "100%",
+                            height: "auto",
+                            overflow: "auto",
                             [themeApp.breakpoints.up("md")]: {
                                 width: "430px",
                             },
@@ -396,7 +399,7 @@ export default function EventDetails(props: IData) {
                                                     onClick={() =>
                                                         handleCopyText(
                                                             eventData.temRoomId ??
-                                                                ""
+                                                            ""
                                                         )
                                                     }>
                                                     <ContentCopyOutlinedIcon />
@@ -457,12 +460,12 @@ export default function EventDetails(props: IData) {
                                                 .sort((a, b) => {
                                                     const timestampA =
                                                         a.timestamp instanceof
-                                                        Date
+                                                            Date
                                                             ? a.timestamp.getTime()
                                                             : 0;
                                                     const timestampB =
                                                         b.timestamp instanceof
-                                                        Date
+                                                            Date
                                                             ? b.timestamp.getTime()
                                                             : 0;
                                                     return (
@@ -514,41 +517,37 @@ export default function EventDetails(props: IData) {
                                 </>
                             )}
                         </Box>
-                    </Box>
-                    <Box
-                        sx={{
-                            display: "flex",
-                            justifyContent: "flex-end",
-                            position: "fixed",
-                            bottom: 10,
-                            right: "0px",
-                            [themeApp.breakpoints.up("md")]: {
-                                width: "420px",
-                            },
-                        }}>
-                        <IconButton
-                            onClick={handleOpenQueCard}
+                        <Box
                             sx={{
-                                width: "60px",
-                                height: "60px",
-                                background: "#2AC75F",
-                                marginRight: "10px",
-                                [themeApp.breakpoints.up("md")]: {
-                                    marginRight: "0px",
-                                },
-                                "&:hover": {
-                                    background: "#2AC75F",
-                                    color: "black",
-                                },
-                            }}>
-                            <AddIcon
+                                position: "fixed",
+                                bottom: 10,
+                                right: "0px",
+                            }}
+                        >
+                            <IconButton
+                                onClick={handleOpenQueCard}
                                 sx={{
-                                    color: "black",
-                                    width: "24px",
-                                    height: "24px",
-                                }}
-                            />
-                        </IconButton>
+                                    width: "60px",
+                                    height: "60px",
+                                    background: "#2AC75F",
+                                    marginRight: "10px",
+                                    [themeApp.breakpoints.up("md")]: {
+                                        marginRight: "0px",
+                                    },
+                                    "&:hover": {
+                                        background: "#2AC75F",
+                                        color: "black",
+                                    },
+                                }}>
+                                <AddIcon
+                                    sx={{
+                                        color: "black",
+                                        width: "24px",
+                                        height: "24px",
+                                    }}
+                                />
+                            </IconButton>
+                        </Box>
                     </Box>
                 </Box>
             )}

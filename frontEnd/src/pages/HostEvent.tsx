@@ -1,4 +1,4 @@
-import { Box, Divider, IconButton, Modal, Typography } from "@mui/material";
+import { Box, Divider, IconButton, Typography } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -81,16 +81,14 @@ export default function HostEvent(props: IData) {
                         justifyContent: "center",
                         width: "100%",
                     }}>
-                    <Modal open={open}>
-                        <Box sx={{ display: "flex", justifyContent: "center" }}>
-                            <HostEventMenu
-                                handleClose={handleClose}
-                                eventId={eventData.temRoomId}
-                                title={eventData.title}
-                                hostName={eventData.ownerName}
-                            />
-                        </Box>
-                    </Modal>
+                    <HostEventMenu
+                        handleClose={handleClose}
+                        eventId={eventData.temRoomId}
+                        title={eventData.title}
+                        hostName={eventData.ownerName}
+                        open={open}
+                    />
+
                     <PreviewQuestion
                         questionId={selectedQId}
                         handleCloseCard={handleCloseCard}
@@ -325,8 +323,8 @@ export default function HostEvent(props: IData) {
                                                 a.isRead === b.isRead
                                                     ? 0
                                                     : a.isRead
-                                                    ? 1
-                                                    : -1
+                                                        ? 1
+                                                        : -1
                                             )
                                             .map((item, index) => (
                                                 <Box
@@ -394,7 +392,7 @@ export default function HostEvent(props: IData) {
                                                     onClick={() =>
                                                         handleCopyText(
                                                             "http://localhost:5173" +
-                                                                patch
+                                                            patch
                                                         )
                                                     }>
                                                     <ContentCopyOutlinedIcon />
@@ -411,8 +409,8 @@ export default function HostEvent(props: IData) {
                                                 a.isRead === b.isRead
                                                     ? 0
                                                     : a.isRead
-                                                    ? 1
-                                                    : -1
+                                                        ? 1
+                                                        : -1
                                             )
                                             .sort((a, b) => {
                                                 return (
