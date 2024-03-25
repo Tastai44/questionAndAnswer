@@ -17,16 +17,21 @@ export default function Home() {
     const navigate = useNavigate();
     const [invitedCode, setInvitedCode] = useState("");
     const [error, setError] = useState("");
-    const userInfo = JSON.parse(localStorage.getItem("user") || "null");
+    // const userInfo = JSON.parse(localStorage.getItem("user") || "null");
     const handleContinue = () => {
-        if (userInfo) {
-            alert("Only one user can be logged in at a time!");
+        // if (userInfo) {
+        //     alert("Only one user can be logged in at a time!");
+        // } else {
+        //     if (invitedCode) {
+        //         navigate(`/event/${invitedCode}`);
+        //     } else {
+        //         setError("Please type the code!");
+        //     }
+        // }
+        if (invitedCode) {
+            navigate(`/event/${invitedCode}`);
         } else {
-            if (invitedCode) {
-                navigate(`/event/${invitedCode}`);
-            } else {
-                setError("Please type the code!");
-            }
+            setError("Please type the code!");
         }
     };
 

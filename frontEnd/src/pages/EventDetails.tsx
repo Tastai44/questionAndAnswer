@@ -6,7 +6,7 @@ import PreviewQuestion from "../components/PreviewQuestion/PreviewQuestion";
 import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined";
 import { themeApp } from "../utils/Theme";
 import { getQuesByEId, getQuesByOwnerId } from "../api/question";
-import { IQuestion, Ievent } from "../interface/Ievent";
+import { Ievent } from "../interface/Ievent";
 import MenuIcon from "@mui/icons-material/Menu";
 import AudienceMenu from "../components/AudienceMenu";
 import AddIcon from "@mui/icons-material/Add";
@@ -14,6 +14,7 @@ import AddQuestion from "../components/AddEditQuestion";
 import ALQuestionCard from "../components/QuestionCard/ALQuestionCard";
 import AlerQuestion from "../components/AlerQuestion";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
+import { IQuestion } from "../interface/IQuestion";
 
 interface IData {
     refresh: number;
