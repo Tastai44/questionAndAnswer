@@ -3,10 +3,10 @@ import CloseIcon from "@mui/icons-material/Close";
 import { ContentCopy } from "@mui/icons-material";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useState } from "react";
-import CloseEventCard from "./CloseEventCard";
 import { themeApp } from "../utils/Theme";
 // import { deleteEventById } from '../api/event';
 import { useNavigate } from "react-router-dom";
+import ConfirmModalCard from "./ConfirmModalCard";
 
 interface IData {
     handleClose: () => void;
@@ -36,12 +36,21 @@ export default function HostEventMenu(props: IData) {
 
     return (
         <Box>
-            <CloseEventCard
+            {/* <CloseEventCard
                 handleClose={handleCloseCard}
                 id={props.eventId}
                 open={open}
                 handleDelete={handleEndEvent}
-            />
+            /> */}
+            <ConfirmModalCard
+                handleClose={() => setOpen(!open)}
+                handleDeleteDiscard={handleEndEvent}
+                open={open}
+                discard={false}
+                context="All of the question will be remove and no way to return it."
+                buttonWord={"End"}
+                title={"End this event?"} />
+
             <Modal open={props.open}>
                 <Box sx={{
                     display: "flex",

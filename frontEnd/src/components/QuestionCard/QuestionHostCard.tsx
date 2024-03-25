@@ -20,11 +20,11 @@ import BookmarkRemoveOutlinedIcon from "@mui/icons-material/BookmarkRemoveOutlin
 import BookmarkAddOutlinedIcon from "@mui/icons-material/BookmarkAddOutlined";
 import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
-import { IQuestion } from "../../interface/Ievent";
 import Comment from "./Comment";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { getTimeDifferenceInMinutes } from "../../helper/getTime";
 import ConfirmModalCard from "../ConfirmModalCard";
+import { IQuestion } from "../../interface/IQuestion";
 
 interface IData {
     questions: IQuestion;
@@ -169,7 +169,8 @@ export default function QuestionCard(props: IData) {
                     handleClose={() => setOpenDeleteCard(!openDeleteCard)}
                     handleDeleteDiscard={handleOpenConfirm}
                     context="Deleting question is permanent and cannot be undone."
-                />
+                    buttonWord={"Delete"}
+                    title={"Delete question?"} />
                 <IconButton
                     aria-controls={open ? "basic-menu" : undefined}
                     aria-haspopup="true"

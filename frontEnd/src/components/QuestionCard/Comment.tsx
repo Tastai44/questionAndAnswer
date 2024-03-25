@@ -35,6 +35,8 @@ export default function Comment(props: IData) {
                 open={openConfirm}
                 discard={false}
                 context="Deleting comment is permanent and cannot be undone."
+                buttonWord={"Delete"}
+                title={"Deleting comment?"}
             />
             <Box
                 sx={{

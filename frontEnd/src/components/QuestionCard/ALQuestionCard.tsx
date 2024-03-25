@@ -20,11 +20,12 @@ import { useState } from "react";
 import AlerQuestion from "../AlerQuestion";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
-import { IQuestion } from "../../interface/Ievent";
+
 import Comment from "./Comment";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { getTimeDifferenceInMinutes } from "../../helper/getTime";
 import ConfirmModalCard from "../ConfirmModalCard";
+import { IQuestion } from "../../interface/IQuestion";
 
 interface IData {
     isMy?: boolean;
@@ -113,7 +114,8 @@ export default function ALQuestionCard(props: IData) {
                 handleClose={() => setOpenDeleteCard(!openDeleteCard)}
                 handleDeleteDiscard={handleOpenConfirm}
                 context="Deleting question is permanent and cannot be undone."
-            />
+                buttonWord={"Delete"}
+                title={"Delete question?"} />
             <AddQuestion
                 handleClose={handleCloseQueCard}
                 handleRefresh={props.handleRefresh}

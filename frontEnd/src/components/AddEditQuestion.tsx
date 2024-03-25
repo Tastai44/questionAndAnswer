@@ -84,7 +84,8 @@ export default function AddQuestion(props: IData) {
                 open={openConfirm}
                 discard={true}
                 context="Changes you made will not be saved"
-            />
+                buttonWord={"Discard"}
+                title={"Unsaved Change"} />
             <Modal open={props.openQueCard}>
                 <Box
                     sx={{

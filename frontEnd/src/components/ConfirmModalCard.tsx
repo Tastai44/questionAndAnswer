@@ -13,6 +13,8 @@ import CloseIcon from "@mui/icons-material/Close";
 interface IData {
     open: boolean;
     discard: boolean;
+    buttonWord: string;
+    title: string;
     context: string;
     handleClose: () => void;
     handleDeleteDiscard: () => void;
@@ -60,9 +62,10 @@ export default function ConfirmModalCard(props: IData) {
                                 fontWeight: "medium",
                                 fontSize: "17px",
                             }}>
-                            {props.discard
+                            {/* {props.discard
                                 ? "Unsaved Change"
-                                : "Delete question?"}
+                                : "Delete question?"} */}
+                            {props.title}
                         </Typography>
                         <IconButton
                             onClick={props.handleClose}
@@ -154,7 +157,8 @@ export default function ConfirmModalCard(props: IData) {
                                         width: "181px",
                                     },
                                 }}>
-                                {props.discard ? "Discard" : "Delete"}
+                                {/* {props.discard ? "Discard" : "Delete"} */}
+                                {props.buttonWord}
                             </Button>
                         </Box>
                     </Box>

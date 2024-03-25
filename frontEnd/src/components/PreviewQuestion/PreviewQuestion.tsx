@@ -205,7 +205,8 @@ export default function PreviewQuestion(props: IData) {
                         handleClose={() => setOpenConfirm(!openConfirm)}
                         handleDeleteDiscard={handleOpenConfirm}
                         context="Deleting question is permanent and cannot be undone."
-                    />
+                        buttonWord={"Delete"}
+                        title={"Delete question?"} />
                     {questions !== undefined && (
                         <Box
                             sx={{
