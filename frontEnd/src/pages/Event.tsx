@@ -48,13 +48,17 @@ export default function Event() {
                 name: userName,
             };
             const response = await addUser(user);
-            const responseBody = await response;
-            const saveUser = {
-                userId: responseBody.data,
-                name: userName,
-            };
-            localStorage.setItem("user", JSON.stringify(saveUser));
-            navigate(`/eventDetails/${eventData?.eventId}/${userName}`);
+            if (response.data !== 404) {
+                const saveUser = {
+                    userId: response.data,
+                    name: userName,
+                };
+                localStorage.setItem("user", JSON.stringify(saveUser));
+                navigate(`/eventDetails/${eventData?.eventId}/${userName}`);
+            } else {
+                alert("The username has already exited!");
+            }
+
         } else {
             setError("Please type your name!");
         }
