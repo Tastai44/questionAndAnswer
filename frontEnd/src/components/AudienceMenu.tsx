@@ -1,4 +1,4 @@
-import { Box, IconButton, Modal, Typography } from "@mui/material";
+import { Box, IconButton, Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useState } from "react";
@@ -27,25 +27,7 @@ export default function AudienceMenu(props: IData) {
 
     return (
         <>
-            <Modal open={open}>
-                <Box
-                    sx={{
-                        position: "absolute",
-                        top: "40%",
-                        left: "50%",
-                        transform: "translate(-50%, -50%)",
-                        bgcolor: "background.paper",
-                        boxShadow: 24,
-                        border: "0px",
-                        borderRadius: "20px",
-                        width: "90%",
-                        [themeApp.breakpoints.up("md")]: {
-                            width: "398px",
-                        },
-                    }}>
-                    <LeaveCard handleCloseCard={handleCloseCard} />
-                </Box>
-            </Modal>
+            <LeaveCard handleCloseCard={handleCloseCard} open={open} />
             <Box
                 sx={{
                     background: "#2ECC71",

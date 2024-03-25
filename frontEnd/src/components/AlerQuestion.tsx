@@ -9,7 +9,7 @@ interface IData {
 
 export default function AlerQuestion(props: IData) {
     return (
-        <Box>
+        <>
             <Modal open={props.open}>
                 <Box
                     sx={{
@@ -64,6 +64,6 @@ export default function AlerQuestion(props: IData) {
                     </Box>
                 </Box>
             </Modal>
-        </Box>
+        </>
     );
 }

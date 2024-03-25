@@ -6,7 +6,7 @@ import {
     Modal,
     Typography,
 } from "@mui/material";
-import { IQuestion } from "../../interface/Ievent";
+import { IQuestion } from "../../interface/IQuestion";
 import { useEffect, useState } from "react";
 import {
     addComment,
@@ -158,12 +158,19 @@ export default function PreviewQuestion(props: IData) {
                     transform: "translate(-50%, -50%)",
                     bgcolor: "background.paper",
                     borderRadius: "20px",
-                    border: "0px",
+                    border: "0px solid black",
                     width: "90%",
                     height: "auto",
+                    "&:active": {
+                        border: "0px"
+                    },
+                    "&:hover": {
+                        border: "0px"
+                    },
                     [themeApp.breakpoints.up("md")]: {
                         width: "398px",
                     },
+
                 }}>
                 <Box
                     sx={{

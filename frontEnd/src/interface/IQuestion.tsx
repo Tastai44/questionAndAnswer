@@ -25,3 +25,17 @@ export interface IAddComment {
     context: string;
     timestamp: Date;
 }
+
+export interface IQuestion {
+    questionId: string;
+    questionText: string;
+    ownerId: string;
+    name: string;
+    eventId: string;
+    isRead: boolean;
+    isSave: boolean;
+    isEdit: boolean;
+    timestamp: Date;
+    likeNumber: { userLikeId: string; }[];
+    comment: IComment[];
+}

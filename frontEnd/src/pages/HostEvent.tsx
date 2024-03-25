@@ -4,14 +4,14 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import QuestionCard from "../components/QuestionCard/QuestionHostCard";
 import { getEventById } from "../api/event";
-import { IQuestion, Ievent } from "../interface/Ievent";
+import { Ievent } from "../interface/Ievent";
 import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined";
 import { getQuesByEId, readQuestion } from "../api/question";
 import HostEventMenu from "../components/HostEventMenu";
-import PopupAlert from "../components/PopupAlert";
 import { themeApp } from "../utils/Theme";
 import PreviewQuestion from "../components/PreviewQuestion/PreviewQuestion";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
+import { IQuestion } from "../interface/IQuestion";
 
 interface IData {
     refresh: number;
@@ -35,7 +35,6 @@ export default function HostEvent(props: IData) {
             if (data) {
                 setEventData(data);
             } else {
-                PopupAlert("Sorry, there are no that event page", "warning");
                 navigatorPath("/");
             }
         };

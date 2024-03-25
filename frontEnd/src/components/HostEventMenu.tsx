@@ -46,22 +46,11 @@ export default function HostEventMenu(props: IData) {
                 <Box sx={{
                     display: "flex",
                     justifyContent: "center",
-                    [themeApp.breakpoints.up("md")]: {
-                        marginLeft: "-16px",
-                    },
                 }}>
                     <Box
-                        // sx={{
-                        //     background: "black",
-                        //     height: "250px",
-                        //     width: "100%",
-                        //     [themeApp.breakpoints.up("md")]: {
-                        //         width: "430px",
-                        //     },
-                        // }}
                         sx={{
                             background: "black",
-                            border: "0px",
+                            height: "auto",
                             width: "100%",
                             [themeApp.breakpoints.up("md")]: {
                                 width: "430px",
@@ -158,6 +147,7 @@ export default function HostEventMenu(props: IData) {
                                 color: "black",
                                 transition: "background-color 0.3s ease",
                                 marginLeft: "10px",
+                                marginBottom: "10px",
                                 "&:hover": {
                                     backgroundColor: "rgba(0, 0, 0, 0.1)",
                                 },
