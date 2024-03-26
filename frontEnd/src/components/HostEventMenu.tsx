@@ -49,13 +49,15 @@ export default function HostEventMenu(props: IData) {
                 discard={false}
                 context="All of the question will be remove and no way to return it."
                 buttonWord={"End"}
-                title={"End this event?"} />
+                title={"End this event?"}
+            />
 
             <Modal open={props.open}>
-                <Box sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                }}>
+                <Box
+                    sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                    }}>
                     <Box
                         sx={{
                             background: "black",
@@ -64,8 +66,7 @@ export default function HostEventMenu(props: IData) {
                             [themeApp.breakpoints.up("md")]: {
                                 width: "430px",
                             },
-                        }}
-                    >
+                        }}>
                         <Box
                             sx={{
                                 display: "flex",
@@ -122,7 +123,9 @@ export default function HostEventMenu(props: IData) {
                             <Box>Link: {patch}</Box>
                             <IconButton
                                 onClick={() =>
-                                    handleCopyText("http://localhost:5173" + patch)
+                                    handleCopyText(
+                                        import.meta.env.VITE_EVENT + patch
+                                    )
                                 }
                                 sx={{ marginRight: "16px", color: "white" }}>
                                 <ContentCopy fontSize="small" />

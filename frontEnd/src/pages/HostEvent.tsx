@@ -390,7 +390,8 @@ export default function HostEvent(props: IData) {
                                                 <IconButton
                                                     onClick={() =>
                                                         handleCopyText(
-                                                            "http://localhost:5173" +
+                                                            import.meta.env
+                                                                .VITE_EVENT +
                                                                 patch
                                                         )
                                                     }>

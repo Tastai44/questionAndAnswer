@@ -167,3 +167,36 @@ export const deleteComment = async (commentId: string, questionId: string) => {
         throw error;
     }
 };
+
+// export const getQuestionSocket = async () => {
+//     try {
+//         // Establish a connection with the Socket.io server
+//         const socket = io(`${import.meta.env.VITE_EVENT}/questions`);
+
+//         // Emit a "getQuestion" event to request questions from the server
+//         socket.emit("getQuestion");
+
+//         // Define a promise that resolves when the response is received
+//         return new Promise((resolve, reject) => {
+//             // Listen for the response event from the server
+//             socket.on("questionResponse", (questions: IQuestion) => {
+//                 // Resolve the promise with the received questions
+//                 resolve(questions);
+
+//                 // Disconnect the socket connection
+//                 socket.disconnect();
+//             });
+
+//             // Handle errors
+//             socket.on("error", (error) => {
+//                 reject(error);
+
+//                 // Disconnect the socket connection
+//                 socket.disconnect();
+//             });
+//         });
+//     } catch (error) {
+//         console.error(error);
+//         throw error;
+//     }
+// };
