@@ -400,7 +400,7 @@ export default function EventDetails(props: IData) {
                                                     onClick={() =>
                                                         handleCopyText(
                                                             eventData.temRoomId ??
-                                                            ""
+                                                                ""
                                                         )
                                                     }>
                                                     <ContentCopyOutlinedIcon />
@@ -413,6 +413,15 @@ export default function EventDetails(props: IData) {
                                 <>
                                     {questions.length !== 0 ? (
                                         questions
+                                            .sort((a, b) => {
+                                                const timestampA = new Date(
+                                                    a.timestamp
+                                                ).getTime();
+                                                const timestampB = new Date(
+                                                    b.timestamp
+                                                ).getTime();
+                                                return timestampB - timestampA;
+                                            })
                                             .sort(
                                                 (a, b) =>
                                                     b.likeNumber.length -
@@ -461,12 +470,12 @@ export default function EventDetails(props: IData) {
                                                 .sort((a, b) => {
                                                     const timestampA =
                                                         a.timestamp instanceof
-                                                            Date
+                                                        Date
                                                             ? a.timestamp.getTime()
                                                             : 0;
                                                     const timestampB =
                                                         b.timestamp instanceof
-                                                            Date
+                                                        Date
                                                             ? b.timestamp.getTime()
                                                             : 0;
                                                     return (
@@ -523,8 +532,7 @@ export default function EventDetails(props: IData) {
                                 position: "fixed",
                                 bottom: 10,
                                 right: "0px",
-                            }}
-                        >
+                            }}>
                             <IconButton
                                 onClick={handleOpenQueCard}
                                 sx={{

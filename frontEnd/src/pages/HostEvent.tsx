@@ -322,8 +322,8 @@ export default function HostEvent(props: IData) {
                                                 a.isRead === b.isRead
                                                     ? 0
                                                     : a.isRead
-                                                        ? 1
-                                                        : -1
+                                                    ? 1
+                                                    : -1
                                             )
                                             .map((item, index) => (
                                                 <Box
@@ -391,7 +391,7 @@ export default function HostEvent(props: IData) {
                                                     onClick={() =>
                                                         handleCopyText(
                                                             "http://localhost:5173" +
-                                                            patch
+                                                                patch
                                                         )
                                                     }>
                                                     <ContentCopyOutlinedIcon />
@@ -404,12 +404,21 @@ export default function HostEvent(props: IData) {
                                 <>
                                     {questions.length !== 0 ? (
                                         questions
+                                            .sort((a, b) => {
+                                                const timestampA = new Date(
+                                                    a.timestamp
+                                                ).getTime();
+                                                const timestampB = new Date(
+                                                    b.timestamp
+                                                ).getTime();
+                                                return timestampB - timestampA;
+                                            })
                                             .sort((a, b) =>
                                                 a.isRead === b.isRead
                                                     ? 0
                                                     : a.isRead
-                                                        ? 1
-                                                        : -1
+                                                    ? 1
+                                                    : -1
                                             )
                                             .sort((a, b) => {
                                                 return (

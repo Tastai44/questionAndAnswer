@@ -25,8 +25,7 @@ import { themeApp } from "../../utils/Theme";
 import AudienceButton from "./AudienceButton";
 import HostButton from "./HostButton";
 import ConfirmModalCard from "../ConfirmModalCard";
-import dayjs from 'dayjs';
-
+import dayjs from "dayjs";
 
 interface IData {
     questionId: string;
@@ -59,7 +58,7 @@ export default function PreviewQuestion(props: IData) {
             if (data) {
                 setQuestions(data);
                 const isUserLiked = data.likeNumber.some(
-                    (item: { userLikeId: string; }) =>
+                    (item: { userLikeId: string }) =>
                         item.userLikeId === userInfo.userId
                 );
                 const isOwner = data.ownerId == userInfo.userId;
@@ -153,7 +152,7 @@ export default function PreviewQuestion(props: IData) {
             <Box
                 sx={{
                     position: "absolute",
-                    top: "40%",
+                    top: "50%",
                     left: "50%",
                     transform: "translate(-50%, -50%)",
                     bgcolor: "background.paper",
@@ -162,15 +161,14 @@ export default function PreviewQuestion(props: IData) {
                     width: "90%",
                     height: "auto",
                     "&:active": {
-                        border: "0px"
+                        border: "0px",
                     },
                     "&:hover": {
-                        border: "0px"
+                        border: "0px",
                     },
                     [themeApp.breakpoints.up("md")]: {
                         width: "398px",
                     },
-
                 }}>
                 <Box
                     sx={{
@@ -206,7 +204,8 @@ export default function PreviewQuestion(props: IData) {
                         handleDeleteDiscard={handleOpenConfirm}
                         context="Deleting question is permanent and cannot be undone."
                         buttonWord={"Delete"}
-                        title={"Delete question?"} />
+                        title={"Delete question?"}
+                    />
                     {questions !== undefined && (
                         <Box
                             sx={{
@@ -338,30 +337,38 @@ export default function PreviewQuestion(props: IData) {
                                 fontFamily={"Inter"}>
                                 {questions.questionText}
                             </Typography>
-                            <Box sx={{
-                                display: "flex", marginLeft: "16px",
-                                marginBottom: "5px",
-                            }}>
+                            <Box
+                                sx={{
+                                    display: "flex",
+                                    marginLeft: "16px",
+                                    marginBottom: "5px",
+                                }}>
                                 <Typography
                                     textAlign={"left"}
                                     sx={{
                                         color: "#6C6C6C",
                                     }}>
-                                    {
-                                        dayjs(questions.timestamp.toLocaleString()).format('hh:mm:ss A')
-                                    }
+                                    {dayjs(
+                                        questions.timestamp.toLocaleString()
+                                    ).format("hh:mm:ss A")}
                                 </Typography>
-                                <Box sx={{ marginTop: "-2.5px", marginLeft: "3px", marginRight: "3px" }}>.</Box>
+                                <Box
+                                    sx={{
+                                        marginTop: "-2.5px",
+                                        marginLeft: "3px",
+                                        marginRight: "3px",
+                                    }}>
+                                    .
+                                </Box>
                                 <Typography
                                     textAlign={"left"}
                                     sx={{
                                         color: "#6C6C6C",
                                     }}>
-                                    {
-                                        dayjs(questions.timestamp.toLocaleString()).format('YYYY-MM-DD')
-                                    }
+                                    {dayjs(
+                                        questions.timestamp.toLocaleString()
+                                    ).format("YYYY-MM-DD")}
                                 </Typography>
-
                             </Box>
                             <Box
                                 sx={{
