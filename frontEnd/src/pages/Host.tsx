@@ -38,7 +38,7 @@ export default function Host() {
             };
             const response = await createEvent(event);
             const responseBody = response;
-            navigate(`/eventHostDetails/${responseBody.data}`);
+            navigate(`/eventRoom/${responseBody.data}/host`);
             setEventName("");
             setHostName("");
         } else {

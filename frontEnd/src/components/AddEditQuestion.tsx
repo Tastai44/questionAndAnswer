@@ -8,9 +8,8 @@ import {
 } from "@mui/material";
 import { themeApp } from "../utils/Theme";
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { createQuestion, updateQuestion } from "../api/question";
-// import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
 import CloseIcon from "@mui/icons-material/Close";
 import ConfirmModalCard from "./ConfirmModalCard";
 
@@ -76,6 +75,10 @@ export default function AddQuestion(props: IData) {
         props.handleRefresh;
     };
 
+    const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        setText(e.target.value);
+    };
+
     return (
         <>
             <ConfirmModalCard
@@ -85,7 +88,8 @@ export default function AddQuestion(props: IData) {
                 discard={true}
                 context="Changes you made will not be saved"
                 buttonWord={"Discard"}
-                title={"Unsaved Change"} />
+                title={"Unsaved Change"}
+            />
             <Modal open={props.openQueCard}>
                 <Box
                     sx={{
@@ -161,9 +165,9 @@ export default function AddQuestion(props: IData) {
                                         onClick={
                                             text != ""
                                                 ? () =>
-                                                    setOpenConfirm(
-                                                        !openConfirm
-                                                    )
+                                                      setOpenConfirm(
+                                                          !openConfirm
+                                                      )
                                                 : props.handleClose
                                         }
                                         size="small">
@@ -205,9 +209,7 @@ export default function AddQuestion(props: IData) {
                                         }}>
                                         <textarea
                                             value={text}
-                                            onChange={(e) =>
-                                                setText(e.target.value)
-                                            }
+                                            onChange={handleChange}
                                             style={{
                                                 borderRadius: "14px",
                                                 fontSize: "17px",

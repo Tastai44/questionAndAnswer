@@ -70,14 +70,7 @@ export default function PreviewQuestion(props: IData) {
             fetch();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [refresh, props.refresh]);
-
-    // const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    //     setAnchorEl(event.currentTarget);
-    // };
-    // const handleClose = () => {
-    //     setAnchorEl(null);
-    // };
+    }, [refresh, props.refresh, props.questionId]);
 
     const handleSaveQuestion = async () => {
         await saveQuestion(props.questionId);
@@ -148,313 +141,319 @@ export default function PreviewQuestion(props: IData) {
     };
 
     return (
-        <Modal open={props.openPreviewCard}>
-            <Box
-                sx={{
-                    position: "absolute",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                    bgcolor: "background.paper",
-                    borderRadius: "20px",
-                    border: "0px solid black",
-                    width: "90%",
-                    height: "auto",
-                    "&:active": {
-                        border: "0px",
-                    },
-                    "&:hover": {
-                        border: "0px",
-                    },
-                    [themeApp.breakpoints.up("md")]: {
-                        width: "398px",
-                    },
-                }}>
+        <>
+            <Modal open={props.openPreviewCard}>
                 <Box
                     sx={{
-                        display: "flex",
-                        justifyContent: "center",
-                        width: "100%",
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%, -50%)",
+                        bgcolor: "background.paper",
+                        borderRadius: "20px",
+                        border: "0px solid black",
+                        width: "90%",
+                        height: "auto",
+                        "&:active": {
+                            border: "0px",
+                        },
+                        "&:hover": {
+                            border: "0px",
+                        },
+                        [themeApp.breakpoints.up("md")]: {
+                            width: "398px",
+                        },
                     }}>
-                    <AddQuestion
-                        handleClose={handleCloseQueCard}
-                        handleRefresh={handleRefresh}
-                        handleCloseAlert={handleCloseAlert}
-                        handleOpenAlert={handleOpenAlert}
-                        isEdit={true}
-                        ownerName={props.ownerName}
-                        questionId={props.questionId}
-                        openQueCard={openQueCard}
-                        context={oldContext}
-                    />
-                    <AlerQuestion
-                        open={openAlert}
-                        context={"Your question has been edited!"}
-                    />
-                    {/* <DeleteCard
+                    <Box
+                        sx={{
+                            display: "flex",
+                            justifyContent: "center",
+                            width: "100%",
+                        }}>
+                        <AddQuestion
+                            handleClose={handleCloseQueCard}
+                            handleRefresh={handleRefresh}
+                            handleCloseAlert={handleCloseAlert}
+                            handleOpenAlert={handleOpenAlert}
+                            isEdit={true}
+                            ownerName={props.ownerName}
+                            questionId={props.questionId}
+                            openQueCard={openQueCard}
+                            context={oldContext}
+                        />
+                        <AlerQuestion
+                            open={openAlert}
+                            context={"Your question has been edited!"}
+                        />
+                        {/* <DeleteCard
                         handleClose={handleCloseCard}
                         id={props.questionId}
                         handleDeleteQuestion={handleDeleteQuestion}
                         open={open}
                     /> */}
-                    <ConfirmModalCard
-                        open={openConfirm}
-                        discard={false}
-                        handleClose={() => setOpenConfirm(!openConfirm)}
-                        handleDeleteDiscard={handleOpenConfirm}
-                        context="Deleting question is permanent and cannot be undone."
-                        buttonWord={"Delete"}
-                        title={"Delete question?"}
-                    />
-                    {questions !== undefined && (
-                        <Box
-                            sx={{
-                                display: "flex",
-                                flexDirection: "column",
-                                textAlign: "center",
-                                width: "100%",
-                            }}>
+                        <ConfirmModalCard
+                            open={openConfirm}
+                            discard={false}
+                            handleClose={() => setOpenConfirm(!openConfirm)}
+                            handleDeleteDiscard={handleOpenConfirm}
+                            context="Deleting question is permanent and cannot be undone."
+                            buttonWord={"Delete"}
+                            title={"Delete question?"}
+                        />
+                        {questions !== undefined && (
                             <Box
                                 sx={{
                                     display: "flex",
-                                    padding: "14px",
-                                    fontSize: "13px",
-                                    justifyContent: "space-between",
-                                    alignItems: "center",
-                                    alignContent: "center",
+                                    flexDirection: "column",
+                                    textAlign: "center",
+                                    width: "100%",
                                 }}>
-                                <Box sx={{ width: "50%", display: "flex" }}>
+                                <Box
+                                    sx={{
+                                        display: "flex",
+                                        padding: "14px",
+                                        fontSize: "13px",
+                                        justifyContent: "space-between",
+                                        alignItems: "center",
+                                        alignContent: "center",
+                                    }}>
+                                    <Box sx={{ width: "50%", display: "flex" }}>
+                                        <Box
+                                            sx={{
+                                                color: "black",
+                                                marginRight: "5px",
+                                                fontFamily: "Inter",
+                                                fontSize: "17px",
+                                            }}>
+                                            Question
+                                        </Box>
+                                    </Box>
+
                                     <Box
                                         sx={{
-                                            color: "black",
-                                            marginRight: "5px",
-                                            fontFamily: "Inter",
-                                            fontSize: "17px",
+                                            display: "flex",
+                                            alignContent: "center",
+                                            alignItems: "center",
                                         }}>
-                                        Question
+                                        <IconButton
+                                            sx={{
+                                                fontSize: "13px",
+                                                background: "#F7F7F7",
+                                                width: "32px",
+                                                height: "32px",
+                                            }}
+                                            onClick={props.handleCloseCard}>
+                                            <CloseIcon
+                                                sx={{
+                                                    width: "20px",
+                                                    height: "20px",
+                                                    color: "black",
+                                                }}
+                                            />
+                                        </IconButton>
                                     </Box>
                                 </Box>
-
+                                <Divider sx={{ marginBottom: "10px" }} />
                                 <Box
                                     sx={{
                                         display: "flex",
-                                        alignContent: "center",
-                                        alignItems: "center",
+                                        justifyContent: "space-between",
+                                        marginBottom: "14px",
                                     }}>
-                                    <IconButton
+                                    <Box
                                         sx={{
-                                            fontSize: "13px",
-                                            background: "#F7F7F7",
-                                            width: "32px",
-                                            height: "32px",
-                                        }}
-                                        onClick={props.handleCloseCard}>
-                                        <CloseIcon
+                                            width: "90%",
+                                            display: "flex",
+                                            alignContent: "center",
+                                            alignItems: "center",
+                                            fontSize: "15px",
+                                        }}>
+                                        <Typography
+                                            color={"#1C1C1C"}
+                                            fontSize={"15px"}
+                                            textAlign={"left"}
+                                            fontWeight={"mediums"}
                                             sx={{
-                                                width: "20px",
-                                                height: "20px",
-                                                color: "black",
+                                                marginLeft: "16px",
+                                                marginRight: "3px",
                                             }}
-                                        />
-                                    </IconButton>
+                                            fontFamily={"Inter"}>
+                                            {questions.name}
+                                        </Typography>
+                                        {questions.isEdit && (
+                                            <>
+                                                <Box sx={{ marginTop: "-5px" }}>
+                                                    .
+                                                </Box>
+                                                <Box
+                                                    sx={{
+                                                        color: "#2ECC71",
+                                                        marginLeft: "5px",
+                                                        marginRight: "5px",
+                                                    }}>
+                                                    Edited
+                                                </Box>
+                                            </>
+                                        )}
+                                        {questions.comment.length > 0 && (
+                                            <>
+                                                <Box
+                                                    sx={{
+                                                        marginTop: "-5px",
+                                                    }}>
+                                                    .
+                                                </Box>
+                                                <Button
+                                                    sx={{
+                                                        color: "white",
+                                                        marginLeft: "5px",
+                                                        background: "#2ECC71",
+                                                        height: "22px",
+                                                        width: "86px",
+                                                        textTransform: "none",
+                                                        borderRadius: "4px",
+                                                    }}>
+                                                    Answered
+                                                </Button>
+                                            </>
+                                        )}
+                                    </Box>
                                 </Box>
-                            </Box>
-                            <Divider sx={{ marginBottom: "10px" }} />
-                            <Box
-                                sx={{
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                    marginBottom: "14px",
-                                }}>
+                                <Typography
+                                    color={"#1C1C1C"}
+                                    fontSize={"17px"}
+                                    textAlign={"left"}
+                                    fontWeight={"mediums"}
+                                    sx={{
+                                        marginLeft: "16px",
+                                        marginBottom: "16px",
+                                    }}
+                                    fontFamily={"Inter"}>
+                                    {questions.questionText}
+                                </Typography>
                                 <Box
                                     sx={{
-                                        width: "90%",
                                         display: "flex",
-                                        alignContent: "center",
-                                        alignItems: "center",
-                                        fontSize: "15px",
+                                        marginLeft: "16px",
+                                        marginBottom: "5px",
                                     }}>
                                     <Typography
-                                        color={"#1C1C1C"}
-                                        fontSize={"15px"}
                                         textAlign={"left"}
-                                        fontWeight={"mediums"}
                                         sx={{
-                                            marginLeft: "16px",
-                                            marginRight: "3px",
-                                        }}
-                                        fontFamily={"Inter"}>
-                                        {questions.name}
+                                            color: "#6C6C6C",
+                                        }}>
+                                        {dayjs(
+                                            questions.timestamp.toLocaleString()
+                                        ).format("hh:mm:ss A")}
                                     </Typography>
-                                    {questions.isEdit && (
-                                        <>
-                                            <Box sx={{ marginTop: "-5px" }}>
-                                                .
-                                            </Box>
-                                            <Box
-                                                sx={{
-                                                    color: "#2ECC71",
-                                                    marginLeft: "5px",
-                                                    marginRight: "5px",
-                                                }}>
-                                                Edited
-                                            </Box>
-                                        </>
-                                    )}
-                                    {questions.comment.length > 0 && (
-                                        <>
-                                            <Box
-                                                sx={{
-                                                    marginTop: "-5px",
-                                                }}>
-                                                .
-                                            </Box>
-                                            <Button
-                                                sx={{
-                                                    color: "white",
-                                                    marginLeft: "5px",
-                                                    background: "#2ECC71",
-                                                    height: "22px",
-                                                    width: "86px",
-                                                    textTransform: "none",
-                                                    borderRadius: "4px",
-                                                }}>
-                                                Answered
-                                            </Button>
-                                        </>
-                                    )}
+                                    <Box
+                                        sx={{
+                                            marginTop: "-2.5px",
+                                            marginLeft: "3px",
+                                            marginRight: "3px",
+                                        }}>
+                                        .
+                                    </Box>
+                                    <Typography
+                                        textAlign={"left"}
+                                        sx={{
+                                            color: "#6C6C6C",
+                                        }}>
+                                        {dayjs(
+                                            questions.timestamp.toLocaleString()
+                                        ).format("YYYY-MM-DD")}
+                                    </Typography>
                                 </Box>
-                            </Box>
-                            <Typography
-                                color={"#1C1C1C"}
-                                fontSize={"17px"}
-                                textAlign={"left"}
-                                fontWeight={"mediums"}
-                                sx={{
-                                    marginLeft: "16px",
-                                    marginBottom: "16px",
-                                }}
-                                fontFamily={"Inter"}>
-                                {questions.questionText}
-                            </Typography>
-                            <Box
-                                sx={{
-                                    display: "flex",
-                                    marginLeft: "16px",
-                                    marginBottom: "5px",
-                                }}>
-                                <Typography
-                                    textAlign={"left"}
-                                    sx={{
-                                        color: "#6C6C6C",
-                                    }}>
-                                    {dayjs(
-                                        questions.timestamp.toLocaleString()
-                                    ).format("hh:mm:ss A")}
-                                </Typography>
                                 <Box
                                     sx={{
-                                        marginTop: "-2.5px",
-                                        marginLeft: "3px",
-                                        marginRight: "3px",
+                                        padding: "0px 14px 14px 14px",
+                                        height:
+                                            questions.comment.length != 0
+                                                ? "210px"
+                                                : "0px",
+                                        overflow:
+                                            questions.comment.length != 0
+                                                ? "auto"
+                                                : "none",
                                     }}>
-                                    .
+                                    {questions.comment.length != 0 &&
+                                        questions.comment
+                                            .sort((a, b) => {
+                                                const timestampA =
+                                                    a.timestamp instanceof Date
+                                                        ? a.timestamp.getTime()
+                                                        : 0;
+                                                const timestampB =
+                                                    b.timestamp instanceof Date
+                                                        ? b.timestamp.getTime()
+                                                        : 0;
+                                                return timestampB - timestampA;
+                                            })
+                                            .map((item, index) => (
+                                                <Box
+                                                    key={index}
+                                                    sx={{
+                                                        marginBottom: "16px",
+                                                    }}>
+                                                    <Comment
+                                                        isHost={props.isHost}
+                                                        ownerName={item.name}
+                                                        date={item.timestamp.toLocaleString()}
+                                                        context={item.context}
+                                                        commentId={
+                                                            item.commentId
+                                                        }
+                                                        questionId={
+                                                            questions.questionId
+                                                        }
+                                                        handleRefresh={
+                                                            props.handleRefresh
+                                                        }
+                                                    />
+                                                </Box>
+                                            ))}
                                 </Box>
-                                <Typography
-                                    textAlign={"left"}
-                                    sx={{
-                                        color: "#6C6C6C",
-                                    }}>
-                                    {dayjs(
-                                        questions.timestamp.toLocaleString()
-                                    ).format("YYYY-MM-DD")}
-                                </Typography>
+                                {props.isHost ? (
+                                    <HostButton
+                                        isUserLiked={isUserLiked}
+                                        openQueCard={openQueCard}
+                                        likeNumber={questions.likeNumber.length}
+                                        context={questions.questionText}
+                                        comment={comment}
+                                        isSave={questions.isSave}
+                                        handleUnLike={handleUnLike}
+                                        handleLike={handleLike}
+                                        handleCloseCard={() =>
+                                            setOpenConfirm(!openConfirm)
+                                        }
+                                        handleOpenQueCard={handleOpenQueCard}
+                                        handleAddComment={handleAddComment}
+                                        handleSetComment={handleSetComment}
+                                        handleSaveQuestion={handleSaveQuestion}
+                                        handleUnSaveQuestion={
+                                            handleUnSaveQuestion
+                                        }
+                                    />
+                                ) : (
+                                    <AudienceButton
+                                        isOwner={isOwner}
+                                        isUserLiked={isUserLiked}
+                                        openQueCard={openQueCard}
+                                        likeNumber={questions.likeNumber.length}
+                                        context={questions.questionText}
+                                        handleUnLike={handleUnLike}
+                                        handleLike={handleLike}
+                                        handleCloseCard={() =>
+                                            setOpenConfirm(!openConfirm)
+                                        }
+                                        handleOpenQueCard={handleOpenQueCard}
+                                    />
+                                )}
                             </Box>
-                            <Box
-                                sx={{
-                                    padding: "0px 14px 14px 14px",
-                                    height:
-                                        questions.comment.length != 0
-                                            ? "210px"
-                                            : "0px",
-                                    overflow:
-                                        questions.comment.length != 0
-                                            ? "auto"
-                                            : "none",
-                                }}>
-                                {questions.comment.length != 0 &&
-                                    questions.comment
-                                        .sort((a, b) => {
-                                            const timestampA =
-                                                a.timestamp instanceof Date
-                                                    ? a.timestamp.getTime()
-                                                    : 0;
-                                            const timestampB =
-                                                b.timestamp instanceof Date
-                                                    ? b.timestamp.getTime()
-                                                    : 0;
-                                            return timestampB - timestampA;
-                                        })
-                                        .map((item, index) => (
-                                            <Box
-                                                key={index}
-                                                sx={{
-                                                    marginBottom: "16px",
-                                                }}>
-                                                <Comment
-                                                    isHost={props.isHost}
-                                                    ownerName={item.name}
-                                                    date={item.timestamp.toLocaleString()}
-                                                    context={item.context}
-                                                    commentId={item.commentId}
-                                                    questionId={
-                                                        questions.questionId
-                                                    }
-                                                    handleRefresh={
-                                                        props.handleRefresh
-                                                    }
-                                                />
-                                            </Box>
-                                        ))}
-                            </Box>
-                            {props.isHost ? (
-                                <HostButton
-                                    isUserLiked={isUserLiked}
-                                    openQueCard={openQueCard}
-                                    likeNumber={questions.likeNumber.length}
-                                    context={questions.questionText}
-                                    comment={comment}
-                                    isSave={questions.isSave}
-                                    handleUnLike={handleUnLike}
-                                    handleLike={handleLike}
-                                    handleCloseCard={() =>
-                                        setOpenConfirm(!openConfirm)
-                                    }
-                                    handleOpenQueCard={handleOpenQueCard}
-                                    handleAddComment={handleAddComment}
-                                    handleSetComment={handleSetComment}
-                                    handleSaveQuestion={handleSaveQuestion}
-                                    handleUnSaveQuestion={handleUnSaveQuestion}
-                                />
-                            ) : (
-                                <AudienceButton
-                                    isOwner={isOwner}
-                                    isUserLiked={isUserLiked}
-                                    openQueCard={openQueCard}
-                                    likeNumber={questions.likeNumber.length}
-                                    context={questions.questionText}
-                                    handleUnLike={handleUnLike}
-                                    handleLike={handleLike}
-                                    handleCloseCard={() =>
-                                        setOpenConfirm(!openConfirm)
-                                    }
-                                    handleOpenQueCard={handleOpenQueCard}
-                                />
-                            )}
-                        </Box>
-                    )}
+                        )}
+                    </Box>
                 </Box>
-            </Box>
-        </Modal>
+            </Modal>
+        </>
     );
 }

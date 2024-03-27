@@ -115,7 +115,8 @@ export default function ALQuestionCard(props: IData) {
                 handleDeleteDiscard={handleOpenConfirm}
                 context="Deleting question is permanent and cannot be undone."
                 buttonWord={"Delete"}
-                title={"Delete question?"} />
+                title={"Delete question?"}
+            />
             <AddQuestion
                 handleClose={handleCloseQueCard}
                 handleRefresh={props.handleRefresh}
@@ -244,11 +245,12 @@ export default function ALQuestionCard(props: IData) {
                     </MenuItem>
                 </Menu>
             </Box>
-            <Box sx={{ width: "95%", marginLeft: "16px" }}>
+            <Box
+                onClick={() =>
+                    props.handleSelectQuestion(props.questions.questionId)
+                }
+                sx={{ width: "95%", marginLeft: "16px" }}>
                 <Typography
-                    onClick={() =>
-                        props.handleSelectQuestion(props.questions.questionId)
-                    }
                     sx={{
                         cursor: "pointer",
                         textAlign: "justify",
