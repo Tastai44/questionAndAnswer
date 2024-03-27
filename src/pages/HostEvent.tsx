@@ -325,8 +325,8 @@ export default function HostEvent(props: IData) {
                                                 a.isRead === b.isRead
                                                     ? 0
                                                     : a.isRead
-                                                    ? 1
-                                                    : -1
+                                                        ? 1
+                                                        : -1
                                             )
                                             .map((item, index) => (
                                                 <Box
@@ -394,8 +394,8 @@ export default function HostEvent(props: IData) {
                                                     onClick={() =>
                                                         handleCopyText(
                                                             import.meta.env
-                                                                .VITE_EVENT +
-                                                                patch
+                                                                .VITE_CLIENT +
+                                                            patch
                                                         )
                                                     }>
                                                     <ContentCopyOutlinedIcon />
@@ -421,8 +421,8 @@ export default function HostEvent(props: IData) {
                                                 a.isRead === b.isRead
                                                     ? 0
                                                     : a.isRead
-                                                    ? 1
-                                                    : -1
+                                                        ? 1
+                                                        : -1
                                             )
                                             .sort((a, b) => {
                                                 return (

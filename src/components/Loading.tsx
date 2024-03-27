@@ -26,9 +26,9 @@ export default function Loading(props: ILoading) {
                         disableShrink
                         size={80}
                         color="inherit"
-                        sx={{ color: "#ECD0FF" }}
+                        sx={{ color: "green" }}
                     />
-                    <Typography variant="h5">Please wait...</Typography>
+                    <Typography variant="h5" color={"white"}>Please wait...</Typography>
                 </Box>
             </Modal>
         </>

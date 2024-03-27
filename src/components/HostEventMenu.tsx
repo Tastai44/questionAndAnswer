@@ -127,7 +127,7 @@ export default function HostEventMenu(props: IData) {
                             <IconButton
                                 onClick={() =>
                                     handleCopyText(
-                                        import.meta.env.VITE_EVENT + patch
+                                        import.meta.env.VITE_CLIENT + patch
                                     )
                                 }
                                 sx={{ marginRight: "16px", color: "white" }}>

@@ -26,6 +26,7 @@ import AudienceButton from "./AudienceButton";
 import HostButton from "./HostButton";
 import ConfirmModalCard from "../ConfirmModalCard";
 import dayjs from "dayjs";
+import Loading from "../Loading";
 
 interface IData {
     questionId: string;
@@ -51,19 +52,22 @@ export default function PreviewQuestion(props: IData) {
     const [oldContext, setOldContext] = useState("");
     const now = new Date();
     const [openConfirm, setOpenConfirm] = useState(false);
+    const [openLoading, setOpenLoading] = useState(false);
 
     useEffect(() => {
         const fetch = async () => {
+            setOpenLoading(true);
             const data: IQuestion = await getQuesById(props.questionId ?? "");
             if (data) {
                 setQuestions(data);
                 const isUserLiked = data.likeNumber.some(
-                    (item: { userLikeId: string }) =>
+                    (item: { userLikeId: string; }) =>
                         item.userLikeId === userInfo.userId
                 );
                 const isOwner = data.ownerId == userInfo.userId;
                 SetIsOwner(isOwner);
                 SetIsUserLiked(isUserLiked);
+                setOpenLoading(false);
             }
         };
         if (props.openPreviewCard) {
@@ -83,6 +87,7 @@ export default function PreviewQuestion(props: IData) {
         props.handleRefresh();
     };
     const handleDeleteQuestion = async (id: string) => {
+        setOpenLoading(true);
         await deleteQuestionById(id);
         props.handleRefresh();
         props.handleCloseCard();
@@ -108,6 +113,7 @@ export default function PreviewQuestion(props: IData) {
             timestamp: now,
         };
         try {
+            setOpenLoading(true);
             await addComment(data, props.questionId);
             setComment("");
             handleRefresh();
@@ -142,6 +148,7 @@ export default function PreviewQuestion(props: IData) {
 
     return (
         <>
+            <Loading openLoading={openLoading} />
             <Modal open={props.openPreviewCard}>
                 <Box
                     sx={{
@@ -161,7 +168,7 @@ export default function PreviewQuestion(props: IData) {
                             border: "0px",
                         },
                         [themeApp.breakpoints.up("md")]: {
-                            width: "398px",
+                            width: "420px",
                         },
                     }}>
                     <Box
