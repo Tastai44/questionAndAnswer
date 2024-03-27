@@ -54,11 +54,10 @@ export default function Event() {
                     name: userName,
                 };
                 localStorage.setItem("user", JSON.stringify(saveUser));
-                navigate(`/eventDetails/${eventData?.eventId}/${userName}`);
+                navigate(`/eventRoom/${eventData?.eventId}/no`);
             } else {
                 alert("The username has already exited!");
             }
-
         } else {
             setError("Please type your name!");
         }

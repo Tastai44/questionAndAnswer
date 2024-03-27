@@ -7,9 +7,11 @@ import { themeApp } from "../utils/Theme";
 // import { deleteEventById } from '../api/event';
 import { useNavigate } from "react-router-dom";
 import ConfirmModalCard from "./ConfirmModalCard";
+import { deleteEventById } from "../api/event";
 
 interface IData {
     handleClose: () => void;
+    setReset: () => void;
     eventId: string;
     title: string;
     hostName: string;
@@ -30,7 +32,8 @@ export default function HostEventMenu(props: IData) {
         setOpen(!open);
     };
     const handleEndEvent = async () => {
-        // await deleteEventById(id);
+        await deleteEventById(props.eventId);
+        props.setReset();
         navigate("/");
     };
 

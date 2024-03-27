@@ -6,7 +6,7 @@ import QuestionCard from "../components/QuestionCard/QuestionHostCard";
 import { getEventById } from "../api/event";
 import { Ievent } from "../interface/Ievent";
 import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined";
-import { getQuesByEId, readQuestion } from "../api/question";
+import { readQuestion } from "../api/question";
 import HostEventMenu from "../components/HostEventMenu";
 import { themeApp } from "../utils/Theme";
 import PreviewQuestion from "../components/PreviewQuestion/PreviewQuestion";
@@ -15,7 +15,9 @@ import { IQuestion } from "../interface/IQuestion";
 
 interface IData {
     refresh: number;
+    questions: IQuestion[];
     handleRefresh: () => void;
+    setReset: () => void;
 }
 
 export default function HostEvent(props: IData) {
@@ -23,7 +25,7 @@ export default function HostEvent(props: IData) {
     const navigatorPath = useNavigate();
     const { eventId } = useParams();
     const [eventData, setEventData] = useState<Ievent>();
-    const [questions, setQuestions] = useState<IQuestion[]>([]);
+    // const [questions, setQuestions] = useState<IQuestion[]>([]);
     const [open, setOpen] = useState(false);
     const [openCard, setOpenCard] = useState(false);
     const [selectedQId, setSelectedQId] = useState("");
@@ -42,14 +44,14 @@ export default function HostEvent(props: IData) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.refresh]);
 
-    useEffect(() => {
-        const fetch = async () => {
-            const data = (await getQuesByEId(eventId ?? "")) as IQuestion[];
-            setQuestions(data);
-        };
-        fetch();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.refresh]);
+    // useEffect(() => {
+    //     const fetch = async () => {
+    //         const data = (await getQuesByEId(eventId ?? "")) as IQuestion[];
+    //         setQuestions(data);
+    //     };
+    //     fetch();
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [props.refresh]);
 
     const handleChange = (newValue: number) => {
         setValue(newValue);
@@ -86,6 +88,7 @@ export default function HostEvent(props: IData) {
                         title={eventData.title}
                         hostName={eventData.ownerName}
                         open={open}
+                        setReset={props.setReset}
                     />
 
                     <PreviewQuestion
@@ -141,7 +144,7 @@ export default function HostEvent(props: IData) {
                                     sx={{
                                         width: "32px",
                                         height: "32px",
-                                        marginRight: "10px",
+                                        marginRight: "16px",
                                         color: "white",
                                     }}>
                                     <MenuIcon />
@@ -227,7 +230,7 @@ export default function HostEvent(props: IData) {
                                                 width: "16px",
                                                 height: "19px",
                                             }}>
-                                            {questions.length}
+                                            {props.questions.length}
                                         </Box>
                                     </Box>
                                     <Box
@@ -297,7 +300,7 @@ export default function HostEvent(props: IData) {
                                                 height: "21px",
                                             }}>
                                             {
-                                                questions.filter(
+                                                props.questions.filter(
                                                     (que) => que.isSave == true
                                                 ).length
                                             }
@@ -307,8 +310,8 @@ export default function HostEvent(props: IData) {
                             </Box>
                             {value == 0 ? (
                                 <Box>
-                                    {questions.length !== 0 ? (
-                                        questions
+                                    {props.questions.length !== 0 ? (
+                                        props.questions
                                             .sort((a, b) => {
                                                 const timestampA = new Date(
                                                     a.timestamp
@@ -403,8 +406,8 @@ export default function HostEvent(props: IData) {
                                 </Box>
                             ) : value == 1 ? (
                                 <>
-                                    {questions.length !== 0 ? (
-                                        questions
+                                    {props.questions.length !== 0 ? (
+                                        props.questions
                                             .sort((a, b) => {
                                                 const timestampA = new Date(
                                                     a.timestamp
@@ -467,11 +470,11 @@ export default function HostEvent(props: IData) {
                                 </>
                             ) : (
                                 <>
-                                    {questions !== undefined &&
-                                        (questions.filter(
+                                    {props.questions !== undefined &&
+                                        (props.questions.filter(
                                             (que) => que.isSave == true
                                         ).length !== 0 ? (
-                                            questions
+                                            props.questions
                                                 .sort((a, b) => {
                                                     const timestampA = new Date(
                                                         a.timestamp

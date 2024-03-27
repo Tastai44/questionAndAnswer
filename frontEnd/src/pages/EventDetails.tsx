@@ -5,7 +5,6 @@ import { getEventById } from "../api/event";
 import PreviewQuestion from "../components/PreviewQuestion/PreviewQuestion";
 import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined";
 import { themeApp } from "../utils/Theme";
-import { getQuesByEId, getQuesByOwnerId } from "../api/question";
 import { Ievent } from "../interface/Ievent";
 import MenuIcon from "@mui/icons-material/Menu";
 import AudienceMenu from "../components/AudienceMenu";
@@ -18,6 +17,8 @@ import { IQuestion } from "../interface/IQuestion";
 
 interface IData {
     refresh: number;
+    questions: IQuestion[];
+    myQuestions: IQuestion[];
     handleRefresh: () => void;
 }
 
@@ -31,8 +32,8 @@ export default function EventDetails(props: IData) {
     const [openQueCard, setOpenQueCard] = useState(false);
     const { eventId } = useParams();
     const [eventData, setEventData] = useState<Ievent>();
-    const [questions, setQuestions] = useState<IQuestion[]>([]);
-    const [myQuestions, setMyQuestions] = useState<IQuestion[]>([]);
+    // const [questions, setQuestions] = useState<IQuestion[]>([]);
+    // const [myQuestions, setMyQuestions] = useState<IQuestion[]>([]);
     const [selectedQId, setSelectedQId] = useState("");
 
     useEffect(() => {
@@ -47,24 +48,24 @@ export default function EventDetails(props: IData) {
         fetch();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-    useEffect(() => {
-        const fetch = async () => {
-            const data = (await getQuesByEId(eventId ?? "")) as IQuestion[];
-            setQuestions(data);
-        };
-        fetch();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.refresh]);
-    useEffect(() => {
-        const fetch = async () => {
-            const data = (await getQuesByOwnerId(
-                userInfo.userId ?? ""
-            )) as IQuestion[];
-            setMyQuestions(data);
-        };
-        fetch();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.refresh]);
+    // useEffect(() => {
+    //     const fetch = async () => {
+    //         const data = (await getQuesByEId(eventId ?? "")) as IQuestion[];
+    //         setQuestions(data);
+    //     };
+    //     fetch();
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [props.refresh]);
+    // useEffect(() => {
+    //     const fetch = async () => {
+    //         const data = (await getQuesByOwnerId(
+    //             userInfo.userId ?? ""
+    //         )) as IQuestion[];
+    //         setMyQuestions(data);
+    //     };
+    //     fetch();
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [props.refresh]);
 
     const handleOpenCard = () => setOpenCard(true);
     const handleCloseCard = () => setOpenCard(false);
@@ -81,7 +82,6 @@ export default function EventDetails(props: IData) {
     const handleSelectQuestion = async (id: string) => {
         setSelectedQId(id);
         handleOpenCard();
-        props.handleRefresh();
     };
     const handleCopyText = (text: string) => {
         navigator.clipboard.writeText(text);
@@ -180,7 +180,7 @@ export default function EventDetails(props: IData) {
                                     sx={{
                                         width: "32px",
                                         height: "32px",
-                                        marginRight: "10px",
+                                        marginRight: "16px",
                                         color: "black",
                                     }}>
                                     <MenuIcon />
@@ -266,7 +266,7 @@ export default function EventDetails(props: IData) {
                                                 width: "16px",
                                                 height: "19px",
                                             }}>
-                                            {questions.length}
+                                            {props.questions.length}
                                         </Box>
                                     </Box>
                                     <Box
@@ -335,15 +335,15 @@ export default function EventDetails(props: IData) {
                                                 width: "19px",
                                                 height: "21px",
                                             }}>
-                                            {myQuestions.length}
+                                            {props.myQuestions.length}
                                         </Box>
                                     </Box>
                                 </Box>
                             </Box>
                             {value == 0 ? (
-                                <Box>
-                                    {questions.length !== 0 ? (
-                                        questions
+                                <>
+                                    {props.questions.length !== 0 ? (
+                                        props.questions
                                             .sort((a, b) => {
                                                 const timestampA = new Date(
                                                     a.timestamp
@@ -408,11 +408,11 @@ export default function EventDetails(props: IData) {
                                             </Box>
                                         </Box>
                                     )}
-                                </Box>
+                                </>
                             ) : value == 1 ? (
                                 <>
-                                    {questions.length !== 0 ? (
-                                        questions
+                                    {props.questions.length !== 0 ? (
+                                        props.questions
                                             .sort((a, b) => {
                                                 const timestampA = new Date(
                                                     a.timestamp
@@ -464,20 +464,16 @@ export default function EventDetails(props: IData) {
                                 </>
                             ) : (
                                 <>
-                                    {myQuestions !== undefined &&
-                                        (myQuestions.length !== 0 ? (
-                                            myQuestions
+                                    {props.myQuestions !== undefined &&
+                                        (props.myQuestions.length !== 0 ? (
+                                            props.myQuestions
                                                 .sort((a, b) => {
-                                                    const timestampA =
-                                                        a.timestamp instanceof
-                                                        Date
-                                                            ? a.timestamp.getTime()
-                                                            : 0;
-                                                    const timestampB =
-                                                        b.timestamp instanceof
-                                                        Date
-                                                            ? b.timestamp.getTime()
-                                                            : 0;
+                                                    const timestampA = new Date(
+                                                        a.timestamp
+                                                    ).getTime();
+                                                    const timestampB = new Date(
+                                                        b.timestamp
+                                                    ).getTime();
                                                     return (
                                                         timestampB - timestampA
                                                     );
@@ -532,6 +528,14 @@ export default function EventDetails(props: IData) {
                                 position: "fixed",
                                 bottom: 10,
                                 right: "0px",
+                                [themeApp.breakpoints.up("md")]: {
+                                    position: "relative",
+                                    width: "430px",
+                                    bottom: 0,
+                                    display: "flex",
+                                    justifyContent: "flex-end",
+                                    marginTop: "10px",
+                                },
                             }}>
                             <IconButton
                                 onClick={handleOpenQueCard}
