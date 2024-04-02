@@ -10,8 +10,8 @@ import { readQuestion } from "../api/question";
 import HostEventMenu from "../components/HostEventMenu";
 import { themeApp } from "../utils/Theme";
 import PreviewQuestion from "../components/PreviewQuestion/PreviewQuestion";
-import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import { IQuestion } from "../interface/IQuestion";
+import PopupAlert from "../components/PopupAlert";
 
 interface IData {
     refresh: number;
@@ -53,7 +53,7 @@ export default function HostEvent(props: IData) {
 
     const handleCopyText = (text: string) => {
         navigator.clipboard.writeText(text);
-        alert("Text copied to clipboard!");
+        PopupAlert("Copied", "success");
     };
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -195,15 +195,7 @@ export default function HostEvent(props: IData) {
                                             alignItems: "center",
                                             cursor: "pointer",
                                         }}>
-                                        <FiberManualRecordIcon
-                                            sx={{
-                                                color: "red",
-                                                width: "8px",
-                                                height: "8px",
-                                                marginRight: "8px",
-                                            }}
-                                        />
-                                        Live
+                                        Recent
                                         <Box
                                             sx={{
                                                 display: "flex",
@@ -318,8 +310,8 @@ export default function HostEvent(props: IData) {
                                                 a.isRead === b.isRead
                                                     ? 0
                                                     : a.isRead
-                                                    ? 1
-                                                    : -1
+                                                        ? 1
+                                                        : -1
                                             )
                                             .map((item, index) => (
                                                 <Box
@@ -351,7 +343,7 @@ export default function HostEvent(props: IData) {
                                             <Box sx={{ marginBottom: "10px" }}>
                                                 <Typography
                                                     sx={{
-                                                        marginTop: "50%",
+                                                        marginTop: "40%",
                                                         fontSize: "20px",
                                                         fontWeight: "bold",
                                                     }}>
@@ -394,7 +386,7 @@ export default function HostEvent(props: IData) {
                                                         handleCopyText(
                                                             import.meta.env
                                                                 .VITE_CLIENT +
-                                                                patch
+                                                            patch
                                                         )
                                                     }>
                                                     <ContentCopyOutlinedIcon />
@@ -420,8 +412,8 @@ export default function HostEvent(props: IData) {
                                                 a.isRead === b.isRead
                                                     ? 0
                                                     : a.isRead
-                                                    ? 1
-                                                    : -1
+                                                        ? 1
+                                                        : -1
                                             )
                                             .sort((a, b) => {
                                                 return (

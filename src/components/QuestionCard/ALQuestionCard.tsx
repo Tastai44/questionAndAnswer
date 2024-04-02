@@ -94,7 +94,10 @@ export default function ALQuestionCard(props: IData) {
     return (
         <Box
             sx={{
-                background: "white",
+                backgroundColor:
+                    userInfo.userId == props.questions.ownerId
+                        ? "rgba(46, 204, 113, 0.1)"
+                        : "white",
                 display: "flex",
                 flexDirection: "column",
                 width: "100%",
@@ -188,6 +191,10 @@ export default function ALQuestionCard(props: IData) {
                                     width: "86px",
                                     textTransform: "none",
                                     borderRadius: "4px",
+                                    "&:hover": {
+                                        background: "#2ECC71",
+                                        color: "white",
+                                    },
                                 }}>
                                 Answered
                             </Button>
@@ -202,15 +209,16 @@ export default function ALQuestionCard(props: IData) {
                         </>
                     )}
                 </Box>
-                <IconButton
-                    disabled={userInfo.userId !== props.questions.ownerId}
-                    aria-controls={open ? "basic-menu" : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={open ? "true" : undefined}
-                    onClick={handleClick}
-                    sx={{ marginRight: "16px" }}>
-                    <MoreHorizOutlinedIcon />
-                </IconButton>
+                {userInfo.userId == props.questions.ownerId && (
+                    <IconButton
+                        aria-controls={open ? "basic-menu" : undefined}
+                        aria-haspopup="true"
+                        aria-expanded={open ? "true" : undefined}
+                        onClick={handleClick}
+                        sx={{ marginRight: "16px" }}>
+                        <MoreHorizOutlinedIcon />
+                    </IconButton>
+                )}
                 <Menu
                     onClose={handleClose}
                     anchorEl={anchorEl}
@@ -352,7 +360,7 @@ export default function ALQuestionCard(props: IData) {
             </Box>
             <Box
                 sx={{
-                    padding: "10px 14px 0px 16px",
+                    padding: "10px 14px 0px 14px",
                 }}>
                 {props.questions.comment.length != 0 &&
                     props.questions.comment
@@ -371,6 +379,7 @@ export default function ALQuestionCard(props: IData) {
                         .map((item, index) => (
                             <Box key={index} sx={{ marginBottom: "16px" }}>
                                 <Comment
+                                    comment={item}
                                     isHost={false}
                                     ownerName={item.name}
                                     date={item.timestamp.toLocaleString()}

@@ -1,13 +1,8 @@
 import {
     Box,
     Button,
-    FormControl,
-    IconButton,
-    InputAdornment,
-    OutlinedInput,
     Typography,
 } from "@mui/material";
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import BookmarkAddOutlinedIcon from "@mui/icons-material/BookmarkAddOutlined";
 import { ChangeEvent, useState } from "react";
@@ -26,16 +21,16 @@ interface IData {
     handleLike: () => void;
     handleCloseCard: () => void;
     handleOpenQueCard: (context: string) => void;
-    handleSetComment: (event: ChangeEvent<HTMLInputElement>) => void;
+    handleSetComment: (event: ChangeEvent<HTMLTextAreaElement>) => void;
     handleAddComment: () => void;
     handleSaveQuestion: () => void;
     handleUnSaveQuestion: () => void;
 }
 
 export default function HostButton(props: IData) {
-    const [hovered, setHovered] = useState(false);
-    const [hoveredDelete, setHoveredDelete] = useState(false);
-    const [hoveredSave, setHoveredSave] = useState(false);
+    // const [hovered, setHovered] = useState(false);
+    // const [hoveredDelete, setHoveredDelete] = useState(false);
+    // const [hoveredSave, setHoveredSave] = useState(false);
     const [openComment, setOpenComment] = useState(false);
 
     const handleOpenComment = () => {
@@ -50,137 +45,144 @@ export default function HostButton(props: IData) {
                     gap: "8px",
                     marginLeft: "16px",
                     marginBottom: "14px",
-                    flexWrap: hoveredDelete ? "wrap" : "auto",
+                    flexWrap: "wrap",
+                    justifyContent: "space-between",
                 }}>
-                <Button
-                    sx={{
-                        width: "75px",
-                        height: "38px",
-                        borderRadius: "50px",
-                        background: "#FFFFFF",
-                        border: "1px solid #C9CCD0",
-                        color: "black",
-                        textTransform: "none",
-                        gap: "3px",
-                    }}>
-                    <ThumbUpIcon
+                <Box sx={{ display: "flex", gap: "8px" }}>
+                    <Button
                         sx={{
-                            width: "20px",
-                            height: "20px",
-                        }}
-                    />
-                    <Typography fontSize={15}>
-                        {props.likeNumber == 0 ? "" : props.likeNumber}
-                    </Typography>
-                </Button>
-                <Button
-                    onClick={handleOpenComment}
-                    onMouseEnter={() => setHovered(true)}
-                    onMouseLeave={() => setHovered(false)}
-                    sx={{
-                        width: hovered || openComment ? "127px" : "52px",
-                        height: "36px",
-                        borderRadius: "50px",
-                        background: "#FFFFFF",
-                        border: "1px solid #C9CCD0",
-                        color: "black",
-                        textTransform: "none",
-                    }}>
-                    {hovered || openComment ? (
-                        <>
-                            <ChatBubbleOutlineOutlinedIcon
-                                sx={{ color: "#2ECC71" }}
-                            />
-                            <Typography color={"#2ECC71"} fontSize={15}>
-                                Comment
-                            </Typography>
-                        </>
-                    ) : (
-                        <>
-                            <ChatBubbleOutlineOutlinedIcon />
-                        </>
-                    )}
-                </Button>
-                <Button
-                    onClick={
-                        props.isSave
-                            ? props.handleUnSaveQuestion
-                            : props.handleSaveQuestion
-                    }
-                    onMouseEnter={() => setHoveredSave(true)}
-                    onMouseLeave={() => setHoveredSave(false)}
-                    sx={{
-                        width: hoveredSave || props.isSave ? "101px" : "52px",
-                        height: "36px",
-                        borderRadius: "50px",
-                        background: "#FFFFFF",
-                        border: "1px solid #C9CCD0",
-                        color: "black",
-                        textTransform: "none",
-                    }}>
-                    {hoveredSave || props.isSave ? (
-                        <>
-                            <BookmarkAddedOutlinedIcon
-                                sx={{ color: "#2ECC71" }}
-                            />
-                            <Typography color={"#2ECC71"} fontSize={15}>
-                                Saved
-                            </Typography>
-                        </>
-                    ) : (
-                        <>
-                            <BookmarkAddOutlinedIcon />
-                        </>
-                    )}
-                </Button>
-                <Button
-                    onMouseEnter={() => setHoveredDelete(true)}
-                    onMouseLeave={() => setHoveredDelete(false)}
+                            width: "75px",
+                            height: "38px",
+                            borderRadius: "50px",
+                            background: "#FFFFFF",
+                            border: "1px solid #C9CCD0",
+                            color: "black",
+                            textTransform: "none",
+                            gap: "3px",
+                            "&:hover": {
+                                background: "#FFFFFF",
+                            },
+                        }}>
+                        <ThumbUpIcon
+                            sx={{
+                                width: "20px",
+                                height: "20px",
+                            }}
+                        />
+                        <Typography fontSize={15}>
+                            {props.likeNumber == 0 ? "" : props.likeNumber}
+                        </Typography>
+                    </Button>
+                    <Button
+                        onClick={handleOpenComment}
+                        sx={{
+                            width: "127px",
+                            height: "36px",
+                            borderRadius: "50px",
+                            background: "#FFFFFF",
+                            border: "1px solid #C9CCD0",
+                            color: "black",
+                            textTransform: "none",
+                            "&:hover": {
+                                background: "#FFFFFF",
+                                color: "#2ECC71",
+                            },
+                        }}>
+                        {openComment ? (
+                            <>
+                                <ChatBubbleOutlineOutlinedIcon
+                                    sx={{ color: "#2ECC71" }}
+                                />
+                                <Typography color={"#2ECC71"} fontSize={15}>
+                                    Comment
+                                </Typography>
+                            </>
+                        ) : (
+                            <>
+                                <ChatBubbleOutlineOutlinedIcon />
+                                <Typography fontSize={15}>Comment</Typography>
+                            </>
+                        )}
+                    </Button>
+                    <Button
+                        onClick={
+                            props.isSave
+                                ? props.handleUnSaveQuestion
+                                : props.handleSaveQuestion
+                        }
+                        sx={{
+                            width: "101px",
+                            height: "36px",
+                            borderRadius: "50px",
+                            background: "#FFFFFF",
+                            border: "1px solid #C9CCD0",
+                            color: "black",
+                            textTransform: "none",
+                            "&:hover": {
+                                background: "#FFFFFF",
+                                color: "#2ECC71",
+                            },
+                        }}>
+                        {props.isSave ? (
+                            <>
+                                <BookmarkAddedOutlinedIcon
+                                    sx={{ color: "#2ECC71" }}
+                                />
+                                <Typography color={"#2ECC71"} fontSize={15}>
+                                    Saved
+                                </Typography>
+                            </>
+                        ) : (
+                            <>
+                                <BookmarkAddOutlinedIcon />
+                                <Typography fontSize={15}>Saved</Typography>
+                            </>
+                        )}
+                    </Button>
+                </Box>
+                {/* <Button
                     onClick={props.handleCloseCard}
                     sx={{
-                        width: hoveredDelete ? "103px" : "52px",
+                        width: "114px",
                         height: "36px",
                         borderRadius: "50px",
                         background: "#FFFFFF",
                         border: "1px solid #C9CCD0",
                         color: "black",
                         textTransform: "none",
+                        marginRight: "14px",
+                        "&:hover": {
+                            background: "#FFFFFF",
+                            color: "#FA6056",
+                        },
                     }}>
-                    {hoveredDelete ? (
-                        <>
-                            <DeleteOutlineOutlinedIcon
-                                sx={{ color: "#FA6056" }}
-                            />
-                            <Typography color={"#FA6056"} fontSize={15}>
-                                Delete
-                            </Typography>
-                        </>
-                    ) : (
-                        <>
-                            <DeleteOutlineOutlinedIcon />
-                        </>
-                    )}
-                </Button>
+                    <DeleteOutlineOutlinedIcon />
+                    <Typography fontSize={15}>Delete</Typography>
+                </Button> */}
             </Box>
             {openComment && (
                 <Box
                     sx={{
                         display: "flex",
                         justifyContent: "center",
+                        border: "0px"
                     }}>
-                    <FormControl
+                    {/* <FormControl
                         sx={{
                             width: "95%",
                             padding: 1,
+                            border: "0px",
                         }}
-                        variant="outlined">
+                        variant="outlined"
+                    >
                         <OutlinedInput
+                            maxRows={3}
                             placeholder="Add your comment..."
                             multiline
                             sx={{
                                 background: "white",
                                 borderRadius: "14px",
-                                border: "1px solid #C9CCD0",
+                                border: "1px solid #2ECC71",
                                 "&:hover": {
                                     border: "1px solid #2ECC71",
                                 },
@@ -192,7 +194,7 @@ export default function HostButton(props: IData) {
                             value={props.comment}
                             onChange={props.handleSetComment}
                             endAdornment={
-                                <InputAdornment position="end">
+                                <InputAdornment sx={{ border: "0px" }} position="end">
                                     {props.comment ? (
                                         <IconButton
                                             edge="end"
@@ -200,7 +202,7 @@ export default function HostButton(props: IData) {
                                                 border: "0px",
                                             }}
                                             onClick={props.handleAddComment}>
-                                            <SendIcon />
+                                            <SendIcon sx={{ color: "#2ECC71" }} />
                                         </IconButton>
                                     ) : (
                                         <></>
@@ -208,7 +210,73 @@ export default function HostButton(props: IData) {
                                 </InputAdornment>
                             }
                         />
-                    </FormControl>
+                    </FormControl> */}
+                    <Box
+                        sx={{
+                            width: "100%",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                        }}>
+                        <Box
+                            sx={{
+                                display: "flex",
+                                background: "white",
+                                borderRadius: "8px",
+                                width: "90%",
+                                marginRight: "14px",
+                                marginLeft: "14px",
+                                border: "2px solid #2ECC71",
+                                alignContent: "center",
+                                alignItems: "center",
+                                marginBottom: "16px"
+                            }}>
+                            <Box
+                                sx={{
+                                    width: "100%",
+                                    borderRadius: "14px",
+                                    marginTop: "10px",
+                                }}>
+                                <textarea
+                                    value={props.comment}
+                                    onChange={props.handleSetComment}
+                                    style={{
+                                        borderRadius: "14px",
+                                        fontSize: "17px",
+                                        width: "95%",
+                                        border: "none",
+                                        outline: "none",
+                                        color: "black",
+                                        resize: "none",
+                                        fontFamily: "Inter",
+                                        height: "30px",
+                                        maxHeight: "100px"
+                                    }}
+                                    maxLength={200}
+                                    placeholder="What is in your mind?"
+                                />
+                            </Box>
+                            {props.comment ? (
+                                <Box
+                                    sx={{
+                                        cursor: "pointer",
+                                        border: "0px",
+                                        marginRight: "5px"
+                                    }}
+                                    onClick={props.handleAddComment}>
+                                    <SendIcon sx={{ color: "#2ECC71" }} />
+                                </Box>
+                            ) : (
+                                <></>
+                            )}
+                        </Box>
+                    </Box>
+                    {/* <textarea
+                        placeholder="Add your comment..."
+                        maxLength={100} style={{
+                            resize: 'none', width: "95%",
+                            padding: 1, fontFamily: "Inter"
+                        }} /> */}
                 </Box>
             )}
         </Box>
