@@ -162,7 +162,7 @@ export default function Comment(props: IData) {
                 cursor: "pointer",
               }}
             >
-              {props.comment.likeNumber.length == 0 ? (
+              {props.comment.likeNumber !== undefined && props.comment.likeNumber.length == 0 ? (
                 <>
                   <Box
                     // onClick={() => handleLike()}
@@ -209,7 +209,7 @@ export default function Comment(props: IData) {
                           height: "16px",
                         }}
                       />
-                      {props.comment.likeNumber.length}
+                      {props.comment.likeNumber !== undefined && props.comment.likeNumber.length}
                     </Box>
                   ) : (
                     <Box
@@ -232,7 +232,7 @@ export default function Comment(props: IData) {
                           height: "16px",
                         }}
                       />
-                      {props.comment.likeNumber.length}
+                      {props.comment.likeNumber !== undefined && props.comment.likeNumber.length}
                     </Box>
                   )}
                 </>
@@ -249,7 +249,7 @@ export default function Comment(props: IData) {
                 cursor: "pointer",
               }}
             >
-              {props.comment.likeNumber.length == 0 ? (
+              {props.comment.likeNumber !== undefined && props.comment.likeNumber.length == 0 ? (
                 <>
                   <Box
                     onClick={() => handleLike()}
@@ -292,7 +292,7 @@ export default function Comment(props: IData) {
                           height: "16px",
                         }}
                       />
-                      {props.comment.likeNumber.length}
+                      {props.comment.likeNumber !== undefined && props.comment.likeNumber.length}
                     </Box>
                   ) : (
                     <Box
@@ -316,7 +316,7 @@ export default function Comment(props: IData) {
                           height: "16px",
                         }}
                       />
-                      {props.comment.likeNumber.length}
+                      {props.comment.likeNumber !== undefined && props.comment.likeNumber.length}
                     </Box>
                   )}
                 </>
