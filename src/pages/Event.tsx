@@ -15,8 +15,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import { themeApp } from "../utils/Theme";
 import { getEventByRoomId } from "../api/event";
 import { Ievent } from "../interface/Ievent";
-import { addUser } from "../api/audience";
-import PopupAlert from "../components/PopupAlert";
+import { addUser, getUserByName } from "../api/audience";
 import KeyboardBackspaceOutlinedIcon from "@mui/icons-material/KeyboardBackspaceOutlined";
 
 export default function Event() {
@@ -58,7 +57,11 @@ export default function Event() {
                 localStorage.setItem("user", JSON.stringify(saveUser));
                 navigate(`/eventRoom/${eventData?.eventId}/no`);
             } else {
-                PopupAlert("The username has already exited!", "warning");
+                const existUser = await getUserByName(user.name);
+                if (existUser) {
+                    localStorage.setItem("user", JSON.stringify(existUser[0]));
+                    navigate(`/eventRoom/${eventData?.eventId}/no`);
+                }
             }
         } else {
             setError("Please type your name!");

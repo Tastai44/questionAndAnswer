@@ -13,6 +13,17 @@ export const addUser = async (user: Iuser) => {
     }
 };
 
+export const getUserByName = async (name: string) => {
+    try {
+        return await axios.get(
+            `${import.meta.env.VITE_EVENT}/usersByName/${name}`
+        ).then((res) => res.data);
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
 export const deleteUserById = async (userId: string) => {
     try {
         return await axios.delete(
